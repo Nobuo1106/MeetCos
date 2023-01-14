@@ -9,8 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
-    @State var selectddate = Date()
-    @State var interval = "0:00"
+    @State var selectdDate = Date()
+    @State var displayTime = "0:00:00"
     @State var totalCost = 0
     @State var showingSheet = false
 
@@ -19,10 +19,11 @@ struct HomeView: View {
             HStack {
                 Text("終了予定時刻")
                     .padding()
-                DatePicker("", selection: $selectddate, displayedComponents:
+                DatePicker("", selection: $selectdDate, displayedComponents:
                         .hourAndMinute)
-                .onChange(of: selectddate, perform: { value in
-                    interval = viewModel.calcRemainingTime(value)
+                .onChange(of: selectdDate, perform: { value in
+                    viewModel.selectedDate = value
+                    displayTime = viewModel.calcDisplayTime()
                    })
                 .environment(\.locale, Locale(identifier: "en_DK"))
                 .datePickerStyle(CompactDatePickerStyle())
@@ -34,12 +35,12 @@ struct HomeView: View {
                     .stroke(Color.green, style: StrokeStyle(lineWidth:10))
                     .padding(50)
                 Circle()
-                    .trim(from: 0.0, to: 0.5)
+                    .trim(from: 0.0, to: viewModel.duration)
                     .stroke(Color.yellow, style: StrokeStyle(lineWidth:10, lineCap: .round))
                     .scaledToFit()
                     .padding(50)
                     .rotationEffect(.degrees(-90))
-                Text("残り時間   \(interval)")
+                Text("残り時間   \(viewModel.displayTime)")
                     .onAppear {
                         viewModel.start()
                     }

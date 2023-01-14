@@ -10,26 +10,33 @@ import Combine
 
 extension HomeView {
     class HomeViewModel: ObservableObject {
-        @Published var interval: String = "0:00"
+        @Published var displayTime = "0:00:00"
         @Published var remainingTime: Double = 0.0
-        @Published var stateDate = Date()
+        @Published var selectedDate = Date()
         @Published var timer: AnyCancellable!
         @Published var count: Int = 0
+        @Published var duration: CGFloat = 1.0 // プログレスバー位置
         @Published var isTimer = true
+        @Published var progressFromZerotoOne: CGFloat = 0.0
         
-        func calcRemainingTime (_ selected: Date)-> String{
-            let interval = selected.timeIntervalSinceNow
+        func calcDisplayTime () -> String{
+            let interval = self.selectedDate.timeIntervalSinceNow
             self.remainingTime = interval
             if self.remainingTime < 0 {
                 self.isTimer = false
             }
-            print(self.remainingTime)
+            //            print(self.remainingTime)
+            return self.formatToString()
+        }
+        
+        private func formatToString () -> String{
             let dateFormatter = DateComponentsFormatter()
             dateFormatter.unitsStyle = .positional
-            dateFormatter.allowedUnits = [.hour, .minute]
-            dateFormatter.zeroFormattingBehavior = .pad
-            print(dateFormatter.string(from: interval)!)
-            return dateFormatter.string(from: interval)!
+            dateFormatter.allowedUnits = [.hour, .minute, .second]
+            dateFormatter.zeroFormattingBehavior = .dropTrailing
+            //            print(dateFormatter.string(from: self.remainingTime)!)
+            self.displayTime = dateFormatter.string(from: self.remainingTime)!
+            return self.displayTime
         }
         
         func start() {
@@ -37,23 +44,30 @@ extension HomeView {
         }
         
         func count(_ interval: Double = 0.1){
+            let max = self.remainingTime
             print("start Timer")
             // TimerPublisherが存在しているときは念の為処理をキャンセル
             if let _timer = timer{
                 _timer.cancel()
             }
-
+            
             timer = Timer.publish(every: interval, on: .main, in: .common)
-                .autoconnect()
-                .receive(on: DispatchQueue.main)
-                .sink(receiveValue: ({_ in
-//                    self.count += 1
-                    self.remainingTime -= 0.1
-                    if self.remainingTime < 0 {
-                        self.stop()
-                    }
+            .autoconnect()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: ({_ in
+                //                    self.count += 1
+                self.remainingTime -= 0.1
+                self.displayTime = self.formatToString()
+                // 切り捨て位置変更
+                //                    let floorOption: Double = 10.0
+                print(self.remainingTime)
+                self.duration = CGFloat(self.remainingTime / max)
+                //                    print(self.duration)
+                if self.remainingTime < 0 {
+                    self.stop()
+                    self.duration = 1
+                }
             }))
-
         }
         
         // タイマーの停止
