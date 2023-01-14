@@ -12,6 +12,7 @@ struct HomeView: View {
     @State var selectddate = Date()
     @State var interval = "0:00"
     @State var totalCost = 0
+    @State var showingSheet = false
 
     var body: some View {
         VStack {
@@ -57,8 +58,13 @@ struct HomeView: View {
             Spacer()
             Text("\(totalCost)円")
             Spacer()
-            Button ("Edit") {
-                
+            Button (action:{
+                showingSheet = true
+            }) {
+                Text("Edit")
+            }
+            .sheet(isPresented: $showingSheet) {
+                SheetView()
             }
             Spacer()
         }
