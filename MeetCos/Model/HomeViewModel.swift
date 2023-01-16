@@ -14,7 +14,6 @@ extension HomeView {
         @Published var remainingTime: Double = 0.0
         @Published var selectedDate = Date()
         @Published var timer: AnyCancellable!
-        @Published var count: Int = 0
         @Published var duration: CGFloat = 1.0 // プログレスバー位置
         @Published var isTimer = true
         @Published var progressFromZerotoOne: CGFloat = 0.0
@@ -25,7 +24,6 @@ extension HomeView {
             if self.remainingTime < 0 {
                 self.isTimer = false
             }
-            //            print(self.remainingTime)
             return self.formatToString()
         }
         
@@ -34,7 +32,6 @@ extension HomeView {
             dateFormatter.unitsStyle = .positional
             dateFormatter.allowedUnits = [.hour, .minute, .second]
             dateFormatter.zeroFormattingBehavior = .dropTrailing
-            //            print(dateFormatter.string(from: self.remainingTime)!)
             self.displayTime = dateFormatter.string(from: self.remainingTime)!
             return self.displayTime
         }
@@ -55,14 +52,11 @@ extension HomeView {
             .autoconnect()
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: ({_ in
-                //                    self.count += 1
                 self.remainingTime -= 0.1
                 self.displayTime = self.formatToString()
                 // 切り捨て位置変更
-                //                    let floorOption: Double = 10.0
                 print(self.remainingTime)
                 self.duration = CGFloat(self.remainingTime / max)
-                //                    print(self.duration)
                 if self.remainingTime < 0 {
                     self.stop()
                     self.duration = 1

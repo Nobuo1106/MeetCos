@@ -7,22 +7,28 @@
 
 import SwiftUI
 
+struct Expense: Identifiable {
+    var id = UUID()
+    var laborCosts: Int?
+    var estimatedSales: Int?
+}
+
+class Expenses: ObservableObject {
+    @Published var expenses:[Expense] = [Expense(laborCosts: 0, estimatedSales: 0)]
+}
+
 struct FormView: View {
+    @ObservedObject var section = Expenses()
+    @State private var totalCost = 0
+    @State private var numOfInputRows: Int = 3
+    
     var body: some View {
         Form {
-            Section {
-                Text("部品１")
-                Text("部品２")
+            ForEach(section.expenses) { item in
+                InputRowsView(expense: item)
             }
             
-            Section {
-                Text("部品３")
-                Text("部品４")
-            } header: {
-                Text("ヘッダーテキスト")
-            } footer: {
-                Text("フッターテキスト")
-            }
+            Text("総経費: \(totalCost) ").bold()
         }
     }
 }
