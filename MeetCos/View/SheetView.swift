@@ -12,7 +12,9 @@ struct SheetView: View {
     
     var body: some View {
       NavigationView {
-        FormView()
+          VStack {
+            FormView()
+          }
         .navigationBarItems(leading: Button("キャンセル") {
             self.presentationMode.wrappedValue.dismiss()
         })

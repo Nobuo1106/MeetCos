@@ -23,12 +23,23 @@ struct FormView: View {
     @State private var numOfInputRows: Int = 3
     
     var body: some View {
-        Form {
-            ForEach(section.expenses) { item in
-                InputRowsView(expense: item)
+        VStack {
+            Form {
+                Section {
+                    ForEach(section.expenses) { item in
+                        InputRowsView(expense: item)
+                    }
+                }
+                Section {
+                    Button("+") {
+                        section.expenses.append(Expense(laborCosts: 0, estimatedSales: 0))
+                    }
+                }
+                Section {
+                    Text("総経費 ¥: \(totalCost) ").bold()
+                }
             }
-            
-            Text("総経費: \(totalCost) ").bold()
+            Spacer()
         }
     }
 }
