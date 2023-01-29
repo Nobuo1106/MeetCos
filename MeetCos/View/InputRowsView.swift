@@ -18,7 +18,9 @@ struct InputRowsView: View {
             HStack(alignment: .center) {
                 Text("人数：") .font(.callout)
                     .bold()
-                TextField("○○人", value: $personCount, format: .number).textFieldStyle(RoundedBorderTextFieldStyle())
+                TextField("○○人", value: $personCount, format: .number)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.numberPad)
             }
             
             HStack (alignment: .center) {
@@ -26,6 +28,7 @@ struct InputRowsView: View {
                     .bold()
                 TextField("金額を入力", value: $laborCost, format: .currency(code: "JPY"))
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.numberPad)
             }
             
             HStack (alignment: .center) {
@@ -33,6 +36,7 @@ struct InputRowsView: View {
                     .bold()
                 TextField("金額を入力", value: $amount, format: .currency(code: "JPY"))
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.numberPad)
             }
         }
     }
