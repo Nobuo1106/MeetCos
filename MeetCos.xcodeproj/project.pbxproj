@@ -12,6 +12,10 @@
 		1806351329569A560013369D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1806351229569A560013369D /* Assets.xcassets */; };
 		1806351629569A560013369D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1806351529569A560013369D /* Preview Assets.xcassets */; };
 		182AA198296A857B00128DE5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AA197296A857B00128DE5 /* HomeViewModel.swift */; };
+		182AA19A297178AA00128DE5 /* SheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AA199297178AA00128DE5 /* SheetView.swift */; };
+		182AA19C29718B5400128DE5 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AA19B29718B5400128DE5 /* FormView.swift */; };
+		182AA19E2972942300128DE5 /* InputRowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AA19D2972942300128DE5 /* InputRowsView.swift */; };
+		182AA1A02976CFBA00128DE5 /* SheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AA19F2976CFBA00128DE5 /* SheetViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +25,11 @@
 		1806351229569A560013369D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1806351529569A560013369D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		182AA197296A857B00128DE5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		182AA199297178AA00128DE5 /* SheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetView.swift; sourceTree = "<group>"; };
+		182AA19B29718B5400128DE5 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		182AA19D2972942300128DE5 /* InputRowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputRowsView.swift; sourceTree = "<group>"; };
+		182AA19F2976CFBA00128DE5 /* SheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetViewModel.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		182AA1A12981223800128DE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +62,7 @@
 		1806350D29569A540013369D /* MeetCos */ = {
 			isa = PBXGroup;
 			children = (
+				182AA1A12981223800128DE5 /* Info.plist */,
 				1806350E29569A540013369D /* MeetCosApp.swift */,
 				1806351C295A57730013369D /* Model */,
 				18AD0357296A7B27003D251B /* View */,
@@ -74,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				182AA197296A857B00128DE5 /* HomeViewModel.swift */,
+				182AA19F2976CFBA00128DE5 /* SheetViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -82,6 +93,9 @@
 			isa = PBXGroup;
 			children = (
 				1806351029569A540013369D /* HomeView.swift */,
+				182AA199297178AA00128DE5 /* SheetView.swift */,
+				182AA19B29718B5400128DE5 /* FormView.swift */,
+				182AA19D2972942300128DE5 /* InputRowsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -158,7 +172,11 @@
 			files = (
 				1806351129569A540013369D /* HomeView.swift in Sources */,
 				182AA198296A857B00128DE5 /* HomeViewModel.swift in Sources */,
+				182AA19C29718B5400128DE5 /* FormView.swift in Sources */,
+				182AA19A297178AA00128DE5 /* SheetView.swift in Sources */,
+				182AA19E2972942300128DE5 /* InputRowsView.swift in Sources */,
 				1806350F29569A540013369D /* MeetCosApp.swift in Sources */,
+				182AA1A02976CFBA00128DE5 /* SheetViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,7 +308,7 @@
 				DEVELOPMENT_TEAM = 8BG588F6G9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = MeetCos/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -319,7 +337,7 @@
 				DEVELOPMENT_TEAM = 8BG588F6G9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = MeetCos/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
