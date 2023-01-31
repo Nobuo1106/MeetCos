@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InputRowsView: View {
-    @State private var personCount: Int?
+    @State private var personCount: String = "0"
     @State private var laborCost: Int?
     @State private var amount: Int?
     @State var expense: Expense
@@ -16,25 +16,32 @@ struct InputRowsView: View {
     var body: some View {
         Section {
             HStack(alignment: .center) {
-                Text("人数：") .font(.callout)
+                Picker(selection: $personCount) {
+                    ForEach(0 ..< 100) { value in
+                        Text("\(value)人")
+                            .tag("\(value)人")
+                    }
+                } label: {
+                    Text("人数")
+                        .font(.callout)
+                        .bold()
+                }
+            }
+            
+            HStack (alignment: .center) {
+                Text("人件費：")
+                    .font(.callout)
                     .bold()
-                TextField("○○人", value: $personCount, format: .number)
+                TextField("金額を入力", value: $expense.laborCosts, format: .currency(code: "JPY"))
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.numberPad)
             }
             
             HStack (alignment: .center) {
-                Text("人件費：") .font(.callout)
+                Text("売上見込み：")
+                    .font(.callout)
                     .bold()
-                TextField("金額を入力", value: $laborCost, format: .currency(code: "JPY"))
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .keyboardType(.numberPad)
-            }
-            
-            HStack (alignment: .center) {
-                Text("売上見込み：") .font(.callout)
-                    .bold()
-                TextField("金額を入力", value: $amount, format: .currency(code: "JPY"))
+                TextField("金額を入力", value: $expense.estimatedSales, format: .currency(code: "JPY"))
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.numberPad)
             }

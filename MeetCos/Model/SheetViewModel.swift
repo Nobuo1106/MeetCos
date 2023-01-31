@@ -7,6 +7,17 @@
 
 import Foundation
 
+struct Expense: Identifiable {
+    var id = UUID()
+    var personNum: Int?
+    var laborCosts: Int?
+    var estimatedSales: Int?
+}
+
+class Expenses: ObservableObject {
+    @Published var expenses:[Expense] = [Expense(personNum: 0, laborCosts: 0, estimatedSales: 0)]
+}
+
 enum CountWay : String{
     case personNum
     case yen
@@ -28,6 +39,10 @@ class SheetViewModel {
         formatter.groupingSeparator = ","
         formatter.groupingSize = 3
         return formatter.string(from: NSNumber(value: num)) ?? "0" + whichCount(unit: unit)
+    }
+    
+    func calculateTotal() {
+        
     }
 }
 

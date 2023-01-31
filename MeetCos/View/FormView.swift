@@ -7,16 +7,6 @@
 
 import SwiftUI
 
-struct Expense: Identifiable {
-    var id = UUID()
-    var laborCosts: Int?
-    var estimatedSales: Int?
-}
-
-class Expenses: ObservableObject {
-    @Published var expenses:[Expense] = [Expense(laborCosts: 0, estimatedSales: 0)]
-}
-
 struct FormView: View {
     @FocusState var focus: Bool
     @ObservedObject var section = Expenses()
@@ -42,7 +32,7 @@ struct FormView: View {
                 
                 HStack {
                     Button {
-                        section.expenses.append(Expense(laborCosts: 0, estimatedSales: 0))
+                        section.expenses.append(Expense(personNum: 0, laborCosts: 0, estimatedSales: 0))
                     } label: {
                         Text("+")
                             .bold()
@@ -57,7 +47,8 @@ struct FormView: View {
                             .bold()
                     }
                     .buttonStyle(.plain)
-                    .foregroundColor(.red)
+                    .foregroundColor(section.expenses.count <= 1 ? .gray : .red)
+                    .disabled(section.expenses.count <= 1)
                 }
                 
                 Section {
@@ -68,14 +59,6 @@ struct FormView: View {
         }.gesture(self.gesture)
     }
 }
-
-
-//extension UIApplication {
-//    func closeKeyboard() {
-//        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-//    }
-//}
-
 
 struct FormView_Previews: PreviewProvider {
     static var previews: some View {
