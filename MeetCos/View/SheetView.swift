@@ -10,13 +10,22 @@ import SwiftUI
 struct SheetView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject private var viewModel = SheetViewModel()
+    @FocusState private var focus: Bool
     
     var body: some View {
         NavigationView {
             VStack {
                 FormView()
-                Button("完了") {
-                    viewModel.save()
+            }
+            .toolbar {
+                ToolbarItem(placement: .keyboard) {
+                    HStack {
+                        Button("閉じる") {
+                            focus = false
+                        }
+
+                    }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
                 }
             }
             .navigationBarItems(leading: Button("キャンセル") {

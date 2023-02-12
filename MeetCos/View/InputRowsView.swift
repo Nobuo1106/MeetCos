@@ -41,7 +41,7 @@ struct InputRowsView: View {
                     }
                     .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidShowNotification)) { _ in
                         if self.activeTextField == "laborCost" {
-                            self.laborCost = ""
+                            self.laborCost = viewModel.returnEmptyStringIfZero(laborCost)
                         }
                     }
             }
@@ -58,7 +58,7 @@ struct InputRowsView: View {
                     }
                     .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidShowNotification)) { _ in
                         if self.activeTextField == "estimatedSalary" {
-                            self.estimatedSalary = ""
+                            self.estimatedSalary = viewModel.returnEmptyStringIfZero(estimatedSalary)
                         }
                     }
             }

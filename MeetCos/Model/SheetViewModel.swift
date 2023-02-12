@@ -51,6 +51,13 @@ class SheetViewModel: ObservableObject {
         // coredata.session.save()
         // coredata.group.save()
     }
+    
+    func returnEmptyStringIfZero(_ input: String) -> String {
+        if input == "0" {
+            return ""
+        }
+        return input
+    }
 }
 
 extension String {
