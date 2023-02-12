@@ -9,19 +9,24 @@ import SwiftUI
 
 struct SheetView: View {
     @Environment(\.presentationMode) var presentationMode
+    @ObservedObject private var viewModel = SheetViewModel()
     
     var body: some View {
-      NavigationView {
-          VStack {
-            FormView()
-          }
-        .navigationBarItems(leading: Button("キャンセル") {
-            self.presentationMode.wrappedValue.dismiss()
-        })
-        .navigationBarItems(trailing: Button("完了") {
-            self.presentationMode.wrappedValue.dismiss()
-        })
-      }
+        NavigationView {
+            VStack {
+                FormView()
+                Button("完了") {
+                    viewModel.save()
+                }
+            }
+            .navigationBarItems(leading: Button("キャンセル") {
+                self.presentationMode.wrappedValue.dismiss()
+            })
+            .navigationBarItems(trailing: Button("完了") {
+                self.presentationMode.wrappedValue.dismiss()
+                viewModel.save()
+            })
+        }
     }
 }
 

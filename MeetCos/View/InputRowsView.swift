@@ -9,9 +9,10 @@ import SwiftUI
 
 struct InputRowsView: View {
     @State private var personCount: String = "0"
-    @State private var laborCost: Int?
-    @State private var amount: Int?
-    @State var expense: Expense
+    @State private var laborCost: String = "0"
+    @State private var estimatedSalary: String = "0"
+    @State private var activeTextField: String?
+    @ObservedObject var viewModel = SheetViewModel()
     
     var body: some View {
         Section {
@@ -32,26 +33,44 @@ struct InputRowsView: View {
                 Text("人件費：")
                     .font(.callout)
                     .bold()
-                TextField("金額を入力", value: $expense.laborCosts, format: .currency(code: "JPY"))
+                TextField("金額を入力",text: $laborCost)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.numberPad)
+                    .onTapGesture {
+                        self.activeTextField = "laborCost"
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidShowNotification)) { _ in
+                        if self.activeTextField == "laborCost" {
+                            self.laborCost = ""
+                        }
+                    }
             }
             
             HStack (alignment: .center) {
                 Text("売上見込み：")
                     .font(.callout)
                     .bold()
-                TextField("金額を入力", value: $expense.estimatedSales, format: .currency(code: "JPY"))
+                TextField("金額を入力", text: $estimatedSalary)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.numberPad)
+                    .onTapGesture {
+                        self.activeTextField = "estimatedSalary"
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidShowNotification)) { _ in
+                        if self.activeTextField == "estimatedSalary" {
+                            self.estimatedSalary = ""
+                        }
+                    }
             }
+        }.onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
+            viewModel.calculateSession()
         }
     }
 }
-
 struct InputRowsView_Previews: PreviewProvider {
     
     static var previews: some View {
-        InputRowsView(expense: Expense(id: UUID()))
+        InputRowsView()
     }
 }
+

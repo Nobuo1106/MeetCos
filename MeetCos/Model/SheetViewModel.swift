@@ -23,7 +23,7 @@ enum CountWay : String{
     case yen
 }
 
-class SheetViewModel {
+class SheetViewModel: ObservableObject {
     private func whichCount(unit: CountWay) -> String {
         switch unit {
         case .personNum:
@@ -41,8 +41,15 @@ class SheetViewModel {
         return formatter.string(from: NSNumber(value: num)) ?? "0" + whichCount(unit: unit)
     }
     
-    func calculateTotal() {
+    func calculateSession() {
         
+    }
+    
+    func save() {
+        let session = calculateSession()
+        // CoreData save
+        // coredata.session.save()
+        // coredata.group.save()
     }
 }
 

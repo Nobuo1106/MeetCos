@@ -12,6 +12,7 @@ struct FormView: View {
     @ObservedObject var section = Expenses()
     @State private var totalCost = 0
     @State private var numOfInputRows: Int = 3
+//    @ObservedObject private var viewModel = SheetViewModel()
     
     var gesture: some Gesture {
         DragGesture()
@@ -26,10 +27,10 @@ struct FormView: View {
         VStack {
             Form {
                 ForEach(section.expenses) { item in
-                    InputRowsView(expense: item)
+                    InputRowsView()
                         .focused(self.$focus)
                 }
-                
+//
                 HStack {
                     Button {
                         section.expenses.append(Expense(personNum: 0, laborCosts: 0, estimatedSales: 0))
