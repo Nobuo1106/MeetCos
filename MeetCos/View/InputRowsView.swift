@@ -13,6 +13,7 @@ struct InputRowsView: View {
     @State private var estimatedSalary: String = "0"
     @State private var activeTextField: String?
     @ObservedObject var viewModel = SheetViewModel()
+    @EnvironmentObject var timeManager: TimeManager
     
     var body: some View {
         Section {

@@ -26,6 +26,9 @@ struct FormView: View {
     var body: some View {
         VStack {
             Form {
+                Section {
+                    TimePickerView()
+                }
                 ForEach(section.expenses) { item in
                     InputRowsView()
                         .focused(self.$focus)
