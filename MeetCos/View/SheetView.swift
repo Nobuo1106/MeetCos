@@ -10,7 +10,6 @@ import SwiftUI
 struct SheetView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var viewModel = SheetViewModel()
-    @FocusState private var focus: Bool
     
     var body: some View {
         NavigationView {
@@ -22,8 +21,9 @@ struct SheetView: View {
                 ToolbarItem(placement: .keyboard) {
                     HStack {
                         Button("閉じる") {
-                            focus = false
+                            viewModel.focus = false
                         }
+                        .keyboardShortcut(.defaultAction)
 
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)

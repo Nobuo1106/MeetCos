@@ -72,6 +72,10 @@ class SheetViewModel: ObservableObject {
     //設定画面の表示/非表示
     @Published var isSetting: Bool = false
     //1秒ごとに発動するTimerクラスのpublishメソッド
+    
+    @Published var focus: Bool = false // フォーカス
+    
+    @Published var totalCost: Int = 0
     var timer = Timer.publish(every: 0.05, on: .main, in: .common).autoconnect()
     
     //Pickerで取得した値からカウントダウン残り時間とカウントダウン開始前の最大時間を計算しその値によって時間表示形式も指定する
@@ -149,10 +153,11 @@ class SheetViewModel: ObservableObject {
     }
     
     func calculateSession() {
-        
+        let totalMinutes = self.ToTotalMinutes()
     }
     
     func save() {
+
         let session = calculateSession()
         // CoreData save
         // coredata.session.save()
@@ -164,6 +169,10 @@ class SheetViewModel: ObservableObject {
             return ""
         }
         return input
+    }
+    
+    private func ToTotalMinutes() -> Int {
+        return self.hourSelection * 60 + self.minSelection
     }
 }
 

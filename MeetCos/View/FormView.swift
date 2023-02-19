@@ -13,13 +13,12 @@ struct FormView: View {
     @State private var totalCost = 0
     @State private var numOfInputRows: Int = 3
     @EnvironmentObject var viewModel: SheetViewModel
-//    @ObservedObject private var viewModel = SheetViewModel()
     
     var gesture: some Gesture {
         DragGesture()
             .onChanged{ value in
                 if value.translation.height != 0 {
-                    self.focus = false
+                    viewModel.focus = false
                 }
             }
     }
@@ -30,10 +29,12 @@ struct FormView: View {
                 Section (header: Text("開始時間")){
                     TimePickerView()
                 }
+
                 ForEach(section.expenses) { item in
                     InputRowsView()
                         .focused(self.$focus)
                 }
+//
                 HStack {
                     Button {
                         section.expenses.append(Expense(personNum: 0, laborCosts: 0, estimatedSales: 0))
