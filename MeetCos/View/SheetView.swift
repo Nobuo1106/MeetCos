@@ -9,13 +9,14 @@ import SwiftUI
 
 struct SheetView: View {
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject private var viewModel = SheetViewModel()
+    @StateObject private var viewModel = SheetViewModel()
     @FocusState private var focus: Bool
     
     var body: some View {
         NavigationView {
             VStack {
                 FormView()
+                    .environmentObject(viewModel)
             }
             .toolbar {
                 ToolbarItem(placement: .keyboard) {
@@ -34,6 +35,8 @@ struct SheetView: View {
             .navigationBarItems(trailing: Button("完了") {
                 self.presentationMode.wrappedValue.dismiss()
                 viewModel.save()
+                print("時間\(viewModel.hourSelection)")
+                print("分\(viewModel.minSelection)")
             })
         }
     }
@@ -42,5 +45,6 @@ struct SheetView: View {
 struct SheetView_Previews: PreviewProvider {
     static var previews: some View {
         SheetView()
+            .environmentObject(SheetViewModel())
     }
 }

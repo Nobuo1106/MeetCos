@@ -12,11 +12,11 @@ struct InputRowsView: View {
     @State private var laborCost: String = "0"
     @State private var estimatedSalary: String = "0"
     @State private var activeTextField: String?
-    @ObservedObject var viewModel = SheetViewModel()
-    @EnvironmentObject var timeManager: TimeManager
+    @EnvironmentObject var viewModel: SheetViewModel
+
     
     var body: some View {
-        Section {
+        Section (header: Text("グループ")){
             HStack(alignment: .center) {
                 Picker(selection: $personCount) {
                     ForEach(0 ..< 100) { value in

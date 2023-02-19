@@ -12,6 +12,7 @@ struct FormView: View {
     @ObservedObject var section = Expenses()
     @State private var totalCost = 0
     @State private var numOfInputRows: Int = 3
+    @EnvironmentObject var viewModel: SheetViewModel
 //    @ObservedObject private var viewModel = SheetViewModel()
     
     var gesture: some Gesture {
@@ -26,14 +27,13 @@ struct FormView: View {
     var body: some View {
         VStack {
             Form {
-                Section {
+                Section (header: Text("開始時間")){
                     TimePickerView()
                 }
                 ForEach(section.expenses) { item in
                     InputRowsView()
                         .focused(self.$focus)
                 }
-//
                 HStack {
                     Button {
                         section.expenses.append(Expense(personNum: 0, laborCosts: 0, estimatedSales: 0))
