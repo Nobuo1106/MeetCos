@@ -58,9 +58,9 @@ struct FormView: View {
                         Text("-")
                             .bold()
                     }
-//                    .buttonStyle(.plain)
-//                    .foregroundColor(viewModel.expenses.count <= 1 ? .gray : .red)
-//                    .disabled(viewModel.expenses.count <= 1)
+                    .buttonStyle(.plain)
+                    .foregroundColor(viewModel.expenses.count <= 1 ? .gray : .red)
+                    .disabled(viewModel.expenses.count <= 1)
                 }
 
                 Section {
