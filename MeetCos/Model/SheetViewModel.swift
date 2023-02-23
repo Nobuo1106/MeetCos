@@ -9,19 +9,16 @@ import Foundation
 import SwiftUI
 import AudioToolbox
 
-struct Expense: Identifiable {
-    var id = UUID()
-    var personNum: Int?
-    var laborCosts: Int?
-    var estimatedSales: Int?
-}
 
-class Expenses: ObservableObject {
-    @Published var expenses:[Expense] = [Expense(personNum: 0, laborCosts: 0, estimatedSales: 0)]
-}
+//class Expenses: ObservableObject {
+//    @Published var expenses:[Expense]
+//    init(expenses: [Expense]) {
+//        self.expenses = expenses
+//    }
+//}
 
 enum CountWay : String{
-    case personNum
+    case personCount
     case yen
 }
 
@@ -74,8 +71,9 @@ class SheetViewModel: ObservableObject {
     //1秒ごとに発動するTimerクラスのpublishメソッド
     
     @Published var focus: Bool = false // フォーカス
-    
+    @Published var expenses = [Expense(personCount: "0", laborCosts: "0", estimatedSales: "0")]
     @Published var totalCost: Int = 0
+    
     var timer = Timer.publish(every: 0.05, on: .main, in: .common).autoconnect()
     
     //Pickerで取得した値からカウントダウン残り時間とカウントダウン開始前の最大時間を計算しその値によって時間表示形式も指定する
@@ -137,14 +135,14 @@ class SheetViewModel: ObservableObject {
     }
     private func whichCount(unit: CountWay) -> String {
         switch unit {
-        case .personNum:
+        case .personCount:
             return "人"
         case .yen:
             return "円"
         }
     }
     
-    func ConvertFromIntToPersonNum(num: Int, unit: CountWay) -> String {
+    func ConvertFromIntTopersonCount(num: Int, unit: CountWay) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.groupingSeparator = ","
@@ -173,6 +171,45 @@ class SheetViewModel: ObservableObject {
     
     private func ToTotalMinutes() -> Int {
         return self.hourSelection * 60 + self.minSelection
+    }
+    
+    func laborCosts(for expense: Expense) -> Binding<String> {
+        Binding(
+            get: {
+                expense.laborCosts ?? "0"
+            },
+            set: { [self] newValue in
+                if let index = self.expenses.firstIndex(where: { $0.id == expense.id }) {
+                    expenses[index].laborCosts = newValue
+                }
+            }
+        )
+    }
+    
+    func personCount(for expense: Expense) -> Binding<String> {
+        Binding(
+            get: {
+                expense.personCount ?? "0"
+            },
+            set: { [self] newValue in
+                if let index = self.expenses.firstIndex(where: { $0.id == expense.id }) {
+                    expenses[index].personCount = newValue
+                }
+            }
+        )
+    }
+    
+    func estimatedSales(for expense: Expense) -> Binding<String> {
+        Binding(
+            get: {
+                expense.estimatedSales ?? "0"
+            },
+            set: { [self] newValue in
+                if let index = self.expenses.firstIndex(where: { $0.id == expense.id }) {
+                    expenses[index].estimatedSales = newValue
+                }
+            }
+        )
     }
 }
 

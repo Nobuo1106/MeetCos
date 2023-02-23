@@ -9,8 +9,7 @@ import SwiftUI
 
 struct FormView: View {
     @FocusState var focus: Bool
-    @ObservedObject var section = Expenses()
-    @State private var totalCost = 0
+    //    @ObservedObject var section = Expenses()
     @State private var numOfInputRows: Int = 3
     @EnvironmentObject var viewModel: SheetViewModel
     
@@ -30,14 +29,22 @@ struct FormView: View {
                     TimePickerView()
                 }
 
-                ForEach(section.expenses) { item in
-                    InputRowsView()
-                        .focused(self.$focus)
+                ForEach(viewModel.expenses.indices, id: \.self) { index in
+//                    InputRowsView(
+//                                  personCount: $viewModel.expenses[index].personCount ?? "0",
+//                                  laborCosts: $viewModel.expenses[index].laborCosts ?? "0",
+//                                  estimatedSalary: $viewModel.expenses[index].estimatedSales ?? "0"
+//                    )
+                    InputRowsView(
+//                                  personCount: $viewModel.expenses[index].personCount ?? "0",
+//                                  laborCosts: $viewModel.expenses[index].laborCosts ?? "0",
+//                                  estimatedSalary: $viewModel.expenses[index].estimatedSales ?? "0"
+                    )
+                    .focused(self.$focus)
                 }
-//
                 HStack {
                     Button {
-                        section.expenses.append(Expense(personNum: 0, laborCosts: 0, estimatedSales: 0))
+                        viewModel.expenses.append(Expense(personCount: "0", laborCosts: "0", estimatedSales: "0"))
                     } label: {
                         Text("+")
                             .bold()
@@ -46,18 +53,18 @@ struct FormView: View {
                     .foregroundColor(.blue)
                     Spacer()
                     Button {
-                        section.expenses.removeLast()
+                        viewModel.expenses.removeLast()
                     } label: {
                         Text("-")
                             .bold()
                     }
-                    .buttonStyle(.plain)
-                    .foregroundColor(section.expenses.count <= 1 ? .gray : .red)
-                    .disabled(section.expenses.count <= 1)
+//                    .buttonStyle(.plain)
+//                    .foregroundColor(viewModel.expenses.count <= 1 ? .gray : .red)
+//                    .disabled(viewModel.expenses.count <= 1)
                 }
-                
+
                 Section {
-                    Text("総経費 ¥: \(totalCost) ").bold()
+                    Text("総経費 ¥: \(viewModel.totalCost) ").bold()
                 }
             }
             Spacer()
