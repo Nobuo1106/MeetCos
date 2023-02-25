@@ -28,13 +28,14 @@ struct FormView: View {
                     TimePickerView()
                 }
 
-                ForEach(viewModel.expenses.indices, id: \.self) { index in
-                    InputRowsView(
-                                  personCount: viewModel.expenses[index].personCount ?? "0",
-                                  laborCosts: viewModel.expenses[index].laborCosts ?? "0",
-                                  estimatedSalary: viewModel.expenses[index].estimatedSales ?? "0"
-                    )
-//                    InputRowsView()
+                ForEach($viewModel.expenses) { $expense in
+//                    InputRowsView(expense: viewModel.expenses[index],
+//                                  personCount: viewModel.expenses[index].personCount ?? "0",
+//                                  laborCosts: viewModel.expenses[index].laborCosts ?? "0",
+//                                  estimatedSalary: viewModel.expenses[index].estimatedSales ?? "0"
+//                    )
+//                    print($expense)
+                    InputRowsView(expense: $expense)
                     .focused(self.$focus)
                 }
                 HStack {

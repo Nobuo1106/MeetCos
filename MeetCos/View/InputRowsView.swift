@@ -8,22 +8,14 @@
 import SwiftUI
 
 struct InputRowsView: View {
-//    @Binding var personCount: String
-//    @Binding var laborCosts: String
-//    @Binding var estimatedSalary: String
-    
-    @State var personCount: String = "0"
-    @State var laborCosts: String = "0"
-    @State var estimatedSalary: String = "0"
+    @Binding var expense: Expense
     @State var activeTextField: String?
-//    let expense:Expense
     @EnvironmentObject var viewModel: SheetViewModel
 
-    
     var body: some View {
         Section (header: Text("グループ")){
             HStack(alignment: .center) {
-                Picker(selection: $personCount) {
+                Picker(selection: Binding($expense.personCount)!) {
                     ForEach(0 ..< 100) { value in
                         Text("\(value)人")
                             .tag("\(value)人")
@@ -39,15 +31,15 @@ struct InputRowsView: View {
                 Text("人件費：")
                     .font(.callout)
                     .bold()
-                TextField("金額を入力",text: $laborCosts)
+                TextField("金額を入力",text: Binding($expense.laborCosts)!)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.numberPad)
                     .onTapGesture {
                         self.activeTextField = "laborCosts"
                     }
-                    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidShowNotification)) { _ in
+                    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
                         if self.activeTextField == "laborCosts" {
-                            self.laborCosts = viewModel.returnEmptyStringIfZero(laborCosts)
+                            expense.laborCosts = viewModel.returnEmptyStringIfZero(expense.laborCosts ?? "0")
                         }
                     }
             }
@@ -56,15 +48,15 @@ struct InputRowsView: View {
                 Text("売上見込み：")
                     .font(.callout)
                     .bold()
-                TextField("金額を入力", text: $estimatedSalary)
+                TextField("金額を入力", text: Binding($expense.estimatedSales)!)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.numberPad)
                     .onTapGesture {
-                        self.activeTextField = "estimatedSalary"
+                        self.activeTextField = "estimatedSales"
                     }
-                    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidShowNotification)) { _ in
-                        if self.activeTextField == "estimatedSalary" {
-                            self.estimatedSalary = viewModel.returnEmptyStringIfZero(estimatedSalary)
+                    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
+                        if self.activeTextField == "estimatedSales" {
+                            expense.estimatedSales = viewModel.returnEmptyStringIfZero(expense.estimatedSales ?? "0")
                         }
                     }
             }
@@ -81,8 +73,7 @@ struct InputRowsView_Previews: PreviewProvider {
     @State static var expense = Expense(id: UUID(), personCount: pc, laborCosts: lb, estimatedSales: es)
     
     static var previews: some View {
-//        InputRowsView(personCount: .constant("1"), laborCosts: .constant("2"), estimatedSalary: .constant("プレビュー用デフォルトテキスト"))
-        InputRowsView()
+        InputRowsView(expense: $expense)
     }
 }
 
