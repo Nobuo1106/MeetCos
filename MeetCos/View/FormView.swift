@@ -9,7 +9,6 @@ import SwiftUI
 
 struct FormView: View {
     @FocusState var focus: Bool
-    //    @ObservedObject var section = Expenses()
     @State private var numOfInputRows: Int = 3
     @EnvironmentObject var viewModel: SheetViewModel
     
@@ -30,16 +29,12 @@ struct FormView: View {
                 }
 
                 ForEach(viewModel.expenses.indices, id: \.self) { index in
-//                    InputRowsView(
-//                                  personCount: $viewModel.expenses[index].personCount ?? "0",
-//                                  laborCosts: $viewModel.expenses[index].laborCosts ?? "0",
-//                                  estimatedSalary: $viewModel.expenses[index].estimatedSales ?? "0"
-//                    )
                     InputRowsView(
-//                                  personCount: $viewModel.expenses[index].personCount ?? "0",
-//                                  laborCosts: $viewModel.expenses[index].laborCosts ?? "0",
-//                                  estimatedSalary: $viewModel.expenses[index].estimatedSales ?? "0"
+                                  personCount: viewModel.expenses[index].personCount ?? "0",
+                                  laborCosts: viewModel.expenses[index].laborCosts ?? "0",
+                                  estimatedSalary: viewModel.expenses[index].estimatedSales ?? "0"
                     )
+//                    InputRowsView()
                     .focused(self.$focus)
                 }
                 HStack {

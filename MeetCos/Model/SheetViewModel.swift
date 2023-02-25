@@ -157,6 +157,7 @@ class SheetViewModel: ObservableObject {
     func save() {
 
         let session = calculateSession()
+        let expenses = self.expenses
         // CoreData save
         // coredata.session.save()
         // coredata.group.save()
