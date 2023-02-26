@@ -28,7 +28,7 @@ struct InputRowsView: View {
             }
             
             HStack (alignment: .center) {
-                Text("人件費：")
+                Text("時給：")
                     .font(.callout)
                     .bold()
                 TextField("金額を入力",text: Binding($expense.laborCosts)!)
@@ -56,7 +56,7 @@ struct InputRowsView: View {
             }
             
             HStack (alignment: .center) {
-                Text("売上見込み：")
+                Text("見込み利益：")
                     .font(.callout)
                     .bold()
                 TextField("金額を入力", text: Binding($expense.estimatedSales)!)
