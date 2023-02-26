@@ -74,26 +74,6 @@ class SheetViewModel: ObservableObject {
     @Published var expenses = [Expense(personCount: "0", laborCosts: "0", estimatedSales: "0")]
     @Published var totalCost: Int = 0
     
-    var timer = Timer.publish(every: 0.05, on: .main, in: .common).autoconnect()
-    
-    //Pickerで取得した値からカウントダウン残り時間とカウントダウン開始前の最大時間を計算しその値によって時間表示形式も指定する
-    func setTimer() {
-        //残り時間をPickerから取得した時間・分・秒の値をすべて秒換算して合計して求める
-        duration = Double(hourSelection * 3600 + minSelection * 60 + secSelection)
-        //Pickerで時間を設定した時点=カウントダウン開始前のため、残り時間=最大時間とする
-        maxValue = duration
-        
-        //時間表示形式を残り時間（最大時間）から指定する
-        //60秒未満なら00形式、60秒以上3600秒未満なら00:00形式、3600秒以上なら00:00:00形式
-        if duration < 60 {
-            displayedTimeFormat = .sec
-        } else if duration < 3600 {
-            displayedTimeFormat = .min
-        } else {
-            displayedTimeFormat = .hr
-        }
-    }
-    
     //カウントダウン中の残り時間を表示するためのメソッド
     func displayTimer() -> String {
         //残り時間（時間単位）= 残り合計時間（秒）/3600秒
@@ -150,8 +130,22 @@ class SheetViewModel: ObservableObject {
         return formatter.string(from: NSNumber(value: num)) ?? "0" + whichCount(unit: unit)
     }
     
-    func calculateSession() {
-        let totalMinutes = self.ToTotalMinutes()
+    func calculateSession() -> Int {
+        let totalMinutes: Decimal = Decimal(ToTotalMinutes())
+        let totalDecimal: Decimal = expenses.reduce(Decimal.zero) { (result, expense) in
+            let personCount = Decimal(string: expense.personCount ?? "0") ?? 0
+            let laborCosts = Decimal(string: expense.laborCosts ?? "0") ?? 0
+            let estimatedSales = Decimal(string: expense.estimatedSales ?? "0") ?? 0
+            let subtotal = result + (personCount * laborCosts + estimatedSales) * Decimal(Int(truncating: totalMinutes as NSNumber) / 60)
+            return result + (subtotal.isNaN ? Decimal.zero : subtotal)
+        }
+        let handler = NSDecimalNumberHandler(roundingMode: .bankers, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+        let totalInt: Int = NSDecimalNumber(decimal: totalDecimal).rounding(accordingToBehavior: handler).intValue
+        return totalInt
+    }
+    
+    func changeTotal() {
+        totalCost = calculateSession()
     }
     
     func save() {

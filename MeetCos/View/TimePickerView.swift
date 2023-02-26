@@ -38,6 +38,7 @@ struct TimePickerView: View {
                 }
                 .onChange(of: viewModel.hourSelection) { newValue in
                    print("changed to \(viewModel.hourSelection)")
+                    viewModel.changeTotal()
                }
                 //上下に回転するホイールスタイルを指定
                 .pickerStyle(WheelPickerStyle())

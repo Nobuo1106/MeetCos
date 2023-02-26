@@ -11,7 +11,7 @@ struct InputRowsView: View {
     @Binding var expense: Expense
     @State var activeTextField: String?
     @EnvironmentObject var viewModel: SheetViewModel
-
+    
     var body: some View {
         Section (header: Text("グループ")){
             HStack(alignment: .center) {
@@ -37,9 +37,20 @@ struct InputRowsView: View {
                     .onTapGesture {
                         self.activeTextField = "laborCosts"
                     }
-                    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
+                    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidShowNotification)) { _ in
                         if self.activeTextField == "laborCosts" {
                             expense.laborCosts = viewModel.returnEmptyStringIfZero(expense.laborCosts ?? "0")
+                        }
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
+                        if self.activeTextField == "laborCosts" {
+                            guard let text = expense.laborCosts else { return }
+                            let filtered = text.filter { "0123456789".contains($0) }
+                            if filtered != text {
+                                expense.laborCosts = filtered
+                                expense.laborCosts = viewModel.returnEmptyStringIfZero(expense.laborCosts ?? "0")
+                            }
+                            viewModel.changeTotal()
                         }
                     }
             }
@@ -54,14 +65,25 @@ struct InputRowsView: View {
                     .onTapGesture {
                         self.activeTextField = "estimatedSales"
                     }
-                    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
+                    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidShowNotification)) { _ in
                         if self.activeTextField == "estimatedSales" {
                             expense.estimatedSales = viewModel.returnEmptyStringIfZero(expense.estimatedSales ?? "0")
                         }
                     }
+                    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
+                        if self.activeTextField == "estimatedSales" {
+                            guard let text = expense.estimatedSales else { return }
+                            let filtered = text.filter { "0123456789".contains($0) }
+                            if filtered != text {
+                                expense.estimatedSales = filtered
+                                expense.estimatedSales = viewModel.returnEmptyStringIfZero(expense.estimatedSales ?? "0")
+                            }
+                            viewModel.changeTotal()
+                        }
+                    }
             }
         }.onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
-            viewModel.calculateSession()
+            viewModel.changeTotal()
         }
     }
 }
