@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Expense" representedClassName="Expense" syncable="YES">
+        <attribute name="hourlyProfit" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="hourlyWage" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="personCount" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sessionId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="expenses" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Expenses" inverseName="expense" inverseEntity="Expenses"/>
+    </entity>
+    <entity name="Expenses" representedClassName="Expenses" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="startedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="willFinishAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="expense" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Expense" inverseName="expenses" inverseEntity="Expense"/>
+        <relationship name="total" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Total" inverseName="session" inverseEntity="Total"/>
+    </entity>
+    <entity name="Total" representedClassName="Total" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="expense" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sessionId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="session" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Expenses" inverseName="total" inverseEntity="Expenses"/>
+    </entity>
+</model>

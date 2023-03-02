@@ -2,7 +2,7 @@
 //  Group+CoreDataProperties.swift
 //  MeetCos
 //
-//  Created by apple on 2023/02/03.
+//  Created by apple on 2023/03/03.
 //
 //
 
@@ -16,11 +16,9 @@ extension Group {
         return NSFetchRequest<Group>(entityName: "Group")
     }
 
-    @NSManaged public var sessionId: Int64
-    @NSManaged public var attendanceNum: Int64
+    @NSManaged public var personCount: Int64
     @NSManaged public var hourlyWage: Int64
     @NSManaged public var hourlyProfit: Int64
-    @NSManaged public var session: Session?
 
 }
 

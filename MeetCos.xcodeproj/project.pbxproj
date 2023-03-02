@@ -16,6 +16,11 @@
 		182AA19C29718B5400128DE5 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AA19B29718B5400128DE5 /* FormView.swift */; };
 		182AA19E2972942300128DE5 /* InputRowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AA19D2972942300128DE5 /* InputRowsView.swift */; };
 		182AA1A02976CFBA00128DE5 /* SheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AA19F2976CFBA00128DE5 /* SheetViewModel.swift */; };
+		1863141829B15AD4003123AB /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1863141729B15AD4003123AB /* Expense.swift */; };
+		1863141A29B15AE8003123AB /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1863141929B15AE8003123AB /* TimePickerView.swift */; };
+		18D0679329B15C1200B594C7 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18D0679129B15C1200B594C7 /* CoreData.xcdatamodeld */; };
+		18D0679629B15C9300B594C7 /* Group+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0679429B15C9200B594C7 /* Group+CoreDataClass.swift */; };
+		18D0679D29B15DB700B594C7 /* Group+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0679C29B15DB700B594C7 /* Group+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +35,11 @@
 		182AA19D2972942300128DE5 /* InputRowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputRowsView.swift; sourceTree = "<group>"; };
 		182AA19F2976CFBA00128DE5 /* SheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetViewModel.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		182AA1A12981223800128DE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1863141729B15AD4003123AB /* Expense.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
+		1863141929B15AE8003123AB /* TimePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
+		18D0679229B15C1200B594C7 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
+		18D0679429B15C9200B594C7 /* Group+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Group+CoreDataClass.swift"; sourceTree = "<group>"; };
+		18D0679C29B15DB700B594C7 /* Group+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Group+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +56,7 @@
 		1806350229569A540013369D = {
 			isa = PBXGroup;
 			children = (
+				18D0679129B15C1200B594C7 /* CoreData.xcdatamodeld */,
 				1806350D29569A540013369D /* MeetCos */,
 				1806350C29569A540013369D /* Products */,
 			);
@@ -83,6 +94,9 @@
 		1806351C295A57730013369D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				18D0679C29B15DB700B594C7 /* Group+CoreDataProperties.swift */,
+				18D0679429B15C9200B594C7 /* Group+CoreDataClass.swift */,
+				1863141729B15AD4003123AB /* Expense.swift */,
 				182AA197296A857B00128DE5 /* HomeViewModel.swift */,
 				182AA19F2976CFBA00128DE5 /* SheetViewModel.swift */,
 			);
@@ -94,6 +108,7 @@
 			children = (
 				1806351029569A540013369D /* HomeView.swift */,
 				182AA199297178AA00128DE5 /* SheetView.swift */,
+				1863141929B15AE8003123AB /* TimePickerView.swift */,
 				182AA19B29718B5400128DE5 /* FormView.swift */,
 				182AA19D2972942300128DE5 /* InputRowsView.swift */,
 			);
@@ -170,8 +185,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1863141829B15AD4003123AB /* Expense.swift in Sources */,
+				18D0679D29B15DB700B594C7 /* Group+CoreDataProperties.swift in Sources */,
+				1863141A29B15AE8003123AB /* TimePickerView.swift in Sources */,
+				18D0679329B15C1200B594C7 /* CoreData.xcdatamodeld in Sources */,
 				1806351129569A540013369D /* HomeView.swift in Sources */,
 				182AA198296A857B00128DE5 /* HomeViewModel.swift in Sources */,
+				18D0679629B15C9300B594C7 /* Group+CoreDataClass.swift in Sources */,
 				182AA19C29718B5400128DE5 /* FormView.swift in Sources */,
 				182AA19A297178AA00128DE5 /* SheetView.swift in Sources */,
 				182AA19E2972942300128DE5 /* InputRowsView.swift in Sources */,
@@ -377,6 +397,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		18D0679129B15C1200B594C7 /* CoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				18D0679229B15C1200B594C7 /* CoreData.xcdatamodel */,
+			);
+			currentVersion = 18D0679229B15C1200B594C7 /* CoreData.xcdatamodel */;
+			path = CoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1806350329569A540013369D /* Project object */;
 }
