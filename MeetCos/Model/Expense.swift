@@ -10,7 +10,7 @@ import Foundation
 struct Expense: Identifiable {
     var id = UUID()
     var personCount: String?
-    var laborCosts: String?
-    var estimatedSales: String?
+    var hourlyWage: String?
+    var hourlyProfit: String?
 }
 

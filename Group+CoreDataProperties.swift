@@ -18,8 +18,8 @@ extension Group {
 
     @NSManaged public var sessionId: Int64
     @NSManaged public var attendanceNum: Int64
-    @NSManaged public var laborCostPerHour: Int64
-    @NSManaged public var estimatedSalesPerHour: Int64
+    @NSManaged public var hourlyWage: Int64
+    @NSManaged public var hourlyProfit: Int64
     @NSManaged public var session: Session?
 
 }

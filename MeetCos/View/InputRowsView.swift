@@ -31,24 +31,24 @@ struct InputRowsView: View {
                 Text("時給：")
                     .font(.callout)
                     .bold()
-                TextField("金額を入力",text: Binding($expense.laborCosts)!)
+                TextField("金額を入力",text: Binding($expense.hourlyWage)!)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.numberPad)
                     .onTapGesture {
-                        self.activeTextField = "laborCosts"
+                        self.activeTextField = "hourlyWage"
                     }
                     .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidShowNotification)) { _ in
-                        if self.activeTextField == "laborCosts" {
-                            expense.laborCosts = viewModel.returnEmptyStringIfZero(expense.laborCosts ?? "0")
+                        if self.activeTextField == "hourlyWage" {
+                            expense.hourlyWage = viewModel.returnEmptyStringIfZero(expense.hourlyWage ?? "0")
                         }
                     }
                     .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
-                        if self.activeTextField == "laborCosts" {
-                            guard let text = expense.laborCosts else { return }
+                        if self.activeTextField == "hourlyWage" {
+                            guard let text = expense.hourlyWage else { return }
                             let filtered = text.filter { "0123456789".contains($0) }
                             if filtered != text {
-                                expense.laborCosts = filtered
-                                expense.laborCosts = viewModel.returnEmptyStringIfZero(expense.laborCosts ?? "0")
+                                expense.hourlyWage = filtered
+                                expense.hourlyWage = viewModel.returnEmptyStringIfZero(expense.hourlyWage ?? "0")
                             }
                             viewModel.changeTotal()
                         }
@@ -59,24 +59,24 @@ struct InputRowsView: View {
                 Text("見込み利益：")
                     .font(.callout)
                     .bold()
-                TextField("金額を入力", text: Binding($expense.estimatedSales)!)
+                TextField("金額を入力", text: Binding($expense.hourlyProfit)!)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.numberPad)
                     .onTapGesture {
-                        self.activeTextField = "estimatedSales"
+                        self.activeTextField = "hourlyProfit"
                     }
                     .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidShowNotification)) { _ in
-                        if self.activeTextField == "estimatedSales" {
-                            expense.estimatedSales = viewModel.returnEmptyStringIfZero(expense.estimatedSales ?? "0")
+                        if self.activeTextField == "hourlyProfit" {
+                            expense.hourlyProfit = viewModel.returnEmptyStringIfZero(expense.hourlyProfit ?? "0")
                         }
                     }
                     .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
-                        if self.activeTextField == "estimatedSales" {
-                            guard let text = expense.estimatedSales else { return }
+                        if self.activeTextField == "hourlyProfit" {
+                            guard let text = expense.hourlyProfit else { return }
                             let filtered = text.filter { "0123456789".contains($0) }
                             if filtered != text {
-                                expense.estimatedSales = filtered
-                                expense.estimatedSales = viewModel.returnEmptyStringIfZero(expense.estimatedSales ?? "0")
+                                expense.hourlyProfit = filtered
+                                expense.hourlyProfit = viewModel.returnEmptyStringIfZero(expense.hourlyProfit ?? "0")
                             }
                             viewModel.changeTotal()
                         }
@@ -92,7 +92,7 @@ struct InputRowsView_Previews: PreviewProvider {
     @State static var pc = "2"
     @State static var lb = "2"
     @State static var es = "2000"
-    @State static var expense = Expense(id: UUID(), personCount: pc, laborCosts: lb, estimatedSales: es)
+    @State static var expense = Expense(id: UUID(), personCount: pc, hourlyWage: lb, hourlyProfit: es)
     
     static var previews: some View {
         InputRowsView(expense: $expense)

@@ -71,7 +71,7 @@ class SheetViewModel: ObservableObject {
     //1秒ごとに発動するTimerクラスのpublishメソッド
     
     @Published var focus: Bool = false // フォーカス
-    @Published var expenses = [Expense(personCount: "0", laborCosts: "0", estimatedSales: "0")]
+    @Published var expenses = [Expense(personCount: "0", hourlyWage: "0", hourlyProfit: "0")]
     @Published var totalCost: Int = 0
     
     //カウントダウン中の残り時間を表示するためのメソッド
@@ -134,9 +134,9 @@ class SheetViewModel: ObservableObject {
         let totalMinutes: Decimal = Decimal(ToTotalMinutes())
         let totalDecimal: Decimal = expenses.reduce(Decimal.zero) { (result, expense) in
             let personCount = Decimal(string: expense.personCount ?? "0") ?? 0
-            let laborCosts = Decimal(string: expense.laborCosts ?? "0") ?? 0
-            let estimatedSales = Decimal(string: expense.estimatedSales ?? "0") ?? 0
-            let subtotal = (personCount * laborCosts + estimatedSales) * totalMinutes / 60
+            let hourlyWage = Decimal(string: expense.hourlyWage ?? "0") ?? 0
+            let hourlyProfit = Decimal(string: expense.hourlyProfit ?? "0") ?? 0
+            let subtotal = (personCount * hourlyWage + hourlyProfit) * totalMinutes / 60
             return result + (subtotal.isNaN ? Decimal.zero : subtotal)
         }
         let handler = NSDecimalNumberHandler(roundingMode: .bankers, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
@@ -168,14 +168,14 @@ class SheetViewModel: ObservableObject {
         return self.hourSelection * 60 + self.minSelection
     }
     
-    func laborCosts(for expense: Expense) -> Binding<String> {
+    func hourlyWage(for expense: Expense) -> Binding<String> {
         Binding(
             get: {
-                expense.laborCosts ?? "0"
+                expense.hourlyWage ?? "0"
             },
             set: { [self] newValue in
                 if let index = self.expenses.firstIndex(where: { $0.id == expense.id }) {
-                    expenses[index].laborCosts = newValue
+                    expenses[index].hourlyWage = newValue
                 }
             }
         )
@@ -194,14 +194,14 @@ class SheetViewModel: ObservableObject {
         )
     }
     
-    func estimatedSales(for expense: Expense) -> Binding<String> {
+    func hourlyProfit(for expense: Expense) -> Binding<String> {
         Binding(
             get: {
-                expense.estimatedSales ?? "0"
+                expense.hourlyProfit ?? "0"
             },
             set: { [self] newValue in
                 if let index = self.expenses.firstIndex(where: { $0.id == expense.id }) {
-                    expenses[index].estimatedSales = newValue
+                    expenses[index].hourlyProfit = newValue
                 }
             }
         )
