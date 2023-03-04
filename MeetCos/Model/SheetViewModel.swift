@@ -8,14 +8,8 @@
 import Foundation
 import SwiftUI
 import AudioToolbox
-
-
-//class Expenses: ObservableObject {
-//    @Published var expenses:[Expense]
-//    init(expenses: [Expense]) {
-//        self.expenses = expenses
-//    }
-//}
+import CoreData
+import Combine
 
 enum CountWay : String{
     case personCount
@@ -34,12 +28,9 @@ enum TimerStatus {
     case stopped
 }
 
-struct Sound: Identifiable {
-    let id: SystemSoundID
-    let soundName: String
-}
-
 class SheetViewModel: ObservableObject {
+    private let container: NSPersistentContainer
+    private var cancellables: Set<AnyCancellable> = []
     //Pickerで設定した"時間"を格納する変数
     @Published var hourSelection: Int = 0
     //Pickerで設定した"分"を格納する変数
@@ -73,6 +64,11 @@ class SheetViewModel: ObservableObject {
     @Published var focus: Bool = false // フォーカス
     @Published var expenses = [Expense(personCount: "0", hourlyWage: "0", hourlyProfit: "0")]
     @Published var totalCost: Int = 0
+    private var groups: [Group] = []
+    
+    init(container: NSPersistentContainer) {
+        self.container = container
+    }
     
     //カウントダウン中の残り時間を表示するためのメソッド
     func displayTimer() -> String {
@@ -149,9 +145,10 @@ class SheetViewModel: ObservableObject {
     }
     
     func save() {
-
         let session = calculateSession()
-        let expenses = self.expenses
+        
+        saveGroups()
+        
         // CoreData save
         // coredata.session.save()
         // coredata.group.save()
@@ -205,6 +202,45 @@ class SheetViewModel: ObservableObject {
                 }
             }
         )
+    }
+    
+    func fetchGroups() {
+        let request: NSFetchRequest<Group> = Group.fetchRequest()
+        PersistenceController.shared.fetchItems(fetchRequest: request)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    print("Fetch completed")
+                case .failure(let error):
+                    print("Error fetching data: \(error)")
+                }
+            }, receiveValue: { items in
+                print("Fetched items: \(items)")
+                // do something with the fetched items
+            })
+            .store(in: &cancellables)
+    }
+    
+    func saveGroup(expense: Expense) {
+        let context = container.viewContext
+        let group = Group(context: context)
+        group.personCount = Int64(expense.personCount ?? "") ?? 0
+        group.hourlyWage = Int64(expense.hourlyWage ?? "") ?? 0
+        group.hourlyProfit = Int64(expense.hourlyProfit ?? "") ?? 0
+        group.sessionId = 1
+        
+        do {
+            try context.save()
+            print("Group saved")
+        } catch {
+            print("Error saving group: \(error.localizedDescription)")
+        }
+    }
+    
+    func saveGroups() {
+        for expense in expenses {
+            saveGroup(expense: expense)
+        }
     }
 }
 

@@ -6,16 +6,25 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct SheetView: View {
     @Environment(\.presentationMode) var presentationMode
-    @StateObject private var viewModel = SheetViewModel()
+    @StateObject private var viewModel: SheetViewModel
+    @Environment(\.managedObjectContext) private var viewContext
+    init(container: NSPersistentContainer) {
+        let viewModel = SheetViewModel(container: container)
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         NavigationView {
             VStack {
                 FormView()
                     .environmentObject(viewModel)
+                    .onAppear{
+                        viewModel.fetchGroups()
+                    }
             }
             .toolbar {
                 ToolbarItem(placement: .keyboard) {
@@ -46,7 +55,12 @@ struct SheetView: View {
 
 struct SheetView_Previews: PreviewProvider {
     static var previews: some View {
-        SheetView()
-            .environmentObject(SheetViewModel())
+        let container = NSPersistentContainer(name: "CoreData")
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                fatalError("Error loading persistent store: \(error.localizedDescription)")
+            }
+        }
+        return SheetView(container: container)
     }
 }
