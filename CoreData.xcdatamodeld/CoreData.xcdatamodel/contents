@@ -5,5 +5,12 @@
         <attribute name="hourlyWage" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="personCount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sessionId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="session" maxCount="1" deletionRule="Nullify" destinationEntity="Session" inverseName="groups" inverseEntity="Session"/>
+    </entity>
+    <entity name="Session" representedClassName="Session" syncable="YES">
+        <attribute name="finishedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="sessionId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="groups" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="session" inverseEntity="Group"/>
     </entity>
 </model>
