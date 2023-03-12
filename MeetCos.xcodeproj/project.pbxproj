@@ -24,6 +24,7 @@
 		18E03DBC29B2DB0B006CD4A7 /* Persistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E03DBB29B2DB0B006CD4A7 /* Persistance.swift */; };
 		18E03DDF29B41CEF006CD4A7 /* Session+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E03DDD29B41CEF006CD4A7 /* Session+CoreDataClass.swift */; };
 		18E03DE029B41CEF006CD4A7 /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E03DDE29B41CEF006CD4A7 /* Session+CoreDataProperties.swift */; };
+		18E03DE229B69698006CD4A7 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E03DE129B69698006CD4A7 /* Utility.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		18E03DBB29B2DB0B006CD4A7 /* Persistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistance.swift; sourceTree = "<group>"; };
 		18E03DDD29B41CEF006CD4A7 /* Session+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataClass.swift"; sourceTree = "<group>"; };
 		18E03DDE29B41CEF006CD4A7 /* Session+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		18E03DE129B69698006CD4A7 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				1863141729B15AD4003123AB /* Expense.swift */,
 				182AA197296A857B00128DE5 /* HomeViewModel.swift */,
 				182AA19F2976CFBA00128DE5 /* SheetViewModel.swift */,
+				18E03DE129B69698006CD4A7 /* Utility.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 				182AA19C29718B5400128DE5 /* FormView.swift in Sources */,
 				182AA19A297178AA00128DE5 /* SheetView.swift in Sources */,
 				182AA19E2972942300128DE5 /* InputRowsView.swift in Sources */,
+				18E03DE229B69698006CD4A7 /* Utility.swift in Sources */,
 				1806350F29569A540013369D /* MeetCosApp.swift in Sources */,
 				18E03DDF29B41CEF006CD4A7 /* Session+CoreDataClass.swift in Sources */,
 				182AA1A02976CFBA00128DE5 /* SheetViewModel.swift in Sources */,

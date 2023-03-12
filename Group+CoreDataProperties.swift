@@ -20,21 +20,23 @@ extension Group {
     @NSManaged public var hourlyWage: Int64
     @NSManaged public var hourlyProfit: Int64
     @NSManaged public var sessionId: Int64
+    @NSManaged public var session: Session?
 }
 
-extension Group : Identifiable {
-    func saveGroup(expense: Expense) {
+extension Group {
+    func saveGroup(sessionId: Int64) {
         let group = Group(context: PersistenceController.shared.container.viewContext)
-        group.personCount = Int64(expense.personCount ?? "0") ?? 0
-        group.hourlyWage = Int64(expense.hourlyWage ?? "0") ?? 0
-        group.hourlyProfit = Int64(expense.hourlyProfit ?? "0") ?? 0
-        group.sessionId = 1 // Replace with the appropriate session ID
-
+        group.personCount = self.personCount
+        group.hourlyWage = self.hourlyWage
+        group.hourlyProfit = self.hourlyProfit
+        group.sessionId = sessionId
+        
         do {
             try PersistenceController.shared.container.viewContext.save()
             print("Group saved")
         } catch {
-            print("Error saving group: \(error)")
+            print("Error saving group: \(error.localizedDescription)")
+            PersistenceController.shared.container.viewContext.rollback()
         }
     }
 }

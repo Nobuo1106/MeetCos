@@ -144,14 +144,45 @@ class SheetViewModel: ObservableObject {
         totalCost = calculateSession()
     }
     
+//    func save() {
+//        let context = PersistenceController.shared.container.viewContext
+//
+//        context.perform {
+//            let session = Session(context: context)
+//            session.sessionId = Session.latestSessionId
+//
+//            var groups = [Group]()
+//
+//            for expense in self.expenses {
+//                let group = expense.toGroup(sessionId: session.sessionId)
+//                groups.append(group)
+//                group.saveGroup(sessionId: session.sessionId)
+//            }
+//
+//            session.groups = Set(groups)
+//
+//            do {
+//                try context.save()
+//                print("Session and groups saved")
+//            } catch {
+//                print("Error saving session and groups: \(error.localizedDescription)")
+//                context.rollback()
+//            }
+//        }
+//    }
+    
     func save() {
-        let session = calculateSession()
-        
-        saveGroups()
-        
-        // CoreData save
-        // coredata.session.save()
-        // coredata.group.save()
+        let context = PersistenceController.shared.container.viewContext
+
+        let session = Session(context: context)
+        session.sessionId = Session.latestSessionId
+
+        do {
+            try context.save()
+            print("Session saved")
+        } catch {
+            print("Error saving session: \(error.localizedDescription)")
+        }
     }
     
     func returnEmptyStringIfZero(_ input: String) -> String {
@@ -219,42 +250,6 @@ class SheetViewModel: ObservableObject {
                 // do something with the fetched items
             })
             .store(in: &cancellables)
-    }
-    
-    func saveGroup(expense: Expense) {
-        let context = container.viewContext
-        let group = Group(context: context)
-        group.personCount = Int64(expense.personCount ?? "") ?? 0
-        group.hourlyWage = Int64(expense.hourlyWage ?? "") ?? 0
-        group.hourlyProfit = Int64(expense.hourlyProfit ?? "") ?? 0
-        group.sessionId = 1
-        
-        do {
-            try context.save()
-            print("Group saved")
-        } catch {
-            print("Error saving group: \(error.localizedDescription)")
-        }
-    }
-    
-    func saveGroups() {
-        for expense in expenses {
-            saveGroup(expense: expense)
-        }
-    }
-}
-
-extension String {
-    var isLessThanSix: Bool {
-        return self.count <= 6
-    }
-    
-    var isLessThanEight: Bool {
-        return self.count <= 8
-    }
-    
-    var isNumeric: Bool {
-        return self.range(of: "[^.0-9]", options: .regularExpression) == nil && self != ""
     }
 }
 
