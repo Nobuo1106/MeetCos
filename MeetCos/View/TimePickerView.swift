@@ -73,7 +73,7 @@ struct TimePickerView: View {
 struct TimePickerView_Previews: PreviewProvider {
     static var previews: some View {
         TimePickerView()
-            .environmentObject(SheetViewModel(container:  PersistenceController.shared.container))
+            .environmentObject(SheetViewModel())
             .previewLayout(.sizeThatFits)
     }
 }

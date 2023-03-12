@@ -65,7 +65,7 @@ struct HomeView: View {
                 Text("Edit")
             }
             .sheet(isPresented: $showingSheet) {
-                SheetView(container:  PersistenceController.shared.container)
+                SheetView()
             }
             Spacer()
         }

@@ -2,7 +2,7 @@
 //  Group+CoreDataProperties.swift
 //  MeetCos
 //
-//  Created by apple on 2023/03/03.
+//  Created by apple on 2023/03/12.
 //
 //
 
@@ -16,14 +16,17 @@ extension Group {
         return NSFetchRequest<Group>(entityName: "Group")
     }
 
-    @NSManaged public var personCount: Int64
-    @NSManaged public var hourlyWage: Int64
     @NSManaged public var hourlyProfit: Int64
+    @NSManaged public var hourlyWage: Int64
+    @NSManaged public var personCount: Int64
     @NSManaged public var sessionId: Int64
+    @NSManaged public var createdAt: String
+    @NSManaged public var updatedAt: String
     @NSManaged public var session: Session?
+
 }
 
-extension Group {
+extension Group : Identifiable {
     func saveGroup(sessionId: Int64) {
         let group = Group(context: PersistenceController.shared.container.viewContext)
         group.personCount = self.personCount

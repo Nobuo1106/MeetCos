@@ -29,7 +29,6 @@ enum TimerStatus {
 }
 
 class SheetViewModel: ObservableObject {
-    private let container: NSPersistentContainer
     private var cancellables: Set<AnyCancellable> = []
     //Pickerで設定した"時間"を格納する変数
     @Published var hourSelection: Int = 0
@@ -65,10 +64,6 @@ class SheetViewModel: ObservableObject {
     @Published var expenses = [Expense(personCount: "0", hourlyWage: "0", hourlyProfit: "0")]
     @Published var totalCost: Int = 0
     private var groups: [Group] = []
-    
-    init(container: NSPersistentContainer) {
-        self.container = container
-    }
     
     //カウントダウン中の残り時間を表示するためのメソッド
     func displayTimer() -> String {
@@ -176,10 +171,20 @@ class SheetViewModel: ObservableObject {
 
         let session = Session(context: context)
         session.sessionId = Session.latestSessionId
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.timeZone = TimeZone.current
+        formatter.locale = Locale.current
+        
+        let now = Date()
+        session.createdAt = formatter.string(from: now)
+        session.updatedAt = formatter.string(from: now)
 
         do {
             try context.save()
-            print("Session saved")
+            print("saved")
+            print("createdAt: \(session.createdAt)")
+            print("updatedAt: \(session.updatedAt)")
         } catch {
             print("Error saving session: \(error.localizedDescription)")
         }

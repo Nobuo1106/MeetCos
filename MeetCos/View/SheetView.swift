@@ -11,9 +11,8 @@ import CoreData
 struct SheetView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var viewModel: SheetViewModel
-    @Environment(\.managedObjectContext) private var viewContext
-    init(container: NSPersistentContainer) {
-        let viewModel = SheetViewModel(container: container)
+    init() {
+        let viewModel = SheetViewModel()
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
@@ -61,6 +60,6 @@ struct SheetView_Previews: PreviewProvider {
                 fatalError("Error loading persistent store: \(error.localizedDescription)")
             }
         }
-        return SheetView(container: container)
+        return SheetView()
     }
 }
