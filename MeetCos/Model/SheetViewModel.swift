@@ -139,54 +139,37 @@ class SheetViewModel: ObservableObject {
         totalCost = calculateSession()
     }
     
-//    func save() {
-//        let context = PersistenceController.shared.container.viewContext
-//
-//        context.perform {
-//            let session = Session(context: context)
-//            session.sessionId = Session.latestSessionId
-//
-//            var groups = [Group]()
-//
-//            for expense in self.expenses {
-//                let group = expense.toGroup(sessionId: session.sessionId)
-//                groups.append(group)
-//                group.saveGroup(sessionId: session.sessionId)
-//            }
-//
-//            session.groups = Set(groups)
-//
-//            do {
-//                try context.save()
-//                print("Session and groups saved")
-//            } catch {
-//                print("Error saving session and groups: \(error.localizedDescription)")
-//                context.rollback()
-//            }
-//        }
-//    }
-    
     func save() {
         let context = PersistenceController.shared.container.viewContext
-
-        let session = Session(context: context)
-        session.sessionId = Session.latestSessionId
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        formatter.timeZone = TimeZone.current
-        formatter.locale = Locale.current
         
-        let now = Date()
-        session.createdAt = formatter.string(from: now)
-        session.updatedAt = formatter.string(from: now)
-
-        do {
-            try context.save()
-            print("saved")
-            print("createdAt: \(session.createdAt)")
-            print("updatedAt: \(session.updatedAt)")
-        } catch {
-            print("Error saving session: \(error.localizedDescription)")
+        context.perform {
+            let session = Session(context: context)
+            session.sessionId = Session.latestSessionId
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            formatter.timeZone = TimeZone.current
+            formatter.locale = Locale.current
+            
+            let now = Date()
+            session.createdAt = formatter.string(from: now)
+            session.updatedAt = formatter.string(from: now)
+            
+            var groups = [Group]()
+            
+            for expense in self.expenses {
+                let group = expense.toGroup(sessionId: session.sessionId)
+                groups.append(group)
+            }
+            
+            session.groups = Set(groups)
+            
+            do {
+                try context.save()
+                print("Session and groups saved")
+            } catch {
+                print("Error saving session and groups: \(error.localizedDescription)")
+                context.rollback()
+            }
         }
     }
     

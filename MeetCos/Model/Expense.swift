@@ -22,6 +22,14 @@ extension Expense {
         group.hourlyWage = Int64(self.hourlyWage ?? "0") ?? 0
         group.hourlyProfit = Int64(self.hourlyProfit ?? "0") ?? 0
         group.sessionId = sessionId
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.timeZone = TimeZone.current
+        formatter.locale = Locale.current
+        
+        let now = Date()
+        group.createdAt = formatter.string(from: now)
+        group.updatedAt = formatter.string(from: now)
         return group
     }
 }
