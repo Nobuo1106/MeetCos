@@ -60,6 +60,21 @@ extension Session {
             PersistenceController.shared.container.viewContext.rollback()
         }
     }
+    
+    static func getLastSession() -> Session? {
+        let context = PersistenceController.shared.container.viewContext
+        let fetchRequest: NSFetchRequest<Session> = Session.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "sessionId", ascending: false)]
+        fetchRequest.fetchLimit = 1
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            return results.first
+        } catch {
+            print("Error fetching last session: \(error.localizedDescription)")
+            return nil
+        }
+    }
 }
 
 // MARK: Generated accessors for groups
