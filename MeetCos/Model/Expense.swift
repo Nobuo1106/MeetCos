@@ -9,18 +9,17 @@ import Foundation
 
 struct Expense: Identifiable {
     var id = UUID()
-    var personCount: String? = "0"
-    var hourlyWage: String?
-    var hourlyProfit: String?
+    var personCount: Int = 0
+    var hourlyWage: Int = 0
+    var hourlyProfit: Int = 0
 }
-
 
 extension Expense {
     func toGroup(sessionId: Int64) -> Group {
         let group = Group(context: PersistenceController.shared.container.viewContext)
-        group.personCount = Int64(self.personCount ?? "0") ?? 0
-        group.hourlyWage = Int64(self.hourlyWage ?? "0") ?? 0
-        group.hourlyProfit = Int64(self.hourlyProfit ?? "0") ?? 0
+        group.personCount = Int64(self.personCount)
+        group.hourlyWage = Int64(self.hourlyWage)
+        group.hourlyProfit = Int64(self.hourlyProfit)
         group.sessionId = sessionId
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

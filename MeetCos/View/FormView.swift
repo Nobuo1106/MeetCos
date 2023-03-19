@@ -34,7 +34,7 @@ struct FormView: View {
                 }
                 HStack {
                     Button {
-                        viewModel.expenses.append(Expense(personCount: "0", hourlyWage: "0", hourlyProfit: "0"))
+                        viewModel.expenses.append(Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0))
                     } label: {
                         Text("+")
                             .bold()

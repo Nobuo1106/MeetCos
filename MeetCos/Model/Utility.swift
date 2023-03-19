@@ -20,3 +20,14 @@ extension String {
         return self.range(of: "[^.0-9]", options: .regularExpression) == nil && self != ""
     }
 }
+
+class NumberFormatterUtility {
+    static let shared = NumberFormatterUtility()
+
+    let decimalFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumIntegerDigits = 1 // Add this line
+        return formatter
+    }()
+}

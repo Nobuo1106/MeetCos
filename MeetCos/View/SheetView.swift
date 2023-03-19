@@ -22,7 +22,7 @@ struct SheetView: View {
                 FormView()
                     .environmentObject(viewModel)
                     .onAppear{
-                        viewModel.fetchGroups()
+                        viewModel.getLatestGroups()
                     }
             }
             .toolbar {

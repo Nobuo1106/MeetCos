@@ -59,7 +59,7 @@ class SheetViewModel: ObservableObject {
     //1秒ごとに発動するTimerクラスのpublishメソッド
     
     @Published var focus: Bool = false // フォーカス
-    @Published var expenses = [Expense(personCount: "0", hourlyWage: "0", hourlyProfit: "0")]
+    @Published var expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
     @Published var totalCost: Int = 0
     private var groups: [Group] = []
     
@@ -111,7 +111,7 @@ class SheetViewModel: ObservableObject {
         }
     }
     
-    func ConvertFromIntTopersonCount(num: Int, unit: CountWay) -> String {
+    func ConvertFromIntToPersonCount(num: Int, unit: CountWay) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.groupingSeparator = ","
@@ -122,9 +122,9 @@ class SheetViewModel: ObservableObject {
     func calculateSession() -> Int {
         let totalMinutes: Decimal = Decimal(ToTotalMinutes())
         let totalDecimal: Decimal = expenses.reduce(Decimal.zero) { (result, expense) in
-            let personCount = Decimal(string: expense.personCount ?? "0") ?? 0
-            let hourlyWage = Decimal(string: expense.hourlyWage ?? "0") ?? 0
-            let hourlyProfit = Decimal(string: expense.hourlyProfit ?? "0") ?? 0
+            let personCount = Decimal(expense.personCount)
+            let hourlyWage = Decimal(expense.hourlyWage)
+            let hourlyProfit = Decimal(expense.hourlyProfit) 
             let subtotal = (personCount * hourlyWage + hourlyProfit) * totalMinutes / 60
             return result + (subtotal.isNaN ? Decimal.zero : subtotal)
         }
@@ -171,9 +171,9 @@ class SheetViewModel: ObservableObject {
         }
     }
     
-    func returnEmptyStringIfZero(_ input: String) -> String {
-        if input == "0" {
-            return ""
+    func returnZeroIfEmpty(_ input: Int) -> Int {
+        if input == 0 {
+            return 0
         }
         return input
     }
@@ -182,10 +182,10 @@ class SheetViewModel: ObservableObject {
         return self.hourSelection * 60 + self.minSelection
     }
     
-    func hourlyWage(for expense: Expense) -> Binding<String> {
+    func hourlyWage(for expense: Expense) -> Binding<Int> {
         Binding(
             get: {
-                expense.hourlyWage ?? "0"
+                expense.hourlyWage
             },
             set: { [self] newValue in
                 if let index = self.expenses.firstIndex(where: { $0.id == expense.id }) {
@@ -195,10 +195,10 @@ class SheetViewModel: ObservableObject {
         )
     }
     
-    func personCount(for expense: Expense) -> Binding<String> {
+    func personCount(for expense: Expense) -> Binding<Int> {
         Binding(
             get: {
-                expense.personCount ?? "0"
+                expense.personCount
             },
             set: { [self] newValue in
                 if let index = self.expenses.firstIndex(where: { $0.id == expense.id }) {
@@ -208,10 +208,10 @@ class SheetViewModel: ObservableObject {
         )
     }
     
-    func hourlyProfit(for expense: Expense) -> Binding<String> {
+    func hourlyProfit(for expense: Expense) -> Binding<Int> {
         Binding(
             get: {
-                expense.hourlyProfit ?? "0"
+                expense.hourlyProfit
             },
             set: { [self] newValue in
                 if let index = self.expenses.firstIndex(where: { $0.id == expense.id }) {
@@ -221,21 +221,22 @@ class SheetViewModel: ObservableObject {
         )
     }
     
-    func fetchGroups() {
-        let request: NSFetchRequest<Group> = Group.fetchRequest()
-        PersistenceController.shared.fetchItems(fetchRequest: request)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    print("Fetch completed")
-                case .failure(let error):
-                    print("Error fetching data: \(error)")
-                }
-            }, receiveValue: { items in
-                print("Fetched items: \(items)")
-                // do something with the fetched items
-            })
-            .store(in: &cancellables)
+    func getLatestGroups() {
+        if let latestSession = getLatestSession() {
+            let groups = Array(latestSession.groups)
+            expenses = groups.map { group in
+                Expense(personCount: Int(group.personCount),
+                        hourlyWage: Int(group.hourlyWage),
+                        hourlyProfit: Int(group.hourlyProfit)
+                )
+            }
+        } else {
+            expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
+        }
+    }
+    
+    func getLatestSession() -> Session? {
+        return Session.getLastSession()
     }
 }
 
