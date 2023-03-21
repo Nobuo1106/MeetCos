@@ -33,6 +33,11 @@ class SheetViewModel: ObservableObject {
     @Published var expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
     @Published var totalCost: Int = 0
     private var groups: [Group] = []
+    var latestSession: Session?
+    
+    init(latestSession: Session? = nil) {
+        self.latestSession = latestSession
+    }
     
     //カウントダウン中の残り時間を表示するためのメソッド
     func displayTimer() -> String {
@@ -74,29 +79,42 @@ class SheetViewModel: ObservableObject {
     
     func save() {
         let context = PersistenceController.shared.container.viewContext
-        
+
         context.perform {
-            let session = Session(context: context)
-            session.sessionId = Session.latestSessionId
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             formatter.timeZone = TimeZone.current
             formatter.locale = Locale.current
-            
+
             let now = Date()
-            session.createdAt = formatter.string(from: now)
-            session.updatedAt = formatter.string(from: now)
-            session.duration = Double(self.toTotalMinutes())
-            
+
+            if let session = self.latestSession {
+                session.updatedAt = formatter.string(from: now)
+                session.duration = Double(self.toTotalMinutes())
+
+                // Remove existing groups
+                session.groups.forEach { context.delete($0) }
+            } else {
+                let session = Session(context: context)
+                session.sessionId = Session.latestSessionId
+                session.createdAt = formatter.string(from: now)
+                session.updatedAt = formatter.string(from: now)
+                session.duration = Double(self.toTotalMinutes())
+                self.latestSession = session
+            }
+
             var groups = [Group]()
-            
+
             for expense in self.expenses {
-                let group = expense.toGroup(sessionId: session.sessionId)
+                let group = expense.toGroup(sessionId: self.latestSession?.sessionId ?? Session.latestSessionId)
+                group.session = self.latestSession
                 groups.append(group)
             }
-            
-            session.groups = Set(groups)
-            
+
+            if let session = self.latestSession {
+                session.groups = Set(groups)
+            }
+
             do {
                 try context.save()
                 print("Session and groups saved")
@@ -157,12 +175,13 @@ class SheetViewModel: ObservableObject {
         )
     }
     
-    func getLastGroups() {
-        if let lastSession = getLatestSession() {
-            let hourMin: (hours: Int, minutes: Int) = self.toHourAndMinutes(minutes: lastSession.duration)
+    func getLatestGroups(from session: Session? = nil) {
+        let targetSession = session ?? getLatestSession()
+        if let latestSession = targetSession {
+            let hourMin: (hours: Int, minutes: Int) = self.toHourAndMinutes(minutes: latestSession.duration)
             self.hourSelection = hourMin.hours
             self.minSelection = hourMin.minutes
-            let groups = Array(lastSession.groups)
+            let groups = Array(latestSession.groups)
             expenses = groups.map { group in
                 Expense(personCount: Int(group.personCount),
                         hourlyWage: Int(group.hourlyWage),
@@ -172,10 +191,13 @@ class SheetViewModel: ObservableObject {
         } else {
             expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
         }
+        self.changeTotal()
     }
     
     private func getLatestSession() -> Session? {
-        return Session.getLastSession()
+        let session = Session.getLatestSession()
+        self.latestSession = session
+        return session
     }
     
     func toHourAndMinutes(minutes: Double) -> (hours: Int, minutes: Int) {

@@ -11,9 +11,9 @@ import CoreData
 struct SheetView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var viewModel: SheetViewModel
-    init() {
-        let viewModel = SheetViewModel()
-        _viewModel = StateObject(wrappedValue: viewModel)
+    init(latestSession: Session? = nil) {
+        let viewModel = SheetViewModel(latestSession: latestSession)
+            _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
@@ -22,7 +22,7 @@ struct SheetView: View {
                 FormView()
                     .environmentObject(viewModel)
                     .onAppear{
-                        viewModel.getLastGroups()
+                        viewModel.getLatestGroups(from: viewModel.latestSession)
                     }
             }
             .toolbar {

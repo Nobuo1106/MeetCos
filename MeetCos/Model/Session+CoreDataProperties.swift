@@ -42,7 +42,7 @@ extension Session {
         }
     }
     
-    static func getLastSession() -> Session? {
+    static func getLatestSession() -> Session? {
         let context = PersistenceController.shared.container.viewContext
         let fetchRequest: NSFetchRequest<Session> = Session.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "sessionId", ascending: false)]
