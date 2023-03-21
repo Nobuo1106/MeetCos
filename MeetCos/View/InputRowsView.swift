@@ -33,7 +33,7 @@ struct InputRowsView: View {
                 Text("時給：")
                     .font(.callout)
                     .bold()
-                TextField("Hourly Wage", value: $expense.hourlyWage, formatter: NumberFormatterUtility.shared.decimalFormatter)
+                TextField("1XXX", value: $expense.hourlyWage, formatter: NumberFormatterUtility.shared.decimalFormatter)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.numberPad)
                     .onTapGesture {
@@ -51,7 +51,7 @@ struct InputRowsView: View {
                 Text("見込み利益：")
                     .font(.callout)
                     .bold()
-                TextField("Hourly Wage", value: $expense.hourlyProfit, formatter: NumberFormatterUtility.shared.decimalFormatter)
+                TextField("1XXX", value: $expense.hourlyProfit, formatter: NumberFormatterUtility.shared.decimalFormatter)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.numberPad)
                     .onTapGesture {

@@ -27,26 +27,4 @@ extension Group {
 }
 
 extension Group : Identifiable {
-    func saveGroup(sessionId: Int64) {
-        let group = Group(context: PersistenceController.shared.container.viewContext)
-        group.personCount = self.personCount
-        group.hourlyWage = self.hourlyWage
-        group.hourlyProfit = self.hourlyProfit
-        group.sessionId = sessionId
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        formatter.timeZone = TimeZone.current
-        formatter.locale = Locale.current
-        let now = Date()
-        createdAt = formatter.string(from: now)
-        updatedAt = formatter.string(from: now)
-        
-        do {
-            try PersistenceController.shared.container.viewContext.save()
-            print("Group saved")
-        } catch {
-            print("Error saving group: \(error.localizedDescription)")
-            PersistenceController.shared.container.viewContext.rollback()
-        }
-    }
 }

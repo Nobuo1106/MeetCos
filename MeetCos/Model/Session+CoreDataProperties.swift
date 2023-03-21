@@ -23,6 +23,7 @@ extension Session {
     @NSManaged public var createdAt: String
     @NSManaged public var updatedAt: String
     @NSManaged public var groups: Set<Group>
+    @NSManaged public var duration: Double
     
     static var latestSessionId: Int64 {
         let request: NSFetchRequest<Session> = Session.fetchRequest()
@@ -38,26 +39,6 @@ extension Session {
         } catch {
             print("Error fetching latest session id: \(error)")
             return 1
-        }
-    }
-    
-    func saveSession(groups: [Group]) {
-        self.groups = Set(self.groups).union(groups)
-        self.sessionId = Int64(Session.latestSessionId)
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        formatter.timeZone = TimeZone.current
-        formatter.locale = Locale.current
-        let now = Date()
-        createdAt = formatter.string(from: now)
-        updatedAt = formatter.string(from: now)
-        
-        do {
-            try PersistenceController.shared.container.viewContext.save()
-            print("Session saved")
-        } catch {
-            print("Error saving session: \(error)")
-            PersistenceController.shared.container.viewContext.rollback()
         }
     }
     

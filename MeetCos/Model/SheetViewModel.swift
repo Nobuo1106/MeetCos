@@ -7,25 +7,13 @@
 
 import Foundation
 import SwiftUI
-import AudioToolbox
 import CoreData
 import Combine
-
-enum CountWay : String{
-    case personCount
-    case yen
-}
 
 enum TimeFormat {
     case hr
     case min
     case sec
-}
-
-enum TimerStatus {
-    case running
-    case pause
-    case stopped
 }
 
 class SheetViewModel: ObservableObject {
@@ -40,23 +28,6 @@ class SheetViewModel: ObservableObject {
     @Published var maxValue: Double = 0
     //設定した時間が1時間以上、1時間未満1分以上、1分未満1秒以上によって変わる時間表示形式
     @Published var displayedTimeFormat: TimeFormat = .min
-    //タイマーのステータス
-    @Published var timerStatus: TimerStatus = .stopped
-    //AudioToolboxに格納された音源を利用するためのデータ型でデフォルトのサウンドIDを格納
-    @Published var soundID: SystemSoundID = 1151
-    //soundIDプロパティの値に対応するサウンド名を格納
-    @Published var soundName: String = "Beat"
-    //アラーム音オン/オフの設定
-    @Published var isAlarmOn: Bool = true
-    //バイブレーションオン/オフの設定
-    @Published var isVibrationOn: Bool = true
-    //プログレスバー表示オン/オフの設定
-    @Published var isProgressBarOn: Bool = true
-    //エフェクトアニメーション表示オン/オフの設定
-    @Published var isEffectAnimationOn: Bool = true
-    //設定画面の表示/非表示
-    @Published var isSetting: Bool = false
-    //1秒ごとに発動するTimerクラスのpublishメソッド
     
     @Published var focus: Bool = false // フォーカス
     @Published var expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
@@ -83,44 +54,8 @@ class SheetViewModel: ObservableObject {
         }
     }
     
-    //スタートボタンをタップしたときに発動するメソッド
-    func start() {
-        //タイマーステータスを.runningにする
-        timerStatus = .running
-    }
-    
-    //一時停止ボタンをタップしたときに発動するメソッド
-    func pause() {
-        //タイマーステータスを.pauseにする
-        timerStatus = .pause
-    }
-    
-    //リセットボタンをタップしたときに発動するメソッド
-    func reset() {
-        //タイマーステータスを.stoppedにする
-        timerStatus = .stopped
-        //残り時間がまだ0でなくても強制的に0にする
-        duration = 0
-    }
-    private func whichCount(unit: CountWay) -> String {
-        switch unit {
-        case .personCount:
-            return "人"
-        case .yen:
-            return "円"
-        }
-    }
-    
-    func ConvertFromIntToPersonCount(num: Int, unit: CountWay) -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.groupingSeparator = ","
-        formatter.groupingSize = 3
-        return formatter.string(from: NSNumber(value: num)) ?? "0" + whichCount(unit: unit)
-    }
-    
     func calculateSession() -> Int {
-        let totalMinutes: Decimal = Decimal(ToTotalMinutes())
+        let totalMinutes: Decimal = Decimal(toTotalMinutes())
         let totalDecimal: Decimal = expenses.reduce(Decimal.zero) { (result, expense) in
             let personCount = Decimal(expense.personCount)
             let hourlyWage = Decimal(expense.hourlyWage)
@@ -151,6 +86,7 @@ class SheetViewModel: ObservableObject {
             let now = Date()
             session.createdAt = formatter.string(from: now)
             session.updatedAt = formatter.string(from: now)
+            session.duration = Double(self.toTotalMinutes())
             
             var groups = [Group]()
             
@@ -178,7 +114,7 @@ class SheetViewModel: ObservableObject {
         return input
     }
     
-    private func ToTotalMinutes() -> Int {
+    private func toTotalMinutes() -> Int {
         return self.hourSelection * 60 + self.minSelection
     }
     
@@ -221,9 +157,12 @@ class SheetViewModel: ObservableObject {
         )
     }
     
-    func getLatestGroups() {
-        if let latestSession = getLatestSession() {
-            let groups = Array(latestSession.groups)
+    func getLastGroups() {
+        if let lastSession = getLatestSession() {
+            let hourMin: (hours: Int, minutes: Int) = self.toHourAndMinutes(minutes: lastSession.duration)
+            self.hourSelection = hourMin.hours
+            self.minSelection = hourMin.minutes
+            let groups = Array(lastSession.groups)
             expenses = groups.map { group in
                 Expense(personCount: Int(group.personCount),
                         hourlyWage: Int(group.hourlyWage),
@@ -235,8 +174,14 @@ class SheetViewModel: ObservableObject {
         }
     }
     
-    func getLatestSession() -> Session? {
+    private func getLatestSession() -> Session? {
         return Session.getLastSession()
+    }
+    
+    func toHourAndMinutes(minutes: Double) -> (hours: Int, minutes: Int) {
+        let hours = Int(minutes / 60)
+        let remainingMinutes = Int(minutes.truncatingRemainder(dividingBy: 60))
+        return (hours: hours, minutes: remainingMinutes)
     }
 }
 
