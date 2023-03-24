@@ -70,13 +70,20 @@ struct InputRowsView: View {
 }
 
 struct InputRowsView_Previews: PreviewProvider {
-    @State static var pc = 3
-    @State static var lb = 2
-    @State static var es = 2000
-    @State static var expense = Expense(id: UUID(), personCount: pc, hourlyWage: lb, hourlyProfit: es)
-    
+    @State static var expense1 = Expense(id: UUID(), personCount: 3, hourlyWage: 2, hourlyProfit: 2000)
+    @State static var expense2 = Expense(id: UUID(), personCount: 5, hourlyWage: 3, hourlyProfit: 3000)
+    @State static var expense3 = Expense(id: UUID(), personCount: 7, hourlyWage: 4, hourlyProfit: 4000)
+
     static var previews: some View {
-        InputRowsView(expense: $expense)
+        VStack {
+            InputRowsView(expense: $expense1)
+                .previewDisplayName("Preview 1")
+            
+            InputRowsView(expense: $expense2)
+                .previewDisplayName("Preview 2")
+            
+            InputRowsView(expense: $expense3)
+                .previewDisplayName("Preview 3")
+        }.environmentObject(SheetViewModel()) // Add the environmentObject here
     }
 }
-

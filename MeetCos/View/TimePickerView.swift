@@ -41,7 +41,7 @@ struct TimePickerView: View {
                 //上下に回転するホイールスタイルを指定
                 .pickerStyle(WheelPickerStyle())
                 //ピッカーの幅をスクリーンサイズ x 0.1、高さをスクリーンサイズ x 0.4で指定
-                .frame(width: self.screenWidth * 0.1, height: self.screenWidth * 0.4)
+                .frame(width: self.screenWidth * 0.2, height: self.screenWidth * 0.4)
                 //上のframeでクリップし、フレームからはみ出す部分は非表示にする
                 .clipped()
                 //時間単位を表すテキスト
@@ -56,8 +56,7 @@ struct TimePickerView: View {
                     }
                 }
                 .pickerStyle(WheelPickerStyle())
-                .frame(width: self.screenWidth * 0.1, height: self.screenWidth * 0.4)
-                .clipped()
+                .frame(width: self.screenWidth * 0.2, height: self.screenWidth * 0.4)
                 //分単位を表すテキスト
                 Text("分")
                     .font(.headline)
