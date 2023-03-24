@@ -30,21 +30,18 @@ struct HomeView: View {
                 .padding()
                 
             }
-            ZStack (alignment: .center){
+            ZStack(alignment: .center) {
                 Circle()
-                    .stroke(Color.green, style: StrokeStyle(lineWidth:10))
+                    .stroke(Color.green, style: StrokeStyle(lineWidth: 10))
                     .padding(50)
-                Circle()
-                    .trim(from: 0.0, to: viewModel.duration)
-                    .stroke(Color.yellow, style: StrokeStyle(lineWidth:10, lineCap: .round))
+                ClockwiseProgress(progress: viewModel.duration)
+                    .stroke(Color.yellow, style: StrokeStyle(lineWidth: 10, lineCap: .round))
                     .scaledToFit()
                     .padding(50)
-                    .rotationEffect(.degrees(-90))
                 Text("残り時間   \(viewModel.displayTime)")
                     .onAppear {
                         viewModel.start()
                     }
-                
             }
             HStack {
 //                Text("\(viewModel.count)")
@@ -70,6 +67,20 @@ struct HomeView: View {
             Spacer()
         }
         .padding()
+    }
+}
+
+struct ClockwiseProgress: Shape {
+    var progress: CGFloat
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.addArc(center: CGPoint(x: rect.midX, y: rect.midY),
+                    radius: rect.width / 2,
+                    startAngle: Angle(degrees: -90),
+                    endAngle: Angle(degrees: -90 + 360 * Double(progress)),
+                    clockwise: true)
+        return path
     }
 }
 

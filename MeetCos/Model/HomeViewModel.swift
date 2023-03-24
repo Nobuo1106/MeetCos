@@ -56,7 +56,7 @@ extension HomeView {
                 self.displayTime = self.formatToString()
                 // 切り捨て位置変更
                 print(self.remainingTime)
-                self.duration = CGFloat(self.remainingTime / max)
+                self.duration = 1 - CGFloat(self.remainingTime / max)
                 if self.remainingTime < 0 {
                     self.stop()
                     self.duration = 1
