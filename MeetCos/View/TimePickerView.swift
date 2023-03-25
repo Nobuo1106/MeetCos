@@ -30,36 +30,29 @@ struct TimePickerView: View {
                 //時間単位のPicker
                 Picker(selection: self.$viewModel.hourSelection, label: Text("hour")) {
                     ForEach(0..<11) { index in
-                        Text("\(index)" )
-                            .tag(index )
+                        Text("\(index)").font(.system(size: 14))
+                            .tag(index)
                     }
                 }
-                .onChange(of: viewModel.hourSelection) { newValue in
-                   print("changed to \(viewModel.hourSelection)")
-                    viewModel.changeTotal()
-               }
                 //上下に回転するホイールスタイルを指定
                 .pickerStyle(WheelPickerStyle())
-                //ピッカーの幅をスクリーンサイズ x 0.1、高さをスクリーンサイズ x 0.4で指定
-                .frame(width: self.screenWidth * 0.2, height: self.screenWidth * 0.4)
-                //上のframeでクリップし、フレームからはみ出す部分は非表示にする
+                .frame(width: self.screenWidth * 0.15, height: self.screenWidth * 0.3)
                 .clipped()
-                //時間単位を表すテキスト
                 Text("時間")
                     .font(.headline)
-                
-                //分単位のPicker
+                    .font(.system(size: 14))
+
                 Picker(selection: self.$viewModel.minSelection, label: Text("分")) {
                     ForEach(0..<60) { index in
-                        Text("\(self.minutes[index])" )
-                            .tag(index )
+                        Text("\(self.minutes[index])").font(.system(size: 14))
+                            .tag(index)
                     }
                 }
                 .pickerStyle(WheelPickerStyle())
-                .frame(width: self.screenWidth * 0.2, height: self.screenWidth * 0.4)
-                //分単位を表すテキスト
+                .frame(width: self.screenWidth * 0.15, height: self.screenWidth * 0.3)
                 Text("分")
                     .font(.headline)
+                    .font(.system(size: 14))
             }
         }
     }

@@ -17,7 +17,7 @@ struct HomeView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("終了予定時刻")
+                Text("会議時間")
                     .padding()
                 DatePicker("", selection: $selectdDate, displayedComponents:
                         .hourAndMinute)
@@ -67,6 +67,9 @@ struct HomeView: View {
             Spacer()
         }
         .padding()
+        .onAppear {
+            viewModel.getLatestSession()
+        }
     }
 }
 

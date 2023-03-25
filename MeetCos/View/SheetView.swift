@@ -45,8 +45,6 @@ struct SheetView: View {
             .navigationBarItems(trailing: Button("完了") {
                 self.presentationMode.wrappedValue.dismiss()
                 viewModel.save()
-                print("時間\(viewModel.hourSelection)")
-                print("分\(viewModel.minSelection)")
             })
         }
     }

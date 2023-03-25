@@ -24,7 +24,7 @@ struct FormView: View {
     var body: some View {
         VStack {
             Form {
-                Section (header: Text("開始時間")){
+                Section (header: Text("会議時間")){
                     TimePickerView()
                 }
 
