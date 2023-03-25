@@ -32,10 +32,10 @@ struct HomeView: View {
             }
             ZStack(alignment: .center) {
                 Circle()
-                    .stroke(Color.green, style: StrokeStyle(lineWidth: 10))
+                    .stroke(Color.green, style: StrokeStyle(lineWidth: 10, lineCap: .round))
                     .padding(50)
                 ClockwiseProgress(progress: viewModel.duration)
-                    .stroke(Color.yellow, style: StrokeStyle(lineWidth: 10, lineCap: .round))
+                    .stroke(Color.yellow, style: StrokeStyle(lineWidth: 10))
                     .scaledToFit()
                     .padding(50)
                 Text("残り時間   \(viewModel.displayTime)")
@@ -81,6 +81,23 @@ struct ClockwiseProgress: Shape {
                     endAngle: Angle(degrees: -90 + 360 * Double(progress)),
                     clockwise: true)
         return path
+    }
+}
+
+struct CircleCap: View {
+    var progress: CGFloat
+    var lineWidth: CGFloat
+
+    var body: some View {
+        GeometryReader { geometry in
+            let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
+            let radius = geometry.size.width / 2 - lineWidth / 2
+            let capX = center.x + radius * cos(CGFloat(-90 + 360 * Double(progress)) * CGFloat.pi / 180)
+            let capY = center.y + radius * sin(CGFloat(-90 + 360 * Double(progress)) * CGFloat.pi / 180)
+            Circle()
+                .frame(width: lineWidth, height: lineWidth)
+                .position(x: capX, y: capY)
+        }
     }
 }
 
