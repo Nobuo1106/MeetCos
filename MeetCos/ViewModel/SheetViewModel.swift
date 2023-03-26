@@ -17,6 +17,7 @@ enum TimeFormat {
 }
 
 class SheetViewModel: ObservableObject {
+    @Published var timePickerViewModel: TimePickerViewModel
     private var cancellables: Set<AnyCancellable> = []
     //Pickerで設定した"時間"を格納する変数
     @Published var hourSelection: Int = 0
@@ -35,8 +36,9 @@ class SheetViewModel: ObservableObject {
     private var groups: [Group] = []
     var latestSession: Session?
     
-    init(latestSession: Session? = nil) {
+    init(latestSession: Session? = nil, timePickerViewModel: TimePickerViewModel) {
         self.latestSession = latestSession
+        self.timePickerViewModel = timePickerViewModel
     }
     
     //カウントダウン中の残り時間を表示するためのメソッド
@@ -179,8 +181,8 @@ class SheetViewModel: ObservableObject {
         let targetSession = session ?? getLatestSession()
         if let latestSession = targetSession {
             let hourMin: (hours: Int, minutes: Int) = self.toHourAndMinutes(minutes: latestSession.duration)
-            self.hourSelection = hourMin.hours
-            self.minSelection = hourMin.minutes
+            timePickerViewModel.hourSelection = hourMin.hours
+            timePickerViewModel.minSelection = hourMin.minutes
             let groups = Array(latestSession.groups)
             expenses = groups.map { group in
                 Expense(personCount: Int(group.personCount),
@@ -206,4 +208,3 @@ class SheetViewModel: ObservableObject {
         return (hours: hours, minutes: remainingMinutes)
     }
 }
-

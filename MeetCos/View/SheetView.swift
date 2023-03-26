@@ -11,9 +11,12 @@ import CoreData
 struct SheetView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var viewModel: SheetViewModel
+    @StateObject var timePickerViewModel = TimePickerViewModel()
     init(latestSession: Session? = nil) {
-        let viewModel = SheetViewModel(latestSession: latestSession)
-            _viewModel = StateObject(wrappedValue: viewModel)
+        let timePickerVM = TimePickerViewModel()
+        let viewModel = SheetViewModel(latestSession: latestSession, timePickerViewModel: timePickerVM)
+        _timePickerViewModel = StateObject(wrappedValue: timePickerVM)
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     var body: some View {
@@ -21,6 +24,7 @@ struct SheetView: View {
             VStack {
                 FormView()
                     .environmentObject(viewModel)
+                    .environmentObject(timePickerViewModel)
                     .onAppear{
                         viewModel.getLatestGroups(from: viewModel.latestSession)
                     }

@@ -75,6 +75,9 @@ struct InputRowsView_Previews: PreviewProvider {
     @State static var expense3 = Expense(id: UUID(), personCount: 7, hourlyWage: 4, hourlyProfit: 4000)
 
     static var previews: some View {
+        let timePickerVM = TimePickerViewModel()
+        let sheetVM = SheetViewModel(timePickerViewModel: timePickerVM)
+
         VStack {
             InputRowsView(expense: $expense1)
                 .previewDisplayName("Preview 1")
@@ -84,6 +87,7 @@ struct InputRowsView_Previews: PreviewProvider {
             
             InputRowsView(expense: $expense3)
                 .previewDisplayName("Preview 3")
-        }.environmentObject(SheetViewModel()) // Add the environmentObject here
+        }.environmentObject(sheetVM)
+         .environmentObject(timePickerVM) // Add the environmentObject here
     }
 }

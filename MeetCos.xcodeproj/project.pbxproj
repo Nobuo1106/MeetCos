@@ -16,6 +16,8 @@
 		182AA19C29718B5400128DE5 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AA19B29718B5400128DE5 /* FormView.swift */; };
 		182AA19E2972942300128DE5 /* InputRowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AA19D2972942300128DE5 /* InputRowsView.swift */; };
 		182AA1A02976CFBA00128DE5 /* SheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AA19F2976CFBA00128DE5 /* SheetViewModel.swift */; };
+		1837DAE129CEC607007B8E5B /* HomeTimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1837DAE029CEC607007B8E5B /* HomeTimePickerView.swift */; };
+		1837DAE629CEED85007B8E5B /* TimePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1837DAE529CEED85007B8E5B /* TimePickerViewModel.swift */; };
 		1863141829B15AD4003123AB /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1863141729B15AD4003123AB /* Expense.swift */; };
 		1863141A29B15AE8003123AB /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1863141929B15AE8003123AB /* TimePickerView.swift */; };
 		18C17C2829BD762C0084B9CC /* Group+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C17C2629BD762C0084B9CC /* Group+CoreDataProperties.swift */; };
@@ -39,6 +41,8 @@
 		182AA19D2972942300128DE5 /* InputRowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputRowsView.swift; sourceTree = "<group>"; };
 		182AA19F2976CFBA00128DE5 /* SheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetViewModel.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		182AA1A12981223800128DE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1837DAE029CEC607007B8E5B /* HomeTimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTimePickerView.swift; sourceTree = "<group>"; };
+		1837DAE529CEED85007B8E5B /* TimePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerViewModel.swift; sourceTree = "<group>"; };
 		1863141729B15AD4003123AB /* Expense.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		1863141929B15AE8003123AB /* TimePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
 		18C17C2629BD762C0084B9CC /* Group+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Group+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -84,6 +88,7 @@
 				182AA1A12981223800128DE5 /* Info.plist */,
 				1806350E29569A540013369D /* MeetCosApp.swift */,
 				1806351C295A57730013369D /* Model */,
+				1837DAE429CEED54007B8E5B /* ViewModel */,
 				18AD0357296A7B27003D251B /* View */,
 				1806351229569A560013369D /* Assets.xcassets */,
 				1806351429569A560013369D /* Preview Content */,
@@ -108,11 +113,19 @@
 				18C17C2A29BD7A3B0084B9CC /* Session+CoreDataProperties.swift */,
 				18E03DBB29B2DB0B006CD4A7 /* Persistance.swift */,
 				1863141729B15AD4003123AB /* Expense.swift */,
-				182AA197296A857B00128DE5 /* HomeViewModel.swift */,
-				182AA19F2976CFBA00128DE5 /* SheetViewModel.swift */,
 				18E03DE129B69698006CD4A7 /* Utility.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		1837DAE429CEED54007B8E5B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				182AA197296A857B00128DE5 /* HomeViewModel.swift */,
+				182AA19F2976CFBA00128DE5 /* SheetViewModel.swift */,
+				1837DAE529CEED85007B8E5B /* TimePickerViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		18AD0357296A7B27003D251B /* View */ = {
@@ -123,6 +136,7 @@
 				1863141929B15AE8003123AB /* TimePickerView.swift */,
 				182AA19B29718B5400128DE5 /* FormView.swift */,
 				182AA19D2972942300128DE5 /* InputRowsView.swift */,
+				1837DAE029CEC607007B8E5B /* HomeTimePickerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -209,10 +223,12 @@
 				182AA19C29718B5400128DE5 /* FormView.swift in Sources */,
 				182AA19A297178AA00128DE5 /* SheetView.swift in Sources */,
 				182AA19E2972942300128DE5 /* InputRowsView.swift in Sources */,
+				1837DAE629CEED85007B8E5B /* TimePickerViewModel.swift in Sources */,
 				18E03DE229B69698006CD4A7 /* Utility.swift in Sources */,
 				1806350F29569A540013369D /* MeetCosApp.swift in Sources */,
 				18C17C2B29BD7A3C0084B9CC /* Session+CoreDataClass.swift in Sources */,
 				182AA1A02976CFBA00128DE5 /* SheetViewModel.swift in Sources */,
+				1837DAE129CEC607007B8E5B /* HomeTimePickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,6 +17,7 @@ extension HomeView {
         @Published var duration: CGFloat = 1.0 // プログレスバー位置
         @Published var isTimer = true
         @Published var progressFromZerotoOne: CGFloat = 0.0
+        var latestSession: Session?
         
         func calcDisplayTime () -> String{
             let interval = self.selectedDate.timeIntervalSinceNow
@@ -62,6 +63,11 @@ extension HomeView {
                     self.duration = 1
                 }
             }))
+        }
+        
+        func getLatestSession() {
+            let session = Session.getLatestSession()
+            self.latestSession = session
         }
         
         // タイマーの停止

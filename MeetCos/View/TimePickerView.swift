@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TimePickerView: View {
     //TimeManagerのインスタンスを作成
-    @EnvironmentObject var viewModel: SheetViewModel
+    @ObservedObject var viewModel: TimePickerViewModel
     //デバイスのスクリーンの幅
     let screenWidth = UIScreen.main.bounds.width
     //デバイスのスクリーンの高さ
@@ -60,8 +60,8 @@ struct TimePickerView: View {
 
 struct TimePickerView_Previews: PreviewProvider {
     static var previews: some View {
-        TimePickerView()
-            .environmentObject(SheetViewModel())
+        let timePickerVM = TimePickerViewModel()
+        TimePickerView(viewModel: timePickerVM)
             .previewLayout(.sizeThatFits)
     }
 }

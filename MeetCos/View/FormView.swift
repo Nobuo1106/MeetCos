@@ -11,6 +11,7 @@ struct FormView: View {
     @FocusState var focus: Bool
     @State private var numOfInputRows: Int = 3
     @EnvironmentObject var viewModel: SheetViewModel
+    @EnvironmentObject var timePickerViewModel: TimePickerViewModel
     
     var gesture: some Gesture {
         DragGesture()
@@ -25,7 +26,13 @@ struct FormView: View {
         VStack {
             Form {
                 Section (header: Text("会議時間")){
-                    TimePickerView()
+                    TimePickerView(viewModel: timePickerViewModel)
+                        .onChange(of: timePickerViewModel.hourSelection) { newValue in
+                            viewModel.hourSelection = newValue
+                        }
+                        .onChange(of: timePickerViewModel.minSelection) { newValue in
+                            viewModel.minSelection = newValue
+                        }
                 }
 
                 ForEach($viewModel.expenses) { $expense in
@@ -64,7 +71,11 @@ struct FormView: View {
 
 struct FormView_Previews: PreviewProvider {
     static var previews: some View {
+        let timePickerVM = TimePickerViewModel()
+        let sheetVM = SheetViewModel(timePickerViewModel: timePickerVM)
+        
         FormView()
-            .environmentObject(SheetViewModel())
+            .environmentObject(sheetVM)
+            .environmentObject(timePickerVM)
     }
 }
