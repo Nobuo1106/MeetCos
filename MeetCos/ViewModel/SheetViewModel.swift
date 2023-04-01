@@ -180,7 +180,7 @@ class SheetViewModel: ObservableObject {
     func getLatestGroups(from session: Session? = nil) {
         let targetSession = session ?? getLatestSession()
         if let latestSession = targetSession {
-            let hourMin: (hours: Int, minutes: Int) = self.toHourAndMinutes(minutes: latestSession.duration)
+            let hourMin: (hours: Int, minutes: Int) = timePickerViewModel.toHourAndMinutes(minutes: latestSession.duration)
             timePickerViewModel.hourSelection = hourMin.hours
             timePickerViewModel.minSelection = hourMin.minutes
             let groups = Array(latestSession.groups)
@@ -200,11 +200,5 @@ class SheetViewModel: ObservableObject {
         let session = Session.getLatestSession()
         self.latestSession = session
         return session
-    }
-    
-    func toHourAndMinutes(minutes: Double) -> (hours: Int, minutes: Int) {
-        let hours = Int(minutes / 60)
-        let remainingMinutes = Int(minutes.truncatingRemainder(dividingBy: 60))
-        return (hours: hours, minutes: remainingMinutes)
     }
 }

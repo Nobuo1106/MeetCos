@@ -16,7 +16,6 @@
 		182AA19C29718B5400128DE5 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AA19B29718B5400128DE5 /* FormView.swift */; };
 		182AA19E2972942300128DE5 /* InputRowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AA19D2972942300128DE5 /* InputRowsView.swift */; };
 		182AA1A02976CFBA00128DE5 /* SheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AA19F2976CFBA00128DE5 /* SheetViewModel.swift */; };
-		1837DAE129CEC607007B8E5B /* HomeTimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1837DAE029CEC607007B8E5B /* HomeTimePickerView.swift */; };
 		1837DAE629CEED85007B8E5B /* TimePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1837DAE529CEED85007B8E5B /* TimePickerViewModel.swift */; };
 		1863141829B15AD4003123AB /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1863141729B15AD4003123AB /* Expense.swift */; };
 		1863141A29B15AE8003123AB /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1863141929B15AE8003123AB /* TimePickerView.swift */; };
@@ -41,7 +40,6 @@
 		182AA19D2972942300128DE5 /* InputRowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputRowsView.swift; sourceTree = "<group>"; };
 		182AA19F2976CFBA00128DE5 /* SheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetViewModel.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		182AA1A12981223800128DE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		1837DAE029CEC607007B8E5B /* HomeTimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTimePickerView.swift; sourceTree = "<group>"; };
 		1837DAE529CEED85007B8E5B /* TimePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerViewModel.swift; sourceTree = "<group>"; };
 		1863141729B15AD4003123AB /* Expense.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		1863141929B15AE8003123AB /* TimePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
@@ -136,7 +134,6 @@
 				1863141929B15AE8003123AB /* TimePickerView.swift */,
 				182AA19B29718B5400128DE5 /* FormView.swift */,
 				182AA19D2972942300128DE5 /* InputRowsView.swift */,
-				1837DAE029CEC607007B8E5B /* HomeTimePickerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -228,7 +225,6 @@
 				1806350F29569A540013369D /* MeetCosApp.swift in Sources */,
 				18C17C2B29BD7A3C0084B9CC /* Session+CoreDataClass.swift in Sources */,
 				182AA1A02976CFBA00128DE5 /* SheetViewModel.swift in Sources */,
-				1837DAE129CEC607007B8E5B /* HomeTimePickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

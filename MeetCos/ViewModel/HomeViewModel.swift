@@ -8,48 +8,52 @@
 import Foundation
 import Combine
 
-extension HomeView {
-    class HomeViewModel: ObservableObject {
-        @Published var displayTime = "0:00:00"
-        @Published var remainingTime: Double = 0.0
-        @Published var selectedDate = Date()
-        @Published var timer: AnyCancellable!
-        @Published var duration: CGFloat = 1.0 // プログレスバー位置
-        @Published var isTimer = true
-        @Published var progressFromZerotoOne: CGFloat = 0.0
-        var latestSession: Session?
-        
-        func calcDisplayTime () -> String{
-            let interval = self.selectedDate.timeIntervalSinceNow
-            self.remainingTime = interval
-            if self.remainingTime < 0 {
-                self.isTimer = false
-            }
-            return self.formatToString()
+class HomeViewModel: ObservableObject {
+    @Published var timePickerViewModel: TimePickerViewModel
+    @Published var displayTime = "0:00:00"
+    @Published var remainingTime: Double = 0.0
+    @Published var selectedDate = Date()
+    @Published var timer: AnyCancellable!
+    @Published var duration: CGFloat = 1.0 // プログレスバー位置
+    @Published var isTimer = true
+    @Published var progressFromZerotoOne: CGFloat = 0.0
+    var latestSession: Session?
+    
+    init(timePickerViewModel: TimePickerViewModel) {
+        self.timePickerViewModel = timePickerViewModel
+    }
+    
+    func calcDisplayTime () -> String{
+        let interval = self.selectedDate.timeIntervalSinceNow
+        self.remainingTime = interval
+        if self.remainingTime < 0 {
+            self.isTimer = false
+        }
+        return self.formatToString()
+    }
+    
+    private func formatToString () -> String{
+        let dateFormatter = DateComponentsFormatter()
+        dateFormatter.unitsStyle = .positional
+        dateFormatter.allowedUnits = [.hour, .minute, .second]
+        dateFormatter.zeroFormattingBehavior = .dropTrailing
+        self.displayTime = dateFormatter.string(from: self.remainingTime)!
+        return self.displayTime
+    }
+    
+    func start() {
+        self.count()
+    }
+    
+    func count(_ interval: Double = 0.1){
+        let max = self.remainingTime
+        print("start Timer")
+        // TimerPublisherが存在しているときは念の為処理をキャンセル
+        if let _timer = timer{
+            _timer.cancel()
         }
         
-        private func formatToString () -> String{
-            let dateFormatter = DateComponentsFormatter()
-            dateFormatter.unitsStyle = .positional
-            dateFormatter.allowedUnits = [.hour, .minute, .second]
-            dateFormatter.zeroFormattingBehavior = .dropTrailing
-            self.displayTime = dateFormatter.string(from: self.remainingTime)!
-            return self.displayTime
-        }
-        
-        func start() {
-            self.count()
-        }
-        
-        func count(_ interval: Double = 0.1){
-            let max = self.remainingTime
-            print("start Timer")
-            // TimerPublisherが存在しているときは念の為処理をキャンセル
-            if let _timer = timer{
-                _timer.cancel()
-            }
-            
-            timer = Timer.publish(every: interval, on: .main, in: .common)
+        timer = Timer.publish(every: interval, on: .main, in: .common)
             .autoconnect()
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: ({_ in
@@ -63,18 +67,29 @@ extension HomeView {
                     self.duration = 1
                 }
             }))
-        }
-        
-        func getLatestSession() {
-            let session = Session.getLatestSession()
-            self.latestSession = session
-        }
-        
-        // タイマーの停止
-        func stop(){
-            print("stop Timer")
-            timer?.cancel()
-            timer = nil
+    }
+    
+    func getLatestSession() {
+        let session = Session.getLatestSession()
+        self.latestSession = session
+        convertFromDurationToHoursAndMinutes()
+    }
+    
+    // タイマーの停止
+    func stop(){
+        print("stop Timer")
+        timer?.cancel()
+        timer = nil
+    }
+    
+    func convertFromDurationToHoursAndMinutes() {
+        if let session = self.latestSession {
+            let hourMin: (hours: Int, minutes: Int) = timePickerViewModel.toHourAndMinutes(minutes: latestSession?.duration ?? 0)
+            timePickerViewModel.hourSelection = hourMin.hours
+            timePickerViewModel.minSelection = hourMin.minutes
+        } else {
+            timePickerViewModel.hourSelection = 0
+            timePickerViewModel.minSelection = 0
         }
     }
 }

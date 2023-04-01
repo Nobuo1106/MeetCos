@@ -8,49 +8,49 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var viewModel = HomeViewModel()
-    @State var selectdDate = Date()
-    @State var displayTime = "0:00:00"
-    @State var totalCost = 0
-    @State var showingSheet = false
+    @StateObject private var timePickerViewModel = TimePickerViewModel()
+    @StateObject private var homeViewModel: HomeViewModel
+    
+    @State private var selectedDate = Date()
+    @State private var displayTime = "0:00:00"
+    @State private var totalCost = 0
+    @State private var showingSheet = false
+    
+    init() {
+        let timePickerVM = TimePickerViewModel()
+        _timePickerViewModel = StateObject(wrappedValue: timePickerVM)
+        _homeViewModel = StateObject(wrappedValue: HomeViewModel(timePickerViewModel: timePickerVM))
+    }
 
     var body: some View {
         VStack {
             HStack {
                 Text("会議時間")
                     .padding()
-                DatePicker("", selection: $selectdDate, displayedComponents:
-                        .hourAndMinute)
-                .onChange(of: selectdDate, perform: { value in
-                    viewModel.selectedDate = value
-                    displayTime = viewModel.calcDisplayTime()
-                   })
-                .environment(\.locale, Locale(identifier: "en_DK"))
-                .datePickerStyle(CompactDatePickerStyle())
-                .padding()
+                TimePickerView(viewModel: timePickerViewModel)
                 
             }
             ZStack(alignment: .center) {
                 Circle()
                     .stroke(Color.green, style: StrokeStyle(lineWidth: 10, lineCap: .round))
                     .padding(50)
-                ClockwiseProgress(progress: viewModel.duration)
+                ClockwiseProgress(progress: homeViewModel.duration)
                     .stroke(Color.yellow, style: StrokeStyle(lineWidth: 10))
                     .scaledToFit()
                     .padding(50)
-                Text("残り時間   \(viewModel.displayTime)")
+                Text("残り時間   \(homeViewModel.displayTime)")
                     .onAppear {
-                        viewModel.start()
+                        homeViewModel.start()
                     }
             }
             HStack {
-//                Text("\(viewModel.count)")
-//                Text("\(viewModel.remainingTime)")
+//                Text("\(homeViewModel.count)")
+//                Text("\(homeViewModel.remainingTime)")
                 Button("Start") {
-                    viewModel.start()
+                    homeViewModel.start()
                 }
                 Button("Done") {
-                    viewModel.stop()
+                    homeViewModel.stop()
                 }
             }
             Spacer()
@@ -68,7 +68,7 @@ struct HomeView: View {
         }
         .padding()
         .onAppear {
-            viewModel.getLatestSession()
+            homeViewModel.getLatestSession()
         }
     }
 }
@@ -105,7 +105,10 @@ struct CircleCap: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    static var timePickerViewModel = TimePickerViewModel()
+
     static var previews: some View {
         HomeView()
+            .environmentObject(timePickerViewModel)
     }
 }
