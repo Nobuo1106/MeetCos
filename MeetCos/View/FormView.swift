@@ -28,10 +28,12 @@ struct FormView: View {
                 Section (header: Text("会議時間")){
                     TimePickerView(viewModel: timePickerViewModel)
                         .onChange(of: timePickerViewModel.hourSelection) { newValue in
-                            viewModel.hourSelection = newValue
+                            timePickerViewModel.hourSelection = newValue
+                            viewModel.changeTotal()
                         }
                         .onChange(of: timePickerViewModel.minSelection) { newValue in
-                            viewModel.minSelection = newValue
+                            timePickerViewModel.minSelection = newValue
+                            viewModel.changeTotal()
                         }
                 }
 

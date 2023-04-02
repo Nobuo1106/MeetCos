@@ -47,7 +47,7 @@ class HomeViewModel: ObservableObject {
     
     func count(_ interval: Double = 0.1){
         let max = self.remainingTime
-        print("start Timer")
+//        print("start Timer")
         // TimerPublisherが存在しているときは念の為処理をキャンセル
         if let _timer = timer{
             _timer.cancel()
@@ -75,16 +75,19 @@ class HomeViewModel: ObservableObject {
         convertFromDurationToHoursAndMinutes()
     }
     
+    func upsertSession(hour: Int, minute: Int, expenses: [Expense] = []) {
+    }
+    
     // タイマーの停止
     func stop(){
-        print("stop Timer")
+//        print("stop Timer")
         timer?.cancel()
         timer = nil
     }
     
     func convertFromDurationToHoursAndMinutes() {
         if let session = self.latestSession {
-            let hourMin: (hours: Int, minutes: Int) = timePickerViewModel.toHourAndMinutes(minutes: latestSession?.duration ?? 0)
+            let hourMin: (hours: Int, minutes: Int) = timePickerViewModel.toHourAndMinutes(minutes: session.duration)
             timePickerViewModel.hourSelection = hourMin.hours
             timePickerViewModel.minSelection = hourMin.minutes
         } else {

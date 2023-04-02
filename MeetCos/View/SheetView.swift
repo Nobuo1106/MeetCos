@@ -48,7 +48,7 @@ struct SheetView: View {
             })
             .navigationBarItems(trailing: Button("完了") {
                 self.presentationMode.wrappedValue.dismiss()
-                viewModel.save()
+                viewModel.saveSessionAndGroups()
             })
         }
     }

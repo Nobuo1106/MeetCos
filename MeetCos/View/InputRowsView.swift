@@ -26,6 +26,10 @@ struct InputRowsView: View {
                             .font(.callout)
                             .bold()
                     }
+                    .onChange(of: expense.personCount) { _ in
+                        viewModel.changeTotal()
+
+                    }
                 }
             }
             

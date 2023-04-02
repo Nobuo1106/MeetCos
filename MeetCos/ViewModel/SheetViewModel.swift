@@ -20,9 +20,9 @@ class SheetViewModel: ObservableObject {
     @Published var timePickerViewModel: TimePickerViewModel
     private var cancellables: Set<AnyCancellable> = []
     //Pickerで設定した"時間"を格納する変数
-    @Published var hourSelection: Int = 0
+//    @Published var hourSelection: Int = 0
     //Pickerで設定した"分"を格納する変数
-    @Published var minSelection: Int = 0
+//    @Published var minSelection: Int = 0
     //カウントダウン残り時間
     @Published var duration: Double = 0
     //カウントダウン開始前の最大時間
@@ -33,7 +33,6 @@ class SheetViewModel: ObservableObject {
     @Published var focus: Bool = false // フォーカス
     @Published var expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
     @Published var totalCost: Int = 0
-    private var groups: [Group] = []
     var latestSession: Session?
     
     init(latestSession: Session? = nil, timePickerViewModel: TimePickerViewModel) {
@@ -66,7 +65,7 @@ class SheetViewModel: ObservableObject {
         let totalDecimal: Decimal = expenses.reduce(Decimal.zero) { (result, expense) in
             let personCount = Decimal(expense.personCount)
             let hourlyWage = Decimal(expense.hourlyWage)
-            let hourlyProfit = Decimal(expense.hourlyProfit) 
+            let hourlyProfit = Decimal(expense.hourlyProfit)
             let subtotal = (personCount * hourlyWage + hourlyProfit) * totalMinutes / 60
             return result + (subtotal.isNaN ? Decimal.zero : subtotal)
         }
@@ -79,63 +78,19 @@ class SheetViewModel: ObservableObject {
         totalCost = calculateSession()
     }
     
-    func save() {
-        let context = PersistenceController.shared.container.viewContext
-
-        context.perform {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            formatter.timeZone = TimeZone.current
-            formatter.locale = Locale.current
-
-            let now = Date()
-
-            if let session = self.latestSession {
-                session.updatedAt = formatter.string(from: now)
-                session.duration = Double(self.toTotalMinutes())
-
-                // Remove existing groups
-                session.groups.forEach { context.delete($0) }
-            } else {
-                let session = Session(context: context)
-                session.sessionId = Session.latestSessionId
-                session.createdAt = formatter.string(from: now)
-                session.updatedAt = formatter.string(from: now)
-                session.duration = Double(self.toTotalMinutes())
-                self.latestSession = session
-            }
-
-            var groups = [Group]()
-
-            for expense in self.expenses {
-                let group = expense.toGroup(sessionId: self.latestSession?.sessionId ?? Session.latestSessionId)
-                group.session = self.latestSession
-                groups.append(group)
-            }
-
-            if let session = self.latestSession {
-                session.groups = Set(groups)
-            }
-
-            do {
-                try context.save()
-                print("Session and groups saved")
-            } catch {
-                print("Error saving session and groups: \(error.localizedDescription)")
-                context.rollback()
+    func saveSessionAndGroups() {
+        let hour = timePickerViewModel.hourSelection
+        let minute = timePickerViewModel.minSelection
+        SessionModel.shared.upsertSession(session: latestSession, hour: hour, minute: minute, expenses: expenses) { updatedSession in
+            if let updatedSession = updatedSession {
+                self.latestSession = updatedSession
             }
         }
-    }
-    
-    func returnZeroIfEmpty(_ input: Int) -> Int {
-        if input == 0 {
-            return 0
-        }
-        return input
+        self.changeTotal()
     }
     
     private func toTotalMinutes() -> Int {
-        return self.hourSelection * 60 + self.minSelection
+        return timePickerViewModel.hourSelection * 60 + timePickerViewModel.minSelection
     }
     
     func hourlyWage(for expense: Expense) -> Binding<Int> {
