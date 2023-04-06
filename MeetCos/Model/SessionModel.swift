@@ -73,20 +73,37 @@ class SessionModel {
     }
     
     func saveSession(hourSelection: Int, minSelection: Int) {
-        guard let latestSession = self.latestSession else { return }
-        
+        let context = PersistenceController.shared.container.viewContext
+        let session = self.latestSession ?? Session(context: context)
+
         let newDuration = Double(hourSelection * 60 + minSelection)
-        if latestSession.duration != newDuration {
-            latestSession.duration = newDuration
+        if session.duration != newDuration {
+            session.duration = newDuration
+        }
+
+        if session.createdAt.isEmpty {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let currentTime = dateFormatter.string(from: Date())
+            session.createdAt = currentTime
+
+            let emptyGroup = Group(context: context)
+            emptyGroup.personCount = 0
+            emptyGroup.hourlyWage = 0
+            emptyGroup.hourlyProfit = 0
+            emptyGroup.createdAt = currentTime
+            emptyGroup.updatedAt = currentTime
+            emptyGroup.session = session
+        }
+
+        do {
+            try context.save()
+            print("Session saved")
             
-            let context = PersistenceController.shared.container.viewContext
-            do {
-                try context.save()
-                print("Session duration updated")
-            } catch {
-                print("Error updating session duration: \(error.localizedDescription)")
-                context.rollback()
-            }
+            self.latestSession = session
+        } catch {
+            print("Error saving session: \(error.localizedDescription)")
+            context.rollback()
         }
     }
 }
