@@ -21,14 +21,19 @@ struct HomeView: View {
         _timePickerViewModel = StateObject(wrappedValue: timePickerVM)
         _homeViewModel = StateObject(wrappedValue: HomeViewModel(timePickerViewModel: timePickerVM))
     }
-
+    
     var body: some View {
         VStack {
             HStack {
                 Text("会議時間")
                     .padding()
                 TimePickerView(viewModel: timePickerViewModel)
-                
+                    .onChange(of: timePickerViewModel.hourSelection) { _ in
+                        homeViewModel.saveSession()
+                    }
+                    .onChange(of: timePickerViewModel.minSelection) { _ in
+                        homeViewModel.saveSession()
+                    }
             }
             ZStack(alignment: .center) {
                 Circle()
@@ -44,8 +49,8 @@ struct HomeView: View {
                     }
             }
             HStack {
-//                Text("\(homeViewModel.count)")
-//                Text("\(homeViewModel.remainingTime)")
+                //                Text("\(homeViewModel.count)")
+                //                Text("\(homeViewModel.remainingTime)")
                 Button("Start") {
                     homeViewModel.start()
                 }
@@ -57,11 +62,13 @@ struct HomeView: View {
             Text("\(totalCost)円")
             Spacer()
             Button (action:{
-                showingSheet = true
+                showingSheet.toggle()
             }) {
                 Text("Edit")
             }
-            .sheet(isPresented: $showingSheet) {
+            .sheet(isPresented: $showingSheet, onDismiss: {
+                homeViewModel.getLatestSession()
+            }) {
                 SheetView()
             }
             Spacer()
@@ -75,7 +82,7 @@ struct HomeView: View {
 
 struct ClockwiseProgress: Shape {
     var progress: CGFloat
-
+    
     func path(in rect: CGRect) -> Path {
         var path = Path()
         path.addArc(center: CGPoint(x: rect.midX, y: rect.midY),
@@ -90,7 +97,7 @@ struct ClockwiseProgress: Shape {
 struct CircleCap: View {
     var progress: CGFloat
     var lineWidth: CGFloat
-
+    
     var body: some View {
         GeometryReader { geometry in
             let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
@@ -106,7 +113,7 @@ struct CircleCap: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var timePickerViewModel = TimePickerViewModel()
-
+    
     static var previews: some View {
         HomeView()
             .environmentObject(timePickerViewModel)

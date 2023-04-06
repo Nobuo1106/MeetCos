@@ -23,6 +23,11 @@ class HomeViewModel: ObservableObject {
         self.timePickerViewModel = timePickerViewModel
     }
     
+    func getLatestSession() {
+        SessionModel.shared.fetchLatestSession()
+        convertFromDurationToHoursAndMinutes()
+    }
+    
     func calcDisplayTime () -> String{
         let interval = self.selectedDate.timeIntervalSinceNow
         self.remainingTime = interval
@@ -69,15 +74,6 @@ class HomeViewModel: ObservableObject {
             }))
     }
     
-    func getLatestSession() {
-        let session = Session.getLatestSession()
-        self.latestSession = session
-        convertFromDurationToHoursAndMinutes()
-    }
-    
-    func upsertSession(hour: Int, minute: Int, expenses: [Expense] = []) {
-    }
-    
     // タイマーの停止
     func stop(){
 //        print("stop Timer")
@@ -86,7 +82,7 @@ class HomeViewModel: ObservableObject {
     }
     
     func convertFromDurationToHoursAndMinutes() {
-        if let session = self.latestSession {
+        if let session = SessionModel.shared.latestSession {
             let hourMin: (hours: Int, minutes: Int) = timePickerViewModel.toHourAndMinutes(minutes: session.duration)
             timePickerViewModel.hourSelection = hourMin.hours
             timePickerViewModel.minSelection = hourMin.minutes
@@ -94,5 +90,9 @@ class HomeViewModel: ObservableObject {
             timePickerViewModel.hourSelection = 0
             timePickerViewModel.minSelection = 0
         }
+    }
+    
+    func saveSession() {
+        SessionModel.shared.saveSession(hourSelection: timePickerViewModel.hourSelection, minSelection: timePickerViewModel.minSelection)
     }
 }

@@ -19,10 +19,6 @@ enum TimeFormat {
 class SheetViewModel: ObservableObject {
     @Published var timePickerViewModel: TimePickerViewModel
     private var cancellables: Set<AnyCancellable> = []
-    //Pickerで設定した"時間"を格納する変数
-//    @Published var hourSelection: Int = 0
-    //Pickerで設定した"分"を格納する変数
-//    @Published var minSelection: Int = 0
     //カウントダウン残り時間
     @Published var duration: Double = 0
     //カウントダウン開始前の最大時間
@@ -38,26 +34,6 @@ class SheetViewModel: ObservableObject {
     init(latestSession: Session? = nil, timePickerViewModel: TimePickerViewModel) {
         self.latestSession = latestSession
         self.timePickerViewModel = timePickerViewModel
-    }
-    
-    //カウントダウン中の残り時間を表示するためのメソッド
-    func displayTimer() -> String {
-        //残り時間（時間単位）= 残り合計時間（秒）/3600秒
-        let hr = Int(duration) / 3600
-        //残り時間（分単位）= 残り合計時間（秒）/ 3600秒 で割った余り / 60秒
-        let min = Int(duration) % 3600 / 60
-        //残り時間（秒単位）= 残り合計時間（秒）/ 3600秒 で割った余り / 60秒 で割った余り
-        let sec = Int(duration) % 3600 % 60
-        
-        //setTimerメソッドの結果によって時間表示形式を条件分岐し、上の3つの定数を組み合わせて反映
-        switch displayedTimeFormat {
-        case .hr:
-            return String(format: "%02d:%02d:%02d", hr, min, sec)
-        case .min:
-            return String(format: "%02d:%02d", min, sec)
-        case .sec:
-            return String(format: "%02d", sec)
-        }
     }
     
     func calculateSession() -> Int {

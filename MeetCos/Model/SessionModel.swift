@@ -10,6 +10,15 @@ import CoreData
 
 class SessionModel {
     static let shared = SessionModel()
+    var latestSession: Session?
+    
+    private init() {
+        fetchLatestSession()
+    }
+    
+    func fetchLatestSession() {
+        self.latestSession = Session.getLatestSession()
+    }
     
     /// SheetViewModel、HomeViewModelで利用する為、expense引数がなくても使える。
     /// 柔軟にする為直近のSessionオブジェクトも変更出来るように実装。
@@ -59,6 +68,24 @@ class SessionModel {
                 print("Error saving session and groups: \(error.localizedDescription)")
                 context.rollback()
                 completion(nil)
+            }
+        }
+    }
+    
+    func saveSession(hourSelection: Int, minSelection: Int) {
+        guard let latestSession = self.latestSession else { return }
+        
+        let newDuration = Double(hourSelection * 60 + minSelection)
+        if latestSession.duration != newDuration {
+            latestSession.duration = newDuration
+            
+            let context = PersistenceController.shared.container.viewContext
+            do {
+                try context.save()
+                print("Session duration updated")
+            } catch {
+                print("Error updating session duration: \(error.localizedDescription)")
+                context.rollback()
             }
         }
     }
