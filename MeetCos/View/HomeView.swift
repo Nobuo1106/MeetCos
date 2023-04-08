@@ -10,10 +10,6 @@ import SwiftUI
 struct HomeView: View {
     @StateObject private var timePickerViewModel = TimePickerViewModel()
     @StateObject private var homeViewModel: HomeViewModel
-    
-    @State private var selectedDate = Date()
-    @State private var displayTime = "0:00:00"
-    @State private var totalCost = 0
     @State private var showingSheet = false
     
     init() {
@@ -59,7 +55,7 @@ struct HomeView: View {
                 }
             }
             Spacer()
-            Text("\(totalCost)円")
+            Text("\(homeViewModel.totalCost)円")
             Spacer()
             Button (action:{
                 showingSheet.toggle()
