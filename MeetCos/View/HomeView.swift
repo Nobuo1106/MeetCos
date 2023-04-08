@@ -63,7 +63,9 @@ struct HomeView: View {
                 Text("Edit")
             }
             .sheet(isPresented: $showingSheet, onDismiss: {
-                homeViewModel.getLatestSession()
+                homeViewModel.getLatestSession(completion: {
+                    homeViewModel.updateDisplayTime()
+                })
             }) {
                 SheetView()
             }
@@ -71,7 +73,9 @@ struct HomeView: View {
         }
         .padding()
         .onAppear {
-            homeViewModel.getLatestSession()
+            homeViewModel.getLatestSession(completion: {
+                homeViewModel.updateDisplayTime()
+            })
         }
     }
 }

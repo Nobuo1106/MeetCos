@@ -22,13 +22,15 @@ class HomeViewModel: ObservableObject {
     
     init(timePickerViewModel: TimePickerViewModel) {
         self.timePickerViewModel = timePickerViewModel
-        getLatestSession()
+        getLatestSession(completion: {
+            self.updateDisplayTime()
+        })
     }
     
-    func getLatestSession() {
+    func getLatestSession(completion: @escaping () -> Void) {
         SessionModel.shared.fetchLatestSession()
         convertFromDurationToHoursAndMinutes()
-        updateDisplayTime()
+        completion()
     }
     
     func calcDisplayTime() -> String {
@@ -70,7 +72,6 @@ class HomeViewModel: ObservableObject {
     
     func count(_ interval: Double = 0.1){
         let max = self.remainingTime
-//        print("start Timer")
         // TimerPublisherが存在しているときは念の為処理をキャンセル
         if let _timer = timer{
             _timer.cancel()
@@ -81,7 +82,7 @@ class HomeViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: ({_ in
                 self.remainingTime -= 0.1
-                self.displayTime = self.formatToString()
+//                self.displayTime = self.formatToString()
                 // 切り捨て位置変更
                 print(self.remainingTime)
                 self.duration = 1 - CGFloat(self.remainingTime / max)
