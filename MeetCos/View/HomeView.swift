@@ -35,7 +35,7 @@ struct HomeView: View {
                 Circle()
                     .stroke(Color.green, style: StrokeStyle(lineWidth: 10, lineCap: .round))
                     .padding(50)
-                ClockwiseProgress(progress: homeViewModel.duration)
+                CountDownTimerView(progress: homeViewModel.duration)
                     .stroke(Color.yellow, style: StrokeStyle(lineWidth: 10))
                     .scaledToFit()
                     .padding(50)
@@ -76,37 +76,6 @@ struct HomeView: View {
             homeViewModel.getLatestSession(completion: {
                 homeViewModel.updateDisplayTime()
             })
-        }
-    }
-}
-
-struct ClockwiseProgress: Shape {
-    var progress: CGFloat
-    
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.addArc(center: CGPoint(x: rect.midX, y: rect.midY),
-                    radius: rect.width / 2,
-                    startAngle: Angle(degrees: -90),
-                    endAngle: Angle(degrees: -90 + 360 * Double(progress)),
-                    clockwise: true)
-        return path
-    }
-}
-
-struct CircleCap: View {
-    var progress: CGFloat
-    var lineWidth: CGFloat
-    
-    var body: some View {
-        GeometryReader { geometry in
-            let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
-            let radius = geometry.size.width / 2 - lineWidth / 2
-            let capX = center.x + radius * cos(CGFloat(-90 + 360 * Double(progress)) * CGFloat.pi / 180)
-            let capY = center.y + radius * sin(CGFloat(-90 + 360 * Double(progress)) * CGFloat.pi / 180)
-            Circle()
-                .frame(width: lineWidth, height: lineWidth)
-                .position(x: capX, y: capY)
         }
     }
 }

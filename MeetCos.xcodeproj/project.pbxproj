@@ -20,6 +20,9 @@
 		1837DAEA29D80DF5007B8E5B /* SessionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1837DAE929D80DF5007B8E5B /* SessionModel.swift */; };
 		1863141829B15AD4003123AB /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1863141729B15AD4003123AB /* Expense.swift */; };
 		1863141A29B15AE8003123AB /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1863141929B15AE8003123AB /* TimePickerView.swift */; };
+		1897743429E281900039A58A /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1897743329E281900039A58A /* SharedData.swift */; };
+		1897743629E2882E0039A58A /* CountDownTimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1897743529E2882E0039A58A /* CountDownTimerViewModel.swift */; };
+		1897743829E28B8E0039A58A /* CountDownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1897743729E28B8E0039A58A /* CountDownTimer.swift */; };
 		18C17C2829BD762C0084B9CC /* Group+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C17C2629BD762C0084B9CC /* Group+CoreDataProperties.swift */; };
 		18C17C2B29BD7A3C0084B9CC /* Session+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C17C2929BD7A3B0084B9CC /* Session+CoreDataClass.swift */; };
 		18C17C2C29BD7A3C0084B9CC /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C17C2A29BD7A3B0084B9CC /* Session+CoreDataProperties.swift */; };
@@ -45,6 +48,9 @@
 		1837DAE929D80DF5007B8E5B /* SessionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionModel.swift; sourceTree = "<group>"; };
 		1863141729B15AD4003123AB /* Expense.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		1863141929B15AE8003123AB /* TimePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
+		1897743329E281900039A58A /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
+		1897743529E2882E0039A58A /* CountDownTimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownTimerViewModel.swift; sourceTree = "<group>"; };
+		1897743729E28B8E0039A58A /* CountDownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownTimer.swift; sourceTree = "<group>"; };
 		18C17C2629BD762C0084B9CC /* Group+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Group+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		18C17C2929BD7A3B0084B9CC /* Session+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataClass.swift"; sourceTree = "<group>"; };
 		18C17C2A29BD7A3B0084B9CC /* Session+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -115,6 +121,7 @@
 				1863141729B15AD4003123AB /* Expense.swift */,
 				18E03DE129B69698006CD4A7 /* Utility.swift */,
 				1837DAE929D80DF5007B8E5B /* SessionModel.swift */,
+				1897743329E281900039A58A /* SharedData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -125,6 +132,7 @@
 				182AA197296A857B00128DE5 /* HomeViewModel.swift */,
 				182AA19F2976CFBA00128DE5 /* SheetViewModel.swift */,
 				1837DAE529CEED85007B8E5B /* TimePickerViewModel.swift */,
+				1897743529E2882E0039A58A /* CountDownTimerViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -137,6 +145,7 @@
 				1863141929B15AE8003123AB /* TimePickerView.swift */,
 				182AA19B29718B5400128DE5 /* FormView.swift */,
 				182AA19D2972942300128DE5 /* InputRowsView.swift */,
+				1897743729E28B8E0039A58A /* CountDownTimer.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -219,6 +228,7 @@
 				18C17C2829BD762C0084B9CC /* Group+CoreDataProperties.swift in Sources */,
 				1806351129569A540013369D /* HomeView.swift in Sources */,
 				182AA198296A857B00128DE5 /* HomeViewModel.swift in Sources */,
+				1897743829E28B8E0039A58A /* CountDownTimer.swift in Sources */,
 				1837DAEA29D80DF5007B8E5B /* SessionModel.swift in Sources */,
 				18D0679629B15C9300B594C7 /* Group+CoreDataClass.swift in Sources */,
 				182AA19C29718B5400128DE5 /* FormView.swift in Sources */,
@@ -227,7 +237,9 @@
 				1837DAE629CEED85007B8E5B /* TimePickerViewModel.swift in Sources */,
 				18E03DE229B69698006CD4A7 /* Utility.swift in Sources */,
 				1806350F29569A540013369D /* MeetCosApp.swift in Sources */,
+				1897743429E281900039A58A /* SharedData.swift in Sources */,
 				18C17C2B29BD7A3C0084B9CC /* Session+CoreDataClass.swift in Sources */,
+				1897743629E2882E0039A58A /* CountDownTimerViewModel.swift in Sources */,
 				182AA1A02976CFBA00128DE5 /* SheetViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

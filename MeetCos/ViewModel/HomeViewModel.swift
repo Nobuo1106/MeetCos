@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class HomeViewModel: ObservableObject {
     @Published var timePickerViewModel: TimePickerViewModel
@@ -19,12 +20,39 @@ class HomeViewModel: ObservableObject {
     @Published var progressFromZerotoOne: CGFloat = 0.0
     @Published var totalCost = 0
     var latestSession: Session?
+    private var appInBackground = false
+    private var backgroundTime: Date?
+    private let sharedData = SharedData()
     
     init(timePickerViewModel: TimePickerViewModel) {
         self.timePickerViewModel = timePickerViewModel
         getLatestSession(completion: {
             self.updateDisplayTime()
         })
+    }
+    
+    func appStateChanged(_ scenePhase: ScenePhase) {
+        switch scenePhase {
+        case .background:
+            appDidEnterBackground()
+        case .active:
+            appWillEnterForeground()
+        default:
+            break
+        }
+    }
+    
+    func appDidEnterBackground() {
+        appInBackground = true
+        backgroundTime = Date()
+    }
+
+    func appWillEnterForeground() {
+        if appInBackground, let backgroundTime = backgroundTime {
+            let timeInBackground = Date().timeIntervalSince(backgroundTime)
+            remainingTime -= timeInBackground
+        }
+        appInBackground = false
     }
     
     func getLatestSession(completion: @escaping () -> Void) {
