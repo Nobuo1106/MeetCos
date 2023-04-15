@@ -16,4 +16,12 @@ class TimePickerViewModel: ObservableObject {
         let remainingMinutes = Int(minutes.truncatingRemainder(dividingBy: 60))
         return (hours: hours, minutes: remainingMinutes)
     }
+    
+    func updateSelectionsFromDuration(duration: Double) {
+        let (hours, minutes) = toHourAndMinutes(minutes: duration)
+        DispatchQueue.main.async {
+            self.hourSelection = hours
+            self.minSelection = minutes
+        }
+    }
 }

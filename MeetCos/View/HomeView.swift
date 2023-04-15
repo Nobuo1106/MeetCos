@@ -35,14 +35,7 @@ struct HomeView: View {
                 Circle()
                     .stroke(Color.green, style: StrokeStyle(lineWidth: 10, lineCap: .round))
                     .padding(50)
-                CountDownTimerView(progress: homeViewModel.duration)
-                    .stroke(Color.yellow, style: StrokeStyle(lineWidth: 10))
-                    .scaledToFit()
-                    .padding(50)
-                Text("残り時間   \(homeViewModel.displayTime)")
-                    .onAppear {
-                        homeViewModel.start()
-                    }
+                CountDownTimerView(viewModel: homeViewModel.countdownTimerViewModel)
             }
             HStack {
                 //                Text("\(homeViewModel.count)")
@@ -72,11 +65,6 @@ struct HomeView: View {
             Spacer()
         }
         .padding()
-        .onAppear {
-            homeViewModel.getLatestSession(completion: {
-                homeViewModel.updateDisplayTime()
-            })
-        }
     }
 }
 

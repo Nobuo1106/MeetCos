@@ -11,6 +11,7 @@ import SwiftUI
 
 class HomeViewModel: ObservableObject {
     @Published var timePickerViewModel: TimePickerViewModel
+    @Published var countdownTimerViewModel: CountdownTimerViewModel
     @Published var displayTime = "0:00:00"
     @Published var remainingTime: Double = 0.0
     @Published var selectedDate = Date()
@@ -26,9 +27,17 @@ class HomeViewModel: ObservableObject {
     
     init(timePickerViewModel: TimePickerViewModel) {
         self.timePickerViewModel = timePickerViewModel
-        getLatestSession(completion: {
+
+        let initialDuration = Double(timePickerViewModel.hourSelection * 3600 + timePickerViewModel.minSelection * 60)
+        let tempCountdownTimerViewModel = CountdownTimerViewModel(initialDuration: initialDuration)
+        self.countdownTimerViewModel = tempCountdownTimerViewModel
+
+        getLatestSession { [weak self] in
+            guard let self = self else { return }
             self.updateDisplayTime()
-        })
+            let newDuration = Double(self.timePickerViewModel.hourSelection * 3600 + self.timePickerViewModel.minSelection * 60)
+            self.countdownTimerViewModel.updateDuration(newDuration: newDuration)
+        }
     }
     
     func appStateChanged(_ scenePhase: ScenePhase) {
@@ -46,7 +55,7 @@ class HomeViewModel: ObservableObject {
         appInBackground = true
         backgroundTime = Date()
     }
-
+    
     func appWillEnterForeground() {
         if appInBackground, let backgroundTime = backgroundTime {
             let timeInBackground = Date().timeIntervalSince(backgroundTime)
@@ -57,8 +66,10 @@ class HomeViewModel: ObservableObject {
     
     func getLatestSession(completion: @escaping () -> Void) {
         SessionModel.shared.fetchLatestSession()
-        convertFromDurationToHoursAndMinutes()
-        completion()
+        DispatchQueue.main.async {
+            self.convertFromDurationToHoursAndMinutes()
+            completion()
+        }
     }
     
     func calcDisplayTime() -> String {
@@ -83,6 +94,7 @@ class HomeViewModel: ObservableObject {
         let seconds = Int(duration * 60) % 60
         
         displayTime = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+        timePickerViewModel.updateSelectionsFromDuration(duration: duration)
     }
     
     private func formatToString () -> String{
@@ -110,7 +122,7 @@ class HomeViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: ({_ in
                 self.remainingTime -= 0.1
-//                self.displayTime = self.formatToString()
+                //                self.displayTime = self.formatToString()
                 // 切り捨て位置変更
                 print(self.remainingTime)
                 self.duration = 1 - CGFloat(self.remainingTime / max)
@@ -123,26 +135,29 @@ class HomeViewModel: ObservableObject {
     
     // タイマーの停止
     func stop(){
-//        print("stop Timer")
+        //        print("stop Timer")
         timer?.cancel()
         timer = nil
     }
     
     func convertFromDurationToHoursAndMinutes() {
-        DispatchQueue.main.async {
-            if let session = SessionModel.shared.latestSession {
-                let hourMin: (hours: Int, minutes: Int) = self.timePickerViewModel.toHourAndMinutes(minutes: session.duration)
-                self.timePickerViewModel.hourSelection = hourMin.hours
-                self.timePickerViewModel.minSelection = hourMin.minutes
-            } else {
-                self.timePickerViewModel.hourSelection = 0
-                self.timePickerViewModel.minSelection = 0
-            }
+        if let session = SessionModel.shared.latestSession {
+            let hourMin: (hours: Int, minutes: Int) = self.timePickerViewModel.toHourAndMinutes(minutes: session.duration)
+            self.timePickerViewModel.hourSelection = hourMin.hours
+            self.timePickerViewModel.minSelection = hourMin.minutes
+        } else {
+            self.timePickerViewModel.hourSelection = 0
+            self.timePickerViewModel.minSelection = 0
         }
     }
     
     func saveSession() {
         SessionModel.shared.saveSession(hourSelection: timePickerViewModel.hourSelection, minSelection: timePickerViewModel.minSelection)
         updateDisplayTime()
+    }
+    
+    func updateCountdownTimer() {
+        let newDuration = Double(timePickerViewModel.hourSelection * 3600 + timePickerViewModel.minSelection * 60)
+        countdownTimerViewModel.remainingTime = newDuration
     }
 }
