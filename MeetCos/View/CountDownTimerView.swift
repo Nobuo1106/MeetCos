@@ -20,7 +20,7 @@ struct CountDownTimerView: View {
                 .stroke(Color.yellow, style: StrokeStyle(lineWidth: 10))
                 .scaledToFit()
                 .padding(50)
-            Text("残り時間: \(viewModel.remainingTime)")
+            Text("残り時間: \(viewModel.formattedRemainingTime)")
         }
     }
 }

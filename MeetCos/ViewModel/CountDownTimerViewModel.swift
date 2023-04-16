@@ -21,7 +21,6 @@ class CountdownTimerViewModel: ObservableObject {
         self.initialDuration = initialDuration
     }
 
-    // ... timer-related functions
     func start(duration: Double) {
         self.remainingTime = duration
         self.updateDisplayTime()
@@ -57,5 +56,13 @@ class CountdownTimerViewModel: ObservableObject {
     func updateDuration(newDuration: Double) {
         self.initialDuration = newDuration
         self.remainingTime = newDuration
+    }
+    
+    var formattedRemainingTime: String {
+        let hours = Int(remainingTime) / 3600
+        let minutes = (Int(remainingTime) % 3600) / 60
+        let seconds = Int(remainingTime) % 60
+
+        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
 }
