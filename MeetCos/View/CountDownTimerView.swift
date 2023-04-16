@@ -16,7 +16,7 @@ struct CountDownTimerView: View {
             Circle()
                 .stroke(Color.green, style: StrokeStyle(lineWidth: 10, lineCap: .round))
                 .padding(50)
-            ClockwiseProgress(progress: viewModel.progress)
+            ClockwiseProgress()
                 .stroke(Color.yellow, style: StrokeStyle(lineWidth: 10))
                 .scaledToFit()
                 .padding(50)
@@ -26,7 +26,7 @@ struct CountDownTimerView: View {
 }
 
 struct ClockwiseProgress: Shape {
-    var progress: CGFloat
+    var progress: CGFloat = 0.0
     
     func path(in rect: CGRect) -> Path {
         var path = Path()

@@ -27,7 +27,6 @@ class HomeViewModel: ObservableObject {
     
     init(timePickerViewModel: TimePickerViewModel) {
         self.timePickerViewModel = timePickerViewModel
-        
         let initialDuration = Double(timePickerViewModel.hourSelection * 3600 + timePickerViewModel.minSelection * 60)
         let tempCountdownTimerViewModel = CountdownTimerViewModel(initialDuration: initialDuration)
         self.countdownTimerViewModel = tempCountdownTimerViewModel
@@ -83,7 +82,6 @@ class HomeViewModel: ObservableObject {
         guard let session = SessionModel.shared.latestSession else {
             return
         }
-        
         let duration = session.duration
         timePickerViewModel.updateSelectionsFromDuration(duration: duration)
     }
@@ -98,7 +96,7 @@ class HomeViewModel: ObservableObject {
     }
     
     func start() {
-        self.count()
+        countdownTimerViewModel.start()
     }
     
     func count(_ interval: Double = 0.1){
@@ -153,7 +151,6 @@ class HomeViewModel: ObservableObject {
     }
     
     func updateSessionDuration() {
-        // Update the session duration based on the current timePickerViewModel selections
         let newHour = timePickerViewModel.hourSelection
         let newMinute = timePickerViewModel.minSelection
 
@@ -165,7 +162,6 @@ class HomeViewModel: ObservableObject {
     }
     
     func updateCountdownTimerViewModel() {
-        // Update the countdownTimerViewModel's initialDuration and remainingTime
         guard let session = SessionModel.shared.latestSession else { return }
         let newDuration = session.duration
         countdownTimerViewModel.updateDuration(newDuration: newDuration)

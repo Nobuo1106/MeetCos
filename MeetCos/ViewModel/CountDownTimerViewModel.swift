@@ -11,48 +11,45 @@ import Combine
 class CountdownTimerViewModel: ObservableObject {
     @Published var initialDuration: Double
     @Published var remainingTime: Double
-    @Published var timer: AnyCancellable!
-    @Published var progress: CGFloat = 0.0
+//    private var remainingTimeInSeconds: Double
     @Published var displayTime: String = "0:00:00"
-    private let interval: Double = 0.1
+    private var timer: Timer?
     
     init(initialDuration: Double) {
         self.remainingTime = initialDuration
         self.initialDuration = initialDuration
+//        self.remainingTimeInSeconds = initialDuration * 60
     }
+    
+    func start() {
+        stop() // Ensure any existing timer is stopped before starting a new one
 
-    func start(duration: Double) {
-        self.remainingTime = duration
-        
-        timer = Timer.publish(every: interval, on: .main, in: .common)
-            .autoconnect()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let self = self else { return }
-                
-                self.remainingTime -= self.interval
-                
-                if self.remainingTime <= 0 {
-                    self.stop()
-                }
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+
+            if self.remainingTime > 0 {
+                self.remainingTime -= 1
+            } else {
+                self.stop()
             }
+        }
     }
-
+    
     func stop() {
-        timer?.cancel()
+        timer?.invalidate()
         timer = nil
     }
     
     func updateDuration(newDuration: Double) {
-        self.initialDuration = newDuration
-        self.remainingTime = newDuration
+        self.initialDuration = newDuration * 60
+        self.remainingTime = newDuration * 60
     }
     
     var formattedRemainingTime: String {
-        let hours = Int(remainingTime) / 60
-        let minutes = (Int(remainingTime) % 60)
-        let seconds = Int(remainingTime * 60) % 60
-
+        let hours = Int(remainingTime) / 3600
+        let minutes = (Int(remainingTime) % 3600) / 60
+        let seconds = Int(remainingTime) % 60
+        
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
 }
