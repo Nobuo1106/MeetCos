@@ -23,7 +23,6 @@ class CountdownTimerViewModel: ObservableObject {
 
     func start(duration: Double) {
         self.remainingTime = duration
-        self.updateDisplayTime()
         
         timer = Timer.publish(every: interval, on: .main, in: .common)
             .autoconnect()
@@ -32,20 +31,11 @@ class CountdownTimerViewModel: ObservableObject {
                 guard let self = self else { return }
                 
                 self.remainingTime -= self.interval
-                self.updateDisplayTime()
                 
                 if self.remainingTime <= 0 {
                     self.stop()
                 }
             }
-    }
-    
-    private func updateDisplayTime() {
-        let hours = Int(remainingTime) / 3600
-        let minutes = (Int(remainingTime) % 3600) / 60
-        let seconds = Int(remainingTime) % 60
-        
-        displayTime = String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
 
     func stop() {
@@ -59,9 +49,9 @@ class CountdownTimerViewModel: ObservableObject {
     }
     
     var formattedRemainingTime: String {
-        let hours = Int(remainingTime) / 3600
-        let minutes = (Int(remainingTime) % 3600) / 60
-        let seconds = Int(remainingTime) % 60
+        let hours = Int(remainingTime) / 60
+        let minutes = (Int(remainingTime) % 60)
+        let seconds = Int(remainingTime * 60) % 60
 
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }

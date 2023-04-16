@@ -21,7 +21,6 @@ class SessionModel {
     }
     
     /// SheetViewModel、HomeViewModelで利用する為、expense引数がなくても使える。
-    /// 柔軟にする為直近のSessionオブジェクトも変更出来るように実装。
     /// latestSessionのデータ一貫性の為Sessionを返す。
     func upsertSession(session: Session?, hour: Int, minute: Int, expenses: [Expense] = [], completion: @escaping (Session?) -> Void) {
         let context = PersistenceController.shared.container.viewContext
