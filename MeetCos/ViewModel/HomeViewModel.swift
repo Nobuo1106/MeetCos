@@ -26,9 +26,10 @@ class HomeViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
     
     init(timePickerViewModel: TimePickerViewModel) {
+        let groups: [Group] = []
         self.timePickerViewModel = timePickerViewModel
         let initialDuration = Double(timePickerViewModel.hourSelection * 3600 + timePickerViewModel.minSelection * 60)
-        let tempCountdownTimerViewModel = CountdownTimerViewModel(initialDuration: initialDuration)
+        let tempCountdownTimerViewModel = CountdownTimerViewModel(initialDuration: initialDuration, groups: groups)
         self.countdownTimerViewModel = tempCountdownTimerViewModel
         
         getLatestSession { [weak self] in
@@ -164,6 +165,8 @@ class HomeViewModel: ObservableObject {
     func updateCountdownTimerViewModel() {
         guard let session = SessionModel.shared.latestSession else { return }
         let newDuration = session.duration
+        let groups = Array(session.groups)
         countdownTimerViewModel.updateDuration(newDuration: newDuration)
+        countdownTimerViewModel.initializeTotalCost(groups: groups)
     }
 }

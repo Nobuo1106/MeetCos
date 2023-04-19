@@ -11,14 +11,15 @@ import Combine
 class CountdownTimerViewModel: ObservableObject {
     @Published var initialDuration: Double
     @Published var remainingTime: Double
-//    private var remainingTimeInSeconds: Double
     @Published var displayTime: String = "0:00:00"
+    @Published var totalCost: Double = 0.0
+    private var costPerSecond: Double = 0.0
     private var timer: Timer?
     
-    init(initialDuration: Double) {
+    init(initialDuration: Double, groups: [Group]) {
         self.remainingTime = initialDuration
         self.initialDuration = initialDuration
-//        self.remainingTimeInSeconds = initialDuration * 60
+        updateCostPerSecond(groups: groups)
     }
     
     func start() {
@@ -29,6 +30,7 @@ class CountdownTimerViewModel: ObservableObject {
 
             if self.remainingTime > 0 {
                 self.remainingTime -= 1
+                self.totalCost += self.costPerSecond
             } else {
                 self.stop()
             }
@@ -51,5 +53,18 @@ class CountdownTimerViewModel: ObservableObject {
         let seconds = Int(remainingTime) % 60
         
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    }
+    
+    func initializeTotalCost(groups: [Group]) {
+        updateCostPerSecond(groups: groups)
+        totalCost = 0.0
+    }
+    
+    private func updateCostPerSecond(groups: [Group]) {
+        costPerSecond = 0.0
+        for group in groups {
+            let totalHourlyCost = group.hourlyWage + group.hourlyProfit
+            costPerSecond += (Double(totalHourlyCost) * Double(group.personCount)) / 3600.0
+        }
     }
 }
