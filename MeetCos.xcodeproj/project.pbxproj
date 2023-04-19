@@ -23,6 +23,8 @@
 		1897743429E281900039A58A /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1897743329E281900039A58A /* SharedData.swift */; };
 		1897743629E2882E0039A58A /* CountDownTimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1897743529E2882E0039A58A /* CountDownTimerViewModel.swift */; };
 		1897743829E28B8E0039A58A /* CountDownTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1897743729E28B8E0039A58A /* CountDownTimerView.swift */; };
+		1897743A29F025430039A58A /* 88697-neomorphism-radial-progress-bar-style-2-light-theme-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 1897743929F025430039A58A /* 88697-neomorphism-radial-progress-bar-style-2-light-theme-01.json */; };
+		1897743C29F026BE0039A58A /* Comp 1.json in Resources */ = {isa = PBXBuildFile; fileRef = 1897743B29F026BE0039A58A /* Comp 1.json */; };
 		18C17C2829BD762C0084B9CC /* Group+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C17C2629BD762C0084B9CC /* Group+CoreDataProperties.swift */; };
 		18C17C2B29BD7A3C0084B9CC /* Session+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C17C2929BD7A3B0084B9CC /* Session+CoreDataClass.swift */; };
 		18C17C2C29BD7A3C0084B9CC /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C17C2A29BD7A3B0084B9CC /* Session+CoreDataProperties.swift */; };
@@ -51,6 +53,8 @@
 		1897743329E281900039A58A /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		1897743529E2882E0039A58A /* CountDownTimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownTimerViewModel.swift; sourceTree = "<group>"; };
 		1897743729E28B8E0039A58A /* CountDownTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownTimerView.swift; sourceTree = "<group>"; };
+		1897743929F025430039A58A /* 88697-neomorphism-radial-progress-bar-style-2-light-theme-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "88697-neomorphism-radial-progress-bar-style-2-light-theme-01.json"; sourceTree = "<group>"; };
+		1897743B29F026BE0039A58A /* Comp 1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Comp 1.json"; sourceTree = "<group>"; };
 		18C17C2629BD762C0084B9CC /* Group+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Group+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		18C17C2929BD7A3B0084B9CC /* Session+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataClass.swift"; sourceTree = "<group>"; };
 		18C17C2A29BD7A3B0084B9CC /* Session+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -97,6 +101,8 @@
 				1837DAE429CEED54007B8E5B /* ViewModel */,
 				18AD0357296A7B27003D251B /* View */,
 				1806351229569A560013369D /* Assets.xcassets */,
+				1897743929F025430039A58A /* 88697-neomorphism-radial-progress-bar-style-2-light-theme-01.json */,
+				1897743B29F026BE0039A58A /* Comp 1.json */,
 				1806351429569A560013369D /* Preview Content */,
 			);
 			path = MeetCos;
@@ -210,6 +216,8 @@
 			files = (
 				1806351629569A560013369D /* Preview Assets.xcassets in Resources */,
 				1806351329569A560013369D /* Assets.xcassets in Resources */,
+				1897743A29F025430039A58A /* 88697-neomorphism-radial-progress-bar-style-2-light-theme-01.json in Resources */,
+				1897743C29F026BE0039A58A /* Comp 1.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
