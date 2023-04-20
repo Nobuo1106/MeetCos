@@ -115,11 +115,15 @@ class SheetViewModel: ObservableObject {
             timePickerViewModel.hourSelection = hourMin.hours
             timePickerViewModel.minSelection = hourMin.minutes
             let groups = Array(latestSession.groups)
-            expenses = groups.map { group in
-                Expense(personCount: Int(group.personCount),
-                        hourlyWage: Int(group.hourlyWage),
-                        hourlyProfit: Int(group.hourlyProfit)
-                )
+            if groups.isEmpty {
+                expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
+            } else {
+                expenses = groups.map { group in
+                    Expense(personCount: Int(group.personCount),
+                            hourlyWage: Int(group.hourlyWage),
+                            hourlyProfit: Int(group.hourlyProfit)
+                    )
+                }
             }
         } else {
             expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]

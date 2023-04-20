@@ -25,9 +25,9 @@ struct SheetView: View {
                 FormView()
                     .environmentObject(viewModel)
                     .environmentObject(timePickerViewModel)
-                    .onAppear{
-                        viewModel.getLatestGroups(from: viewModel.latestSession)
-                    }
+            }
+            .onAppear{
+                viewModel.getLatestGroups(from: viewModel.latestSession)
             }
             .toolbar {
                 ToolbarItem(placement: .keyboard) {
