@@ -11,16 +11,17 @@ import SwiftUI
 struct TimePickerView: View {
     //TimeManagerのインスタンスを作成
     @ObservedObject var viewModel: TimePickerViewModel
-    //デバイスのスクリーンの幅
+    @Binding var isRunning: Bool
     let screenWidth = UIScreen.main.bounds.width
-    //デバイスのスクリーンの高さ
     let screenHeight = UIScreen.main.bounds.height
-    //設定可能な時間単位の数値
     var hours = [Int](0..<24)
-    //設定可能な分単位の数値
     var minutes = [Int](0..<60)
-    //設定可能な秒単位の数値
     var seconds = [Int](0..<60)
+
+    init(viewModel: TimePickerViewModel, isRunning: Binding<Bool> = .constant(false)) {
+        self.viewModel = viewModel
+        _isRunning = isRunning
+    }
     
     var body: some View {
         //ZStackでPickerとレイヤーで重なるようにボタンを配置
@@ -59,9 +60,10 @@ struct TimePickerView: View {
 }
 
 struct TimePickerView_Previews: PreviewProvider {
+    @State static private var isRunning = false
     static var previews: some View {
         let timePickerVM = TimePickerViewModel()
-        TimePickerView(viewModel: timePickerVM)
+        TimePickerView(viewModel: timePickerVM, isRunning: $isRunning)
             .previewLayout(.sizeThatFits)
     }
 }

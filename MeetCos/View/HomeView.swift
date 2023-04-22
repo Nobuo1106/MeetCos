@@ -14,8 +14,10 @@ struct HomeView: View {
     
     init() {
         let timePickerVM = TimePickerViewModel()
+        let homeVM = HomeViewModel(timePickerViewModel: timePickerVM)
+        
         _timePickerViewModel = StateObject(wrappedValue: timePickerVM)
-        _homeViewModel = StateObject(wrappedValue: HomeViewModel(timePickerViewModel: timePickerVM))
+        _homeViewModel = StateObject(wrappedValue: homeVM)
     }
     
     var body: some View {
@@ -23,13 +25,14 @@ struct HomeView: View {
             HStack {
                 Text("会議時間")
                     .padding()
-                TimePickerView(viewModel: timePickerViewModel)
+                TimePickerView(viewModel: timePickerViewModel, isRunning: $homeViewModel.isRunning)
                     .onChange(of: timePickerViewModel.hourSelection) { _ in
                         homeViewModel.saveSession()
                     }
                     .onChange(of: timePickerViewModel.minSelection) { _ in
                         homeViewModel.saveSession()
                     }
+                    .disabled(homeViewModel.isRunning)
             }
             ZStack(alignment: .center) {
                 Circle()
