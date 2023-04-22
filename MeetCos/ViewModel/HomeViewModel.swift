@@ -12,11 +12,7 @@ import SwiftUI
 class HomeViewModel: ObservableObject {
     @Published var timePickerViewModel: TimePickerViewModel
     @Published var countdownTimerViewModel: CountdownTimerViewModel
-    @Published var displayTime = "0:00:00"
-    @Published var remainingTime: Double = 0.0
-    @Published var selectedDate = Date()
-    @Published var timer: AnyCancellable!
-    @Published var duration: CGFloat = 1.0 // プログレスバー位置
+    @Published var isRunning = false
     @Published var totalCost = 0
     var latestSession: Session?
     private var appInBackground = false
@@ -38,7 +34,6 @@ class HomeViewModel: ObservableObject {
             self.updateCountdownTimerViewModel()
         }
         
-        // Observe changes in hourSelection and minSelection
         timePickerViewModel.$hourSelection
             .combineLatest(timePickerViewModel.$minSelection)
             .sink { [weak self] (_, _) in
@@ -50,26 +45,28 @@ class HomeViewModel: ObservableObject {
     func appStateChanged(_ scenePhase: ScenePhase) {
         switch scenePhase {
         case .background:
-            appDidEnterBackground()
+//            appDidEnterBackground()
+            break
         case .active:
-            appWillEnterForeground()
+//            appWillEnterForeground()
+            break
         default:
             break
         }
     }
     
-    func appDidEnterBackground() {
-        appInBackground = true
-        backgroundTime = Date()
-    }
+//    func appDidEnterBackground() {
+//        appInBackground = true
+//        backgroundTime = Date()
+//    }
     
-    func appWillEnterForeground() {
-        if appInBackground, let backgroundTime = backgroundTime {
-            let timeInBackground = Date().timeIntervalSince(backgroundTime)
-            remainingTime -= timeInBackground
-        }
-        appInBackground = false
-    }
+//    func appWillEnterForeground() {
+//        if appInBackground, let backgroundTime = backgroundTime {
+//            let timeInBackground = Date().timeIntervalSince(backgroundTime)
+//            remainingTime -= timeInBackground
+//        }
+//        appInBackground = false
+//    }
     
     func getLatestSession(completion: @escaping () -> Void) {
         SessionModel.shared.fetchLatestSession()
@@ -86,50 +83,18 @@ class HomeViewModel: ObservableObject {
         let duration = session.duration
         timePickerViewModel.updateSelectionsFromDuration(duration: duration)
     }
-    
-    private func formatToString () -> String{
-        let dateFormatter = DateComponentsFormatter()
-        dateFormatter.unitsStyle = .positional
-        dateFormatter.allowedUnits = [.hour, .minute, .second]
-        dateFormatter.zeroFormattingBehavior = .dropTrailing
-        self.displayTime = dateFormatter.string(from: self.remainingTime)!
-        return self.displayTime
-    }
-    
+
     func start() {
+        isRunning = true
         countdownTimerViewModel.start()
-    }
-    
-    func count(_ interval: Double = 0.1){
-        let max = self.remainingTime
-        // TimerPublisherが存在しているときは念の為処理をキャンセル
-        if let _timer = timer{
-            _timer.cancel()
-        }
-        
-        timer = Timer.publish(every: interval, on: .main, in: .common)
-            .autoconnect()
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: ({_ in
-                self.remainingTime -= 0.1
-                //                self.displayTime = self.formatToString()
-                // 切り捨て位置変更
-                print(self.remainingTime)
-                self.duration = 1 - CGFloat(self.remainingTime / max)
-                if self.remainingTime < 0 {
-                    self.stop()
-                    self.duration = 1
-                }
-            }))
     }
     
     // タイマーの停止
     func stop(){
-        //        print("stop Timer")
-        timer?.cancel()
-        timer = nil
+        isRunning = false
+        countdownTimerViewModel.stop()
     }
-    
+
     func convertFromDurationToHoursAndMinutes() {
         if let session = SessionModel.shared.latestSession {
             let hourMin: (hours: Int, minutes: Int) = self.timePickerViewModel.toHourAndMinutes(minutes: session.duration)

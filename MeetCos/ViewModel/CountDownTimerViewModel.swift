@@ -24,7 +24,7 @@ class CountdownTimerViewModel: ObservableObject {
     }
     
     func start() {
-        stop() // Ensure any existing timer is stopped before starting a new one
+        stop()
 
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self else { return }

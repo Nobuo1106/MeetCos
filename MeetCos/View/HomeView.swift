@@ -55,6 +55,7 @@ struct HomeView: View {
             }) {
                 Text("Edit")
             }
+            .disabled(homeViewModel.isRunning)
             .sheet(isPresented: $showingSheet, onDismiss: {
                 homeViewModel.getLatestSession(completion: {
                     homeViewModel.updateDisplayTime()
