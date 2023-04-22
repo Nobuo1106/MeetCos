@@ -16,13 +16,13 @@ struct CountDownTimerView: View {
             Circle()
                 .stroke(Color.green, style: StrokeStyle(lineWidth: 10, lineCap: .round))
                 .padding(50)
-            ClockwiseProgress()
+            ClockwiseProgress(progress: CGFloat(viewModel.progress))
                 .stroke(Color.yellow, style: StrokeStyle(lineWidth: 10))
                 .scaledToFit()
                 .padding(50)
             VStack {
                 Text("残り時間: \(viewModel.formattedRemainingTime)")
-                Text("経費：\(viewModel.totalCost)")
+                Text("経費：\(viewModel.formattedTotalCost)")
             }
         }
     }

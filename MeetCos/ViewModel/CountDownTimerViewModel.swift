@@ -13,6 +13,7 @@ class CountdownTimerViewModel: ObservableObject {
     @Published var remainingTime: Double
     @Published var displayTime: String = "0:00:00"
     @Published var totalCost: Double = 0.0
+    @Published var progress: Double = 0
     private var costPerSecond: Double = 0.0
     private var timer: Timer?
     
@@ -31,6 +32,7 @@ class CountdownTimerViewModel: ObservableObject {
             if self.remainingTime > 0 {
                 self.remainingTime -= 1
                 self.totalCost += self.costPerSecond
+                self.updateProgress()
             } else {
                 self.stop()
             }
@@ -66,5 +68,18 @@ class CountdownTimerViewModel: ObservableObject {
             let totalHourlyCost = group.hourlyWage + group.hourlyProfit
             costPerSecond += (Double(totalHourlyCost) * Double(group.personCount)) / 3600.0
         }
+    }
+    
+    var formattedTotalCost: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencySymbol = "¥"
+        formatter.maximumFractionDigits = 0
+        
+        return formatter.string(from: NSNumber(value: totalCost)) ?? ""
+    }
+    
+    func updateProgress() {
+        progress = 1 - (remainingTime / initialDuration)
     }
 }
