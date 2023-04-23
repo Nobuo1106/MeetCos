@@ -14,9 +14,9 @@ class CountdownTimerViewModel: ObservableObject {
     @Published var displayTime: String = "0:00:00"
     @Published var totalCost: Double = 0.0
     @Published var progress: Double = 0
+    @Published var isOvertime: Bool = false
     private var costPerSecond: Double = 0.0
     private var timer: Timer?
-    private var isOvertime: Bool = false
     private var totalDuration: Double = 0.0
     
     init(initialDuration: Double, groups: [Group]) {
@@ -31,16 +31,9 @@ class CountdownTimerViewModel: ObservableObject {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self else { return }
 
-            if self.remainingTime > 0 {
-                self.remainingTime -= 1
-                self.totalCost += self.costPerSecond
-                self.updateProgress()
-            } else {
-               self.isOvertime = true
-               self.totalDuration += 1
-               self.totalCost += self.costPerSecond
-               self.updateProgress()
-            }
+            self.remainingTime -= 1
+            self.totalCost += self.costPerSecond
+            self.updateProgress()
         }
     }
     
@@ -55,9 +48,9 @@ class CountdownTimerViewModel: ObservableObject {
     }
     
     var formattedRemainingTime: String {
-        let hours = Int(remainingTime) / 3600
-        let minutes = (Int(remainingTime) % 3600) / 60
-        let seconds = Int(remainingTime) % 60
+        let hours = abs(Int(remainingTime)) / 3600
+        let minutes = abs((Int(remainingTime) % 3600)) / 60
+        let seconds = abs(Int(remainingTime)) % 60
         
         if isOvertime {
             return "+\(String(format: "%02d:%02d:%02d", hours, minutes, seconds))"
@@ -90,15 +83,10 @@ class CountdownTimerViewModel: ObservableObject {
     
     func updateProgress() {
         if remainingTime < 0 {
-            progress = 1
-            return
+            let tempRemainingTime = remainingTime * -1
+            progress = tempRemainingTime / initialDuration
+        } else {
+            progress = 1 - (remainingTime / initialDuration)
         }
-        
-        if remainingTime == 0 {
-            progress = 1
-            totalCost += costPerSecond
-            return
-        }
-        progress = 1 - (remainingTime / initialDuration)
     }
 }

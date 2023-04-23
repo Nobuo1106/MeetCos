@@ -41,8 +41,6 @@ struct HomeView: View {
                 CountDownTimerView(viewModel: homeViewModel.countdownTimerViewModel)
             }
             HStack {
-                //                Text("\(homeViewModel.count)")
-                //                Text("\(homeViewModel.remainingTime)")
                 Button("Start") {
                     homeViewModel.start()
                 }
