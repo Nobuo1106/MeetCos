@@ -105,4 +105,19 @@ class SessionModel {
             context.rollback()
         }
     }
+    
+    func updateStartedAt(for session: Session) {
+        let context = PersistenceController.shared.container.viewContext
+        context.perform {
+            let now = Date()
+            session.startedAt = now
+            
+            do {
+                try context.save()
+            } catch {
+                print("Error updating session startedAt: \(error.localizedDescription)")
+                context.rollback()
+            }
+        }
+    }
 }

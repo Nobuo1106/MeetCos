@@ -86,6 +86,11 @@ class HomeViewModel: ObservableObject {
 
     func start() {
         isRunning = true
+        if let session = SessionModel.shared.latestSession {
+           if session.startedAt == nil {
+               SessionModel.shared.updateStartedAt(for: session)
+           }
+       }
         countdownTimerViewModel.start()
     }
     
