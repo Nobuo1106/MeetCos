@@ -10,7 +10,13 @@ import Combine
 
 class CountdownTimerViewModel: ObservableObject {
     @Published var initialDuration: Double
-    @Published var remainingTime: Double
+    @Published var remainingTime: Double {
+        didSet {
+            if remainingTime < 0 && initialDuration > 0 {
+                isOvertime = true
+            }
+        }
+    }
     @Published var displayTime: String = "0:00:00"
     @Published var totalCost: Double = 0.0
     @Published var progress: Double = 0
@@ -27,10 +33,10 @@ class CountdownTimerViewModel: ObservableObject {
     
     func start() {
         stop()
-
+        
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self else { return }
-
+            
             self.remainingTime -= 1
             self.totalCost += self.costPerSecond
             self.updateProgress()
@@ -53,7 +59,7 @@ class CountdownTimerViewModel: ObservableObject {
         let seconds = abs(Int(remainingTime)) % 60
         
         if isOvertime {
-            return "+\(String(format: "%02d:%02d:%02d", hours, minutes, seconds))"
+            return "+ \(String(format: "%02d:%02d:%02d", hours, minutes, seconds))"
         } else {
             return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
         }
