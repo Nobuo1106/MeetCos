@@ -16,6 +16,8 @@ class CountdownTimerViewModel: ObservableObject {
     @Published var progress: Double = 0
     private var costPerSecond: Double = 0.0
     private var timer: Timer?
+    private var isOvertime: Bool = false
+    private var totalDuration: Double = 0.0
     
     init(initialDuration: Double, groups: [Group]) {
         self.remainingTime = initialDuration
@@ -34,7 +36,10 @@ class CountdownTimerViewModel: ObservableObject {
                 self.totalCost += self.costPerSecond
                 self.updateProgress()
             } else {
-                self.stop()
+               self.isOvertime = true
+               self.totalDuration += 1
+               self.totalCost += self.costPerSecond
+               self.updateProgress()
             }
         }
     }
@@ -54,7 +59,11 @@ class CountdownTimerViewModel: ObservableObject {
         let minutes = (Int(remainingTime) % 3600) / 60
         let seconds = Int(remainingTime) % 60
         
-        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+        if isOvertime {
+            return "+\(String(format: "%02d:%02d:%02d", hours, minutes, seconds))"
+        } else {
+            return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+        }
     }
     
     func initializeTotalCost(groups: [Group]) {
@@ -80,6 +89,16 @@ class CountdownTimerViewModel: ObservableObject {
     }
     
     func updateProgress() {
+        if remainingTime < 0 {
+            progress = 1
+            return
+        }
+        
+        if remainingTime == 0 {
+            progress = 1
+            totalCost += costPerSecond
+            return
+        }
         progress = 1 - (remainingTime / initialDuration)
     }
 }
