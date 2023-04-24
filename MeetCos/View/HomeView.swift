@@ -46,6 +46,7 @@ struct HomeView: View {
                 }
                 Button("Done") {
                     homeViewModel.stop()
+                    homeViewModel.finishSession()
                 }
             }
             Spacer()

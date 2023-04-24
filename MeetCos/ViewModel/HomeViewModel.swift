@@ -139,4 +139,9 @@ class HomeViewModel: ObservableObject {
         countdownTimerViewModel.updateDuration(newDuration: newDuration)
         countdownTimerViewModel.initializeTotalCost(groups: groups)
     }
+    
+    func finishSession() {
+        guard let latestSession = SessionModel.shared.latestSession else { return }
+        SessionModel.shared.updateFinishedAt(for: latestSession)
+    }
 }
