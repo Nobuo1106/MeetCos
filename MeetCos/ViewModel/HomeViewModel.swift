@@ -143,5 +143,10 @@ class HomeViewModel: ObservableObject {
     func finishSession() {
         guard let latestSession = SessionModel.shared.latestSession else { return }
         SessionModel.shared.updateFinishedAt(for: latestSession)
+        SessionModel.shared.resetLatestSession()
+        timePickerViewModel.hourSelection = 0
+        timePickerViewModel.minSelection = 0
+        countdownTimerViewModel.remainingTime = 0
+        countdownTimerViewModel.totalCost = 0
     }
 }

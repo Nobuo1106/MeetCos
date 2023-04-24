@@ -135,4 +135,8 @@ class SessionModel {
             }
         }
     }
+    
+    func resetLatestSession() {
+        latestSession = nil
+    }
 }
