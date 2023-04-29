@@ -44,6 +44,7 @@ struct HomeView: View {
                 Button("Start") {
                     homeViewModel.start()
                 }
+                .disabled(homeViewModel.isRunning)
                 Button("Done") {
                     homeViewModel.stop()
                     homeViewModel.finishSession()

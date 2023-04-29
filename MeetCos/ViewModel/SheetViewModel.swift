@@ -25,8 +25,7 @@ class SheetViewModel: ObservableObject {
     @Published var maxValue: Double = 0
     //設定した時間が1時間以上、1時間未満1分以上、1分未満1秒以上によって変わる時間表示形式
     @Published var displayedTimeFormat: TimeFormat = .min
-    
-    @Published var focus: Bool = false // フォーカス
+    @Published var focus: Bool = false
     @Published var expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
     @Published var totalCost: Int = 0
     var latestSession: Session?
