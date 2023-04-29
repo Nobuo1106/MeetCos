@@ -48,6 +48,12 @@ class CountdownTimerViewModel: ObservableObject {
         timer = nil
     }
     
+    func reset() {
+        remainingTime = 0
+        totalCost = 0
+        progress = 0
+    }
+    
     func updateDuration(newDuration: Double) {
         self.initialDuration = newDuration * 60
         self.remainingTime = newDuration * 60

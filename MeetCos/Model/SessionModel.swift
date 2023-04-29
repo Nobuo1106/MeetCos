@@ -74,18 +74,18 @@ class SessionModel {
     func saveSession(hourSelection: Int, minSelection: Int) {
         let context = PersistenceController.shared.container.viewContext
         let session = self.latestSession ?? Session(context: context)
-
+        
         let newDuration = Double(hourSelection * 60 + minSelection)
         if session.duration != newDuration {
             session.duration = newDuration
         }
-
+        
         if session.createdAt.isEmpty {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             let currentTime = dateFormatter.string(from: Date())
             session.createdAt = currentTime
-
+            
             let emptyGroup = Group(context: context)
             emptyGroup.personCount = 0
             emptyGroup.hourlyWage = 0
@@ -94,7 +94,7 @@ class SessionModel {
             emptyGroup.updatedAt = currentTime
             emptyGroup.session = session
         }
-
+        
         do {
             try context.save()
             print("Session saved")
@@ -138,5 +138,43 @@ class SessionModel {
     
     func resetLatestSession() {
         latestSession = nil
+    }
+    
+    func createEmptySession(completion: @escaping () -> Void) {
+        let context = PersistenceController.shared.container.viewContext
+        context.perform {
+            let session = Session(context: context)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            formatter.timeZone = TimeZone.current
+            formatter.locale = Locale.current
+            let now = Date()
+            session.createdAt = formatter.string(from: now)
+            session.updatedAt = formatter.string(from: now)
+            
+            session.finishedAt = nil
+            session.duration = 0
+            if let latestSession = self.latestSession {
+                session.sessionId = latestSession.sessionId + 1
+            } else {
+                session.sessionId = 1
+            }
+            
+            do {
+                try context.save()
+                DispatchQueue.main.async {
+                    self.latestSession = nil
+                    completion()
+                }
+            } catch {
+                print("Error creating empty session: \(error.localizedDescription)")
+                context.rollback()
+            }
+        }
+    }
+    
+    func isEmptySession(_ session: Session?) -> Bool {
+        guard let session = session else { return true }
+        return session.startedAt == nil && session.finishedAt == nil && session.duration == 0
     }
 }

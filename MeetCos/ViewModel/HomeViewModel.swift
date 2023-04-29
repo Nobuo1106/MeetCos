@@ -45,28 +45,28 @@ class HomeViewModel: ObservableObject {
     func appStateChanged(_ scenePhase: ScenePhase) {
         switch scenePhase {
         case .background:
-//            appDidEnterBackground()
+            //            appDidEnterBackground()
             break
         case .active:
-//            appWillEnterForeground()
+            //            appWillEnterForeground()
             break
         default:
             break
         }
     }
     
-//    func appDidEnterBackground() {
-//        appInBackground = true
-//        backgroundTime = Date()
-//    }
+    //    func appDidEnterBackground() {
+    //        appInBackground = true
+    //        backgroundTime = Date()
+    //    }
     
-//    func appWillEnterForeground() {
-//        if appInBackground, let backgroundTime = backgroundTime {
-//            let timeInBackground = Date().timeIntervalSince(backgroundTime)
-//            remainingTime -= timeInBackground
-//        }
-//        appInBackground = false
-//    }
+    //    func appWillEnterForeground() {
+    //        if appInBackground, let backgroundTime = backgroundTime {
+    //            let timeInBackground = Date().timeIntervalSince(backgroundTime)
+    //            remainingTime -= timeInBackground
+    //        }
+    //        appInBackground = false
+    //    }
     
     func getLatestSession(completion: @escaping () -> Void) {
         SessionModel.shared.fetchLatestSession()
@@ -83,14 +83,14 @@ class HomeViewModel: ObservableObject {
         let duration = session.duration
         timePickerViewModel.updateSelectionsFromDuration(duration: duration)
     }
-
+    
     func start() {
         isRunning = true
         if let session = SessionModel.shared.latestSession {
-           if session.startedAt == nil {
-               SessionModel.shared.updateStartedAt(for: session)
-           }
-       }
+            if session.startedAt == nil {
+                SessionModel.shared.updateStartedAt(for: session)
+            }
+        }
         countdownTimerViewModel.start()
     }
     
@@ -99,7 +99,12 @@ class HomeViewModel: ObservableObject {
         isRunning = false
         countdownTimerViewModel.stop()
     }
-
+    
+    func reset() {
+        isRunning = false
+        countdownTimerViewModel.reset()
+    }
+    
     func convertFromDurationToHoursAndMinutes() {
         if let session = SessionModel.shared.latestSession {
             let hourMin: (hours: Int, minutes: Int) = self.timePickerViewModel.toHourAndMinutes(minutes: session.duration)
@@ -124,7 +129,6 @@ class HomeViewModel: ObservableObject {
     func updateSessionDuration() {
         let newHour = timePickerViewModel.hourSelection
         let newMinute = timePickerViewModel.minSelection
-
         SessionModel.shared.upsertSession(session: SessionModel.shared.latestSession, hour: newHour, minute: newMinute) { [weak self] updatedSession in
             guard let self = self else { return }
             SessionModel.shared.latestSession = updatedSession
@@ -141,12 +145,17 @@ class HomeViewModel: ObservableObject {
     }
     
     func finishSession() {
-        guard let latestSession = SessionModel.shared.latestSession else { return }
-        SessionModel.shared.updateFinishedAt(for: latestSession)
-        SessionModel.shared.resetLatestSession()
+        if let latestSession = SessionModel.shared.latestSession {
+            SessionModel.shared.updateFinishedAt(for: latestSession)
+        }
+
         timePickerViewModel.hourSelection = 0
         timePickerViewModel.minSelection = 0
-        countdownTimerViewModel.remainingTime = 0
-        countdownTimerViewModel.totalCost = 0
+
+        if !SessionModel.shared.isEmptySession(SessionModel.shared.latestSession) {
+            SessionModel.shared.createEmptySession {
+                self.updateCountdownTimerViewModel()
+            }
+        }
     }
 }
