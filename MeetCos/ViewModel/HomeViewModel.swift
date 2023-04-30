@@ -36,6 +36,7 @@ class HomeViewModel: ObservableObject {
         
         timePickerViewModel.$hourSelection
             .combineLatest(timePickerViewModel.$minSelection)
+            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main) // 重複Insertを防ぐためにdebounceを利用
             .sink { [weak self] (_, _) in
                 self?.updateSessionDuration()
             }
@@ -148,10 +149,10 @@ class HomeViewModel: ObservableObject {
         if let latestSession = SessionModel.shared.latestSession {
             SessionModel.shared.updateFinishedAt(for: latestSession)
         }
-
+        
         timePickerViewModel.hourSelection = 0
         timePickerViewModel.minSelection = 0
-
+        
         if !SessionModel.shared.isEmptySession(SessionModel.shared.latestSession) {
             SessionModel.shared.createEmptySession {
                 self.updateCountdownTimerViewModel()
