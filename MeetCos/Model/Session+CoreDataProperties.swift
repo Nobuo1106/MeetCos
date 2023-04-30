@@ -46,8 +46,8 @@ extension Session {
         let context = PersistenceController.shared.container.viewContext
         let fetchRequest: NSFetchRequest<Session> = Session.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "sessionId", ascending: false)]
+        fetchRequest.predicate = NSPredicate(format: "finishedAt == nil")
         fetchRequest.fetchLimit = 1
-        
         do {
             let results = try context.fetch(fetchRequest)
             return results.first

@@ -48,6 +48,7 @@ struct HomeView: View {
                 Button("Done") {
                     homeViewModel.stop()
                     homeViewModel.finishSession()
+                    homeViewModel.countdownTimerViewModel.reset()
                 }
             }
             Spacer()
