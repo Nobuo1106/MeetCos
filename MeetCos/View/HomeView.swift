@@ -27,10 +27,10 @@ struct HomeView: View {
                     .padding()
                 TimePickerView(viewModel: timePickerViewModel, isRunning: $homeViewModel.isRunning)
                     .onChange(of: timePickerViewModel.hourSelection) { _ in
-                        homeViewModel.saveSession()
+                        homeViewModel.updateSessionDuration()
                     }
                     .onChange(of: timePickerViewModel.minSelection) { _ in
-                        homeViewModel.saveSession()
+                        homeViewModel.updateSessionDuration()
                     }
                     .disabled(homeViewModel.isRunning)
             }
