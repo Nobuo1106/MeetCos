@@ -14,7 +14,6 @@ class HomeViewModel: ObservableObject {
     @Published var countdownTimerViewModel: CountdownTimerViewModel
     @Published var isRunning = false
     @Published var totalCost = 0
-    var latestSession: Session?
     private var appInBackground = false
     private var backgroundTime: Date?
     private let sharedData = SharedData()
@@ -28,8 +27,9 @@ class HomeViewModel: ObservableObject {
         let tempCountdownTimerViewModel = CountdownTimerViewModel(initialDuration: initialDuration, groups: groups)
         self.countdownTimerViewModel = tempCountdownTimerViewModel
         
-        getLatestSession { [weak self] in
+        getLatestSession { [weak self] session in
             guard let self = self else { return }
+            SessionModel.shared.latestSession = session
             self.updateDisplayTime()
             self.updateCountdownTimerViewModel()
         }
@@ -69,11 +69,11 @@ class HomeViewModel: ObservableObject {
     //        appInBackground = false
     //    }
     
-    func getLatestSession(completion: @escaping () -> Void) {
-        SessionModel.shared.fetchLatestSession()
-        DispatchQueue.main.async {
+    func getLatestSession(completion: @escaping (Session?) -> Void) {
+        SessionModel.shared.fetchLatestSession { [weak self] latestSession in
+            guard let self = self else { return }
             self.convertFromDurationToHoursAndMinutes()
-            completion()
+            completion(latestSession)
         }
     }
     
@@ -130,10 +130,14 @@ class HomeViewModel: ObservableObject {
     func updateSessionDuration() {
         let newHour = timePickerViewModel.hourSelection
         let newMinute = timePickerViewModel.minSelection
-        SessionModel.shared.upsertSession(session: SessionModel.shared.latestSession, hour: newHour, minute: newMinute) { [weak self] updatedSession in
+
+        SessionModel.shared.fetchLatestSession { [weak self] latestSession in
             guard let self = self else { return }
-            SessionModel.shared.latestSession = updatedSession
-            self.updateCountdownTimerViewModel()
+            SessionModel.shared.latestSession = latestSession
+            SessionModel.shared.upsertSession(session: SessionModel.shared.latestSession, hour: newHour, minute: newMinute) { updatedSession in
+                SessionModel.shared.latestSession = updatedSession
+                self.updateCountdownTimerViewModel()
+            }
         }
     }
     

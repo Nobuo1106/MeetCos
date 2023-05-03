@@ -13,11 +13,28 @@ class SessionModel {
     var latestSession: Session?
     
     private init() {
-        fetchLatestSession()
+        fetchLatestSession { latestSession in
+            self.latestSession = latestSession
+        }
     }
     
-    func fetchLatestSession() {
-        self.latestSession = Session.getLatestSession()
+    func fetchLatestSession(completion: @escaping (Session?) -> Void) {
+        let request: NSFetchRequest<Session> = Session.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "createdAt", ascending: false)
+        request.sortDescriptors = [sortDescriptor]
+        request.fetchLimit = 1
+        
+        do {
+            let sessions = try PersistenceController.shared.container.viewContext.fetch(request)
+            if let session = sessions.first {
+                completion(session)
+            } else {
+                completion(nil)
+            }
+        } catch {
+            print("Error fetching latest session: \(error.localizedDescription)")
+            completion(nil)
+        }
     }
     
     /// SheetViewModel、HomeViewModelで利用する為、expense引数がなくても使える。
@@ -39,7 +56,7 @@ class SessionModel {
                 print("update")
             } else {
                 targetSession = Session(context: context)
-                targetSession.sessionId = Session.latestSessionId + 1
+                targetSession.sessionId = self.getNextSessionId()
                 targetSession.createdAt = formatter.string(from: now)
                 print("insert")
             }
@@ -63,7 +80,7 @@ class SessionModel {
             
             do {
                 try context.save()
-//                print("Session and groups saved")
+                //                print("Session and groups saved")
                 completion(targetSession)
             } catch {
                 print("Error saving session and groups: \(error.localizedDescription)")
@@ -178,5 +195,24 @@ class SessionModel {
     func isEmptySession(_ session: Session?) -> Bool {
         guard let session = session else { return true }
         return session.startedAt == nil && session.finishedAt == nil && session.duration == 0
+    }
+    
+    func getNextSessionId() -> Int64 {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Session")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "sessionId", ascending: false)]
+        fetchRequest.fetchLimit = 1
+        
+        let context = PersistenceController.shared.container.viewContext
+        do {
+            let results = try context.fetch(fetchRequest) as? [Session]
+            if let lastSession = results?.first {
+                return lastSession.sessionId + 1
+            } else {
+                return 1
+            }
+        } catch {
+            print("Error fetching last session ID: \(error.localizedDescription)")
+            return 1
+        }
     }
 }

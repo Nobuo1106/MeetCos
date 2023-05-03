@@ -61,9 +61,10 @@ struct HomeView: View {
             }
             .disabled(homeViewModel.isRunning)
             .sheet(isPresented: $showingSheet, onDismiss: {
-                homeViewModel.getLatestSession(completion: {
+                homeViewModel.getLatestSession { session in
+                    SessionModel.shared.latestSession = session
                     homeViewModel.updateDisplayTime()
-                })
+                }
             }) {
                 SheetView()
             }
