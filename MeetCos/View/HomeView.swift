@@ -11,6 +11,7 @@ struct HomeView: View {
     @StateObject private var timePickerViewModel = TimePickerViewModel()
     @StateObject private var homeViewModel: HomeViewModel
     @State private var showingSheet = false
+    @State private var showingResult = false
     
     init() {
         let timePickerVM = TimePickerViewModel()
@@ -35,11 +36,18 @@ struct HomeView: View {
                     .disabled(homeViewModel.isRunning)
             }
             ZStack(alignment: .center) {
-                Circle()
-                    .stroke(Color.green, style: StrokeStyle(lineWidth: 10, lineCap: .round))
-                    .padding(50)
-                CountDownTimerView(viewModel: homeViewModel.countdownTimerViewModel)
+                if showingResult {
+                    ResultView(showingResult: $showingResult)
+                } else {
+                    Circle()
+                        .stroke(Color.green, style: StrokeStyle(lineWidth: 10, lineCap: .round))
+                        .padding(50)
+                    CountDownTimerView(viewModel: homeViewModel.countdownTimerViewModel)
+                        .transition(.scale)
+                }
             }
+            .frame(height: 400)
+            
             HStack {
                 Button("Start") {
                     homeViewModel.start()
@@ -49,6 +57,7 @@ struct HomeView: View {
                     homeViewModel.stop()
                     homeViewModel.finishSession()
                     homeViewModel.countdownTimerViewModel.reset()
+                    showingResult = true
                 }
             }
             Spacer()
