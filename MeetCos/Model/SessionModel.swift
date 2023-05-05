@@ -37,6 +37,26 @@ class SessionModel {
         }
     }
     
+    // ResultViewで終了したセッションを取得する為のメソッド
+    func fetchLatestFinishedSession(completion: @escaping (Session?) -> Void) {
+        let context = PersistenceController.shared.container.viewContext
+        
+        let fetchRequest: NSFetchRequest<Session> = Session.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "finishedAt > %@", NSDate.distantPast as CVarArg)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        fetchRequest.fetchLimit = 1
+        
+        context.perform {
+            do {
+                let sessions = try context.fetch(fetchRequest)
+                completion(sessions.first)
+            } catch {
+                print("Error fetching latest finished session: \(error.localizedDescription)")
+                completion(nil)
+            }
+        }
+    }
+    
     /// SheetViewModel、HomeViewModelで利用する為、expense引数がなくても使える。
     /// latestSessionのデータ一貫性の為Sessionを返す。
     func upsertSession(session: Session?, hour: Int, minute: Int, expenses: [Expense] = [], completion: @escaping (Session?) -> Void) {

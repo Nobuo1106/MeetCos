@@ -9,9 +9,17 @@ import SwiftUI
 
 struct ResultView: View {
     @Binding var showingResult: Bool
+    @StateObject private var viewModel = ResultViewModel()
     
     var body: some View {
         VStack(spacing: 10) {
+            Text("MTG結果")
+            Spacer()
+            Text("時間：1時間15分")
+            Text("予定時間：1時間")
+            Text("経費: 12000円")
+            Text("予定経費：10000円")
+            Spacer()
 
             Button(action: {
                 withAnimation {
@@ -27,10 +35,11 @@ struct ResultView: View {
                     )
                     .foregroundColor(Color("Color-2"))
                     .cornerRadius(12.0)
+                    .padding()
             }
         }
         .padding()
-        .frame(maxWidth: 300, minHeight: 400)
+        .frame(maxWidth: 300, maxHeight: 350)
         .background(Color("backGroundColor"))
         .cornerRadius(CGFloat(21.0))
         .shadow(radius: 10, x: 5, y: 5)
