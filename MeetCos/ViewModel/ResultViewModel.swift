@@ -11,7 +11,7 @@ import SwiftUI
 class ResultViewModel: ObservableObject {
     @Published var latestFinishedSession: Session?
     @Published var totalSeconds: Int?
-    @Published var estimatedMinutes: Int?
+    @Published var estimatedSeconds: Int?
     @Published var estimatedCost: Int?
     @Published var totalCost: Int?
     
@@ -43,19 +43,19 @@ class ResultViewModel: ObservableObject {
             self.totalSeconds = 0
         }
         
-        self.estimatedMinutes = Int(latestFinishedSession.duration)
+        self.estimatedSeconds = Int(latestFinishedSession.duration) * 60
         
-        let groupCosts = latestFinishedSession.groups.map { group -> Int in
-            let personCount = Int(group.personCount)
-            let hourlyProfit = Int(group.hourlyProfit)
-            let hourlyWage = Int(group.hourlyWage)
-            return personCount * hourlyWage * hourlyProfit
-        }
+//        let groupCosts = latestFinishedSession.groups.map { group -> Int in
+//            let personCount = Int(group.personCount)
+//            let hourlyProfit = Int(group.hourlyProfit)
+//            let hourlyWage = Int(group.hourlyWage)
+//            return personCount * hourlyWage * hourlyProfit
+//        }
         
-        let sumGroupCosts = groupCosts.reduce(0, +)
+//        let sumGroupCosts = groupCosts.reduce(0, +)
         
-        self.estimatedCost = Int(Double(self.estimatedMinutes ?? 0) / 360.0) * sumGroupCosts
-        self.totalCost = Int(Double(self.totalSeconds ?? 0) / 360.0) * sumGroupCosts
+        self.totalCost = Int(latestFinishedSession.totalCost)
+        self.estimatedCost = Int(latestFinishedSession.estimatedCost)
     }
     
     // ResultViewに表示する時間を経過時間に応じて整形

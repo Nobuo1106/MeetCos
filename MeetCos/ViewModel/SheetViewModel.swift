@@ -56,7 +56,7 @@ class SheetViewModel: ObservableObject {
     func saveSessionAndGroups() {
         let hour = timePickerViewModel.hourSelection
         let minute = timePickerViewModel.minSelection
-        SessionModel.shared.upsertSession(session: latestSession, hour: hour, minute: minute, expenses: expenses) { updatedSession in
+        SessionModel.shared.upsertSession(session: latestSession, hour: hour, minute: minute, estimatedCost: totalCost, expenses: expenses) { updatedSession in
             if let updatedSession = updatedSession {
                 self.latestSession = updatedSession
             }
