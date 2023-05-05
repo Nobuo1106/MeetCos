@@ -33,8 +33,9 @@ struct HomeView: View {
                     .onChange(of: timePickerViewModel.minSelection) { _ in
                         homeViewModel.updateSessionDuration()
                     }
-                    .disabled(homeViewModel.isRunning)
+                    .disabled(homeViewModel.isRunning || $showingResult.wrappedValue)
             }
+            .opacity(showingResult ? 0.3 : 1)
             ZStack(alignment: .center) {
                 if showingResult {
                     ResultView(showingResult: $showingResult)
@@ -52,23 +53,29 @@ struct HomeView: View {
                 Button("Start") {
                     homeViewModel.start()
                 }
-                .disabled(homeViewModel.isRunning)
+                .disabled(homeViewModel.isRunning || $showingResult.wrappedValue)
                 Button("Done") {
+                    withAnimation {
+                        showingResult = true
+                    }
                     homeViewModel.stop()
                     homeViewModel.finishSession()
                     homeViewModel.countdownTimerViewModel.reset()
-                    showingResult = true
                 }
+                .disabled(!homeViewModel.isRunning || $showingResult.wrappedValue)
             }
+            .opacity(showingResult ? 0.3 : 1)
             Spacer()
             Text("\(homeViewModel.totalCost)円")
+                .opacity(showingResult ? 0 : 1)
             Spacer()
             Button (action:{
                 showingSheet.toggle()
             }) {
                 Text("Edit")
             }
-            .disabled(homeViewModel.isRunning)
+            .opacity(showingResult ? 0.3 : 1)
+            .disabled(homeViewModel.isRunning || $showingResult.wrappedValue)
             .sheet(isPresented: $showingSheet, onDismiss: {
                 homeViewModel.getLatestSession { session in
                     SessionModel.shared.latestSession = session
