@@ -29,12 +29,6 @@ class ResultViewModel: ObservableObject {
         }
     }
     
-    static func dummyInstance() -> ResultViewModel {
-        let viewModel = ResultViewModel()
-        viewModel.latestFinishedSession = Session()
-        return viewModel
-    }
-    
     // 最新の終了後セッションから合計時間、予定時間、コスト、予定コストを計算
     private func updatePublishedProperties(using latestFinishedSession: Session) {
         self.latestFinishedSession = latestFinishedSession
@@ -60,10 +54,11 @@ class ResultViewModel: ObservableObject {
         
         let sumGroupCosts = groupCosts.reduce(0, +)
         
-        self.estimatedCost = Int(Double(self.estimatedMinutes ?? 0) / 60.0) * sumGroupCosts
-        self.totalCost = Int(Double(self.totalSeconds ?? 0) / 60.0) * sumGroupCosts
+        self.estimatedCost = Int(Double(self.estimatedMinutes ?? 0) / 360.0) * sumGroupCosts
+        self.totalCost = Int(Double(self.totalSeconds ?? 0) / 360.0) * sumGroupCosts
     }
     
+    // ResultViewに表示する時間を経過時間に応じて整形
     func timeString(from seconds: Int?) -> String {
         guard let seconds = seconds else { return "N/A" }
         
@@ -72,7 +67,6 @@ class ResultViewModel: ObservableObject {
         }
         
         let minutes = seconds / 60
-        let remainingSeconds = seconds % 60
         
         if minutes < 60 {
             return "\(minutes) 分"

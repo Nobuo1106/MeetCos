@@ -149,18 +149,20 @@ class HomeViewModel: ObservableObject {
         countdownTimerViewModel.initializeTotalCost(groups: groups)
     }
     
-    func finishSession() {
+    func finishSession(completion: @escaping () -> Void) {
         if let latestSession = SessionModel.shared.latestSession {
             SessionModel.shared.updateFinishedAt(for: latestSession)
         }
         
-        timePickerViewModel.hourSelection = 0
-        timePickerViewModel.minSelection = 0
-        
         if !SessionModel.shared.isEmptySession(SessionModel.shared.latestSession) {
             SessionModel.shared.createEmptySession {
                 self.updateCountdownTimerViewModel()
+                self.timePickerViewModel.hourSelection = 0
+                self.timePickerViewModel.minSelection = 0
+                completion()
             }
+        } else {
+            completion()
         }
     }
 }

@@ -36,6 +36,7 @@ struct HomeView: View {
                     .disabled(homeViewModel.isRunning || $showingResult.wrappedValue)
             }
             .opacity(showingResult ? 0.3 : 1)
+
             ZStack(alignment: .center) {
                 if showingResult {
                     ResultView(showingResult: $showingResult)
@@ -55,11 +56,12 @@ struct HomeView: View {
                 }
                 .disabled(homeViewModel.isRunning || $showingResult.wrappedValue)
                 Button("Done") {
-                    withAnimation {
-                        showingResult = true
-                    }
                     homeViewModel.stop()
-                    homeViewModel.finishSession()
+                    homeViewModel.finishSession {
+                        withAnimation {
+                            showingResult = true
+                        }
+                    }
                     homeViewModel.countdownTimerViewModel.reset()
                 }
                 .disabled(!homeViewModel.isRunning || $showingResult.wrappedValue)
