@@ -63,7 +63,8 @@ class SheetViewModel: ObservableObject {
     }
     
     private func toTotalMinutes() -> Int {
-        return timePickerViewModel.hourSelection * 60 + timePickerViewModel.minSelection
+        let utility = Utility()
+        return utility.toTotalMinutes(hours: timePickerViewModel.hourSelection, minutes: timePickerViewModel.minSelection)
     }
     
     func hourlyWage(for expense: Expense) -> Binding<Int> {
@@ -106,7 +107,7 @@ class SheetViewModel: ObservableObject {
     }
     
     func getLatestGroups(from session: Session? = nil) {
-        getLatestSession { [self]_ in
+        getLatestSession { [self] _ in
             if let latestSession = SessionModel.shared.latestSession {
                 let hourMin: (hours: Int, minutes: Int) = timePickerViewModel.toHourAndMinutes(minutes: latestSession.duration)
                 self.timePickerViewModel.hourSelection = hourMin.hours

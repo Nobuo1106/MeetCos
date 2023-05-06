@@ -182,7 +182,8 @@ class HomeViewModel: ObservableObject {
     }
     
     private func toTotalMinutes() -> Int {
-        return timePickerViewModel.hourSelection * 60 + timePickerViewModel.minSelection
+        let utility = Utility()
+        return utility.toTotalMinutes(hours: timePickerViewModel.hourSelection, minutes: timePickerViewModel.minSelection)
     }
     
     func updateEstimatedTotalCost() {
