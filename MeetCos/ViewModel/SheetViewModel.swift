@@ -28,10 +28,8 @@ class SheetViewModel: ObservableObject {
     @Published var focus: Bool = false
     @Published var expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
     @Published var totalCost: Int = 0
-    var latestSession: Session?
     
-    init(latestSession: Session? = nil, timePickerViewModel: TimePickerViewModel) {
-        self.latestSession = latestSession
+    init(timePickerViewModel: TimePickerViewModel) {
         self.timePickerViewModel = timePickerViewModel
     }
     
@@ -56,9 +54,9 @@ class SheetViewModel: ObservableObject {
     func saveSessionAndGroups() {
         let hour = timePickerViewModel.hourSelection
         let minute = timePickerViewModel.minSelection
-        SessionModel.shared.upsertSession(session: latestSession, hour: hour, minute: minute, estimatedCost: totalCost, expenses: expenses) { updatedSession in
+        SessionModel.shared.upsertSession(session: SessionModel.shared.latestSession, hour: hour, minute: minute, estimatedCost: totalCost, expenses: expenses) { updatedSession in
             if let updatedSession = updatedSession {
-                self.latestSession = updatedSession
+                SessionModel.shared.latestSession = updatedSession
             }
         }
         self.changeTotal()
@@ -108,31 +106,33 @@ class SheetViewModel: ObservableObject {
     }
     
     func getLatestGroups(from session: Session? = nil) {
-        let targetSession = session ?? getLatestSession()
-        if let latestSession = targetSession {
-            let hourMin: (hours: Int, minutes: Int) = timePickerViewModel.toHourAndMinutes(minutes: latestSession.duration)
-            timePickerViewModel.hourSelection = hourMin.hours
-            timePickerViewModel.minSelection = hourMin.minutes
-            let groups = Array(latestSession.groups)
-            if groups.isEmpty {
-                expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
-            } else {
-                expenses = groups.map { group in
-                    Expense(personCount: Int(group.personCount),
-                            hourlyWage: Int(group.hourlyWage),
-                            hourlyProfit: Int(group.hourlyProfit)
-                    )
+        getLatestSession { [self]_ in
+            if let latestSession = SessionModel.shared.latestSession {
+                let hourMin: (hours: Int, minutes: Int) = timePickerViewModel.toHourAndMinutes(minutes: latestSession.duration)
+                self.timePickerViewModel.hourSelection = hourMin.hours
+                timePickerViewModel.minSelection = hourMin.minutes
+                let groups = Array(latestSession.groups)
+                if groups.isEmpty {
+                    expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
+                } else {
+                    expenses = groups.map { group in
+                        Expense(personCount: Int(group.personCount),
+                                hourlyWage: Int(group.hourlyWage),
+                                hourlyProfit: Int(group.hourlyProfit)
+                        )
+                    }
                 }
+            } else {
+                expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
             }
-        } else {
-            expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
+            self.changeTotal()
         }
-        self.changeTotal()
     }
     
-    private func getLatestSession() -> Session? {
-        let session = Session.getLatestSession()
-        self.latestSession = session
-        return session
+    func getLatestSession(completion: @escaping (Session?) -> Void) {
+        SessionModel.shared.fetchLatestSession { [weak self] latestSession in
+            guard self != nil else { return }
+            completion(latestSession)
+        }
     }
 }

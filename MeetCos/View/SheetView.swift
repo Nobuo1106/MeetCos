@@ -14,7 +14,7 @@ struct SheetView: View {
     @StateObject var timePickerViewModel = TimePickerViewModel()
     init(latestSession: Session? = nil) {
         let timePickerVM = TimePickerViewModel()
-        let viewModel = SheetViewModel(latestSession: latestSession, timePickerViewModel: timePickerVM)
+        let viewModel = SheetViewModel( timePickerViewModel: timePickerVM)
         _timePickerViewModel = StateObject(wrappedValue: timePickerVM)
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -27,7 +27,7 @@ struct SheetView: View {
                     .environmentObject(timePickerViewModel)
             }
             .onAppear{
-                viewModel.getLatestGroups(from: viewModel.latestSession)
+                viewModel.getLatestGroups()
             }
             .toolbar {
                 ToolbarItem(placement: .keyboard) {
