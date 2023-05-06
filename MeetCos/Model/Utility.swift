@@ -11,6 +11,10 @@ class Utility {
     func toTotalMinutes(hours: Int, minutes: Int) -> Int {
         return hours * 60 + minutes
     }
+    
+    static func formatToYen(_ value: Int) -> String {
+        return "¥\(value)"
+    }
 }
 
 extension String {

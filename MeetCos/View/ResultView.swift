@@ -17,8 +17,8 @@ struct ResultView: View {
             Spacer()
             Text("時間：\(viewModel.timeString(from: viewModel.totalSeconds ?? 0))")
             Text("予定時間：\(viewModel.timeString(from: viewModel.estimatedSeconds ?? 0))")
-            Text("経費: \(viewModel.totalCost ?? 0)")
-            Text("予定経費：\(viewModel.estimatedCost ?? 0)")
+            Text("経費 ¥： \(viewModel.totalCost ?? 0)")
+            Text("予定経費 ¥：\(viewModel.estimatedCost ?? 0)")
             Spacer()
 
             Button(action: {
