@@ -87,7 +87,7 @@ class CountdownTimerViewModel: ObservableObject {
         formatter.numberStyle = .currency
         formatter.currencySymbol = "¥"
         formatter.maximumFractionDigits = 0
-        
+        print(totalCost)
         return formatter.string(from: NSNumber(value: totalCost)) ?? ""
     }
     

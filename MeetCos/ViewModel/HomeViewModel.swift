@@ -147,7 +147,8 @@ class HomeViewModel: ObservableObject {
     
     func finishSession(completion: @escaping () -> Void) {
         if let latestSession = SessionModel.shared.latestSession {
-            SessionModel.shared.updateFinishedAt(for: latestSession)
+            let totalCost = Int(countdownTimerViewModel.totalCost)
+            SessionModel.shared.updateSessionEndDetails(for: latestSession, totalCost: totalCost)
         }
         
         if !SessionModel.shared.isEmptySession(SessionModel.shared.latestSession) {

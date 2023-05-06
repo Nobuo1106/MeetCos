@@ -167,11 +167,12 @@ class SessionModel {
         }
     }
     
-    func updateFinishedAt(for session: Session) {
+    func updateSessionEndDetails(for session: Session, totalCost: Int) {
         let context = PersistenceController.shared.container.viewContext
         context.perform {
             let now = Date()
             session.finishedAt = now
+            session.totalCost = Int64(totalCost)
             
             do {
                 try context.save()

@@ -42,19 +42,8 @@ class ResultViewModel: ObservableObject {
         } else {
             self.totalSeconds = 0
         }
-        
-        self.estimatedSeconds = Int(latestFinishedSession.duration) * 60
-        
-//        let groupCosts = latestFinishedSession.groups.map { group -> Int in
-//            let personCount = Int(group.personCount)
-//            let hourlyProfit = Int(group.hourlyProfit)
-//            let hourlyWage = Int(group.hourlyWage)
-//            return personCount * hourlyWage * hourlyProfit
-//        }
-        
-//        let sumGroupCosts = groupCosts.reduce(0, +)
-        
         self.totalCost = Int(latestFinishedSession.totalCost)
+        self.estimatedSeconds = Int(latestFinishedSession.duration) * 60
         self.estimatedCost = Int(latestFinishedSession.estimatedCost)
     }
     
