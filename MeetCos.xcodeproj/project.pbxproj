@@ -27,6 +27,8 @@
 		1897743829E28B8E0039A58A /* CountDownTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1897743729E28B8E0039A58A /* CountDownTimerView.swift */; };
 		1897743A29F025430039A58A /* 88697-neomorphism-radial-progress-bar-style-2-light-theme-01.json in Resources */ = {isa = PBXBuildFile; fileRef = 1897743929F025430039A58A /* 88697-neomorphism-radial-progress-bar-style-2-light-theme-01.json */; };
 		1897743C29F026BE0039A58A /* Comp 1.json in Resources */ = {isa = PBXBuildFile; fileRef = 1897743B29F026BE0039A58A /* Comp 1.json */; };
+		18A18E8E2A061C6C00584DCC /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A18E8D2A061C6C00584DCC /* TabBar.swift */; };
+		18A18E902A062A5200584DCC /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A18E8F2A062A5200584DCC /* HistoryView.swift */; };
 		18C17C2829BD762C0084B9CC /* Group+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C17C2629BD762C0084B9CC /* Group+CoreDataProperties.swift */; };
 		18C17C2B29BD7A3C0084B9CC /* Session+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C17C2929BD7A3B0084B9CC /* Session+CoreDataClass.swift */; };
 		18C17C2C29BD7A3C0084B9CC /* Session+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C17C2A29BD7A3B0084B9CC /* Session+CoreDataProperties.swift */; };
@@ -59,6 +61,8 @@
 		1897743729E28B8E0039A58A /* CountDownTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownTimerView.swift; sourceTree = "<group>"; };
 		1897743929F025430039A58A /* 88697-neomorphism-radial-progress-bar-style-2-light-theme-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "88697-neomorphism-radial-progress-bar-style-2-light-theme-01.json"; sourceTree = "<group>"; };
 		1897743B29F026BE0039A58A /* Comp 1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Comp 1.json"; sourceTree = "<group>"; };
+		18A18E8D2A061C6C00584DCC /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		18A18E8F2A062A5200584DCC /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		18C17C2629BD762C0084B9CC /* Group+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Group+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		18C17C2929BD7A3B0084B9CC /* Session+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataClass.swift"; sourceTree = "<group>"; };
 		18C17C2A29BD7A3B0084B9CC /* Session+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -157,7 +161,9 @@
 				182AA19B29718B5400128DE5 /* FormView.swift */,
 				182AA19D2972942300128DE5 /* InputRowsView.swift */,
 				1897743729E28B8E0039A58A /* CountDownTimerView.swift */,
+				18A18E8F2A062A5200584DCC /* HistoryView.swift */,
 				18382DEF29FFF3830022596A /* ResultView.swift */,
+				18A18E8D2A061C6C00584DCC /* TabBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -241,9 +247,11 @@
 				18C17C2C29BD7A3C0084B9CC /* Session+CoreDataProperties.swift in Sources */,
 				18C17C2829BD762C0084B9CC /* Group+CoreDataProperties.swift in Sources */,
 				1806351129569A540013369D /* HomeView.swift in Sources */,
+				18A18E902A062A5200584DCC /* HistoryView.swift in Sources */,
 				182AA198296A857B00128DE5 /* HomeViewModel.swift in Sources */,
 				18382DF22A0253FD0022596A /* ResultViewModel.swift in Sources */,
 				1897743829E28B8E0039A58A /* CountDownTimerView.swift in Sources */,
+				18A18E8E2A061C6C00584DCC /* TabBar.swift in Sources */,
 				1837DAEA29D80DF5007B8E5B /* SessionModel.swift in Sources */,
 				18D0679629B15C9300B594C7 /* Group+CoreDataClass.swift in Sources */,
 				182AA19C29718B5400128DE5 /* FormView.swift in Sources */,

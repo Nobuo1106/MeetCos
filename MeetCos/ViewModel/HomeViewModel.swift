@@ -133,6 +133,7 @@ class HomeViewModel: ObservableObject {
             let totalCost = self.calculateEstimatedTotalCost(session: SessionModel.shared.latestSession)
             SessionModel.shared.upsertSession(session: SessionModel.shared.latestSession, hour: newHour, minute: newMinute, estimatedCost: totalCost) { updatedSession in
                 SessionModel.shared.latestSession = updatedSession
+                self.updateEstimatedTotalCost()
                 self.updateCountdownTimerViewModel()
             }
         }
