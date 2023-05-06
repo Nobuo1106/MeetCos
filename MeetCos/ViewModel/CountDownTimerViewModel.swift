@@ -13,6 +13,7 @@ class CountdownTimerViewModel: ObservableObject {
     @Published var remainingTime: Double {
         didSet {
             if remainingTime < 0 && initialDuration > 0 {
+                // 予定時刻をオーバーした場合
                 isOvertime = true
             }
         }
@@ -59,18 +60,6 @@ class CountdownTimerViewModel: ObservableObject {
         self.remainingTime = newDuration * 60
     }
     
-    var formattedRemainingTime: String {
-        let hours = abs(Int(remainingTime)) / 3600
-        let minutes = abs((Int(remainingTime) % 3600)) / 60
-        let seconds = abs(Int(remainingTime)) % 60
-        
-        if isOvertime {
-            return "+ \(String(format: "%02d:%02d:%02d", hours, minutes, seconds))"
-        } else {
-            return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
-        }
-    }
-    
     func initializeTotalCost(groups: [Group]) {
         updateCostPerSecond(groups: groups)
         totalCost = 0.0
@@ -84,21 +73,33 @@ class CountdownTimerViewModel: ObservableObject {
         }
     }
     
-    var formattedTotalCost: String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencySymbol = "¥"
-        formatter.maximumFractionDigits = 0
-        
-        return formatter.string(from: NSNumber(value: totalCost)) ?? ""
-    }
-    
     func updateProgress() {
         if remainingTime < 0 {
             let tempRemainingTime = remainingTime * -1
             progress = tempRemainingTime / initialDuration
         } else {
             progress = 1 - (remainingTime / initialDuration)
+        }
+    }
+    
+    var formattedTotalCost: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencySymbol = "¥"
+        formatter.maximumFractionDigits = 0
+        print(totalCost)
+        return formatter.string(from: NSNumber(value: totalCost)) ?? ""
+    }
+    
+    var formattedRemainingTime: String {
+        let hours = abs(Int(remainingTime)) / 3600
+        let minutes = abs((Int(remainingTime) % 3600)) / 60
+        let seconds = abs(Int(remainingTime)) % 60
+        
+        if isOvertime {
+            return "+ \(String(format: "%02d:%02d:%02d", hours, minutes, seconds))"
+        } else {
+            return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
         }
     }
 }

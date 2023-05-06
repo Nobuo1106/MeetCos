@@ -11,6 +11,7 @@ struct HomeView: View {
     @StateObject private var timePickerViewModel = TimePickerViewModel()
     @StateObject private var homeViewModel: HomeViewModel
     @State private var showingSheet = false
+    @State private var showingResult = false
     
     init() {
         let timePickerVM = TimePickerViewModel()
@@ -32,34 +33,51 @@ struct HomeView: View {
                     .onChange(of: timePickerViewModel.minSelection) { _ in
                         homeViewModel.updateSessionDuration()
                     }
-                    .disabled(homeViewModel.isRunning)
+                    .disabled(homeViewModel.isRunning || $showingResult.wrappedValue)
             }
+            .opacity(showingResult ? 0.3 : 1)
+
             ZStack(alignment: .center) {
-                Circle()
-                    .stroke(Color.green, style: StrokeStyle(lineWidth: 10, lineCap: .round))
-                    .padding(50)
-                CountDownTimerView(viewModel: homeViewModel.countdownTimerViewModel)
+                if showingResult {
+                    ResultView(showingResult: $showingResult)
+                } else {
+                    Circle()
+                        .stroke(Color.green, style: StrokeStyle(lineWidth: 10, lineCap: .round))
+                        .padding(50)
+                    CountDownTimerView(viewModel: homeViewModel.countdownTimerViewModel)
+                        .transition(.scale)
+                }
             }
+            .frame(height: 400)
+            
             HStack {
                 Button("Start") {
                     homeViewModel.start()
                 }
-                .disabled(homeViewModel.isRunning)
+                .disabled(homeViewModel.isRunning || $showingResult.wrappedValue)
                 Button("Done") {
                     homeViewModel.stop()
-                    homeViewModel.finishSession()
+                    homeViewModel.finishSession {
+                        withAnimation {
+                            showingResult = true
+                        }
+                    }
                     homeViewModel.countdownTimerViewModel.reset()
                 }
+                .disabled(!homeViewModel.isRunning || $showingResult.wrappedValue)
             }
+            .opacity(showingResult ? 0.3 : 1)
             Spacer()
             Text("\(homeViewModel.totalCost)円")
+                .opacity(showingResult ? 0 : 1)
             Spacer()
             Button (action:{
                 showingSheet.toggle()
             }) {
                 Text("Edit")
             }
-            .disabled(homeViewModel.isRunning)
+            .opacity(showingResult ? 0.3 : 1)
+            .disabled(homeViewModel.isRunning || $showingResult.wrappedValue)
             .sheet(isPresented: $showingSheet, onDismiss: {
                 homeViewModel.getLatestSession { session in
                     SessionModel.shared.latestSession = session

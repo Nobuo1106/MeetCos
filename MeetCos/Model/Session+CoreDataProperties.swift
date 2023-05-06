@@ -24,6 +24,8 @@ extension Session {
     @NSManaged public var updatedAt: String
     @NSManaged public var groups: Set<Group>
     @NSManaged public var duration: Double
+    @NSManaged public var estimatedCost: Int64
+    @NSManaged public var totalCost: Int64
     
     static var latestSessionId: Int64 {
         let request: NSFetchRequest<Session> = Session.fetchRequest()

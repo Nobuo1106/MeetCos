@@ -9,7 +9,6 @@ import SwiftUI
 
 
 struct TimePickerView: View {
-    //TimeManagerのインスタンスを作成
     @ObservedObject var viewModel: TimePickerViewModel
     @Binding var isRunning: Bool
     let screenWidth = UIScreen.main.bounds.width

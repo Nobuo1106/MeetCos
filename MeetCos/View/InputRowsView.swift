@@ -16,10 +16,10 @@ struct InputRowsView: View {
         Section (header: Text("グループ")){
             HStack(alignment: .center) {
                 HStack(alignment: .center) {
-                    Picker(selection: $expense.personCount) { // Update this line
+                    Picker(selection: $expense.personCount) {
                         ForEach(0 ..< 100) { value in
                             Text("\(value)人")
-                                .tag(value) // Update this line to store the 'value' directly as an Int
+                                .tag(value)
                         }
                     } label: {
                         Text("人数")

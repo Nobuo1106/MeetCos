@@ -117,11 +117,6 @@ class HomeViewModel: ObservableObject {
         }
     }
     
-    func saveSession() {
-        SessionModel.shared.saveSession(hourSelection: timePickerViewModel.hourSelection, minSelection: timePickerViewModel.minSelection)
-        updateDisplayTime()
-    }
-    
     func updateCountdownTimer() {
         let newDuration = Double(timePickerViewModel.hourSelection * 3600 + timePickerViewModel.minSelection * 60)
         countdownTimerViewModel.remainingTime = newDuration
@@ -134,7 +129,8 @@ class HomeViewModel: ObservableObject {
         SessionModel.shared.fetchLatestSession { [weak self] latestSession in
             guard let self = self else { return }
             SessionModel.shared.latestSession = latestSession
-            SessionModel.shared.upsertSession(session: SessionModel.shared.latestSession, hour: newHour, minute: newMinute) { updatedSession in
+            let totalCost = self.calculateTotalCost(session: SessionModel.shared.latestSession)
+            SessionModel.shared.upsertSession(session: SessionModel.shared.latestSession, hour: newHour, minute: newMinute, estimatedCost: totalCost) { updatedSession in
                 SessionModel.shared.latestSession = updatedSession
                 self.updateCountdownTimerViewModel()
             }
@@ -149,18 +145,40 @@ class HomeViewModel: ObservableObject {
         countdownTimerViewModel.initializeTotalCost(groups: groups)
     }
     
-    func finishSession() {
+    func finishSession(completion: @escaping () -> Void) {
         if let latestSession = SessionModel.shared.latestSession {
-            SessionModel.shared.updateFinishedAt(for: latestSession)
+            let totalCost = Int(countdownTimerViewModel.totalCost)
+            SessionModel.shared.updateSessionEndDetails(for: latestSession, totalCost: totalCost)
         }
-        
-        timePickerViewModel.hourSelection = 0
-        timePickerViewModel.minSelection = 0
         
         if !SessionModel.shared.isEmptySession(SessionModel.shared.latestSession) {
             SessionModel.shared.createEmptySession {
                 self.updateCountdownTimerViewModel()
+                self.timePickerViewModel.hourSelection = 0
+                self.timePickerViewModel.minSelection = 0
+                completion()
             }
+        } else {
+            completion()
         }
+    }
+    
+    func calculateTotalCost(session: Session? ) -> Int {
+        let totalMinutes: Decimal = Decimal(toTotalMinutes())
+        guard let groups = session?.groups else { return 0 } // グループが存在しないときはコストは0円
+        let totalDecimal: Decimal = groups.reduce(Decimal.zero) { (result, group) in
+            let personCount = Decimal(group.personCount)
+            let hourlyWage = Decimal(group.hourlyWage)
+            let hourlyProfit = Decimal(group.hourlyProfit)
+            let subtotal = (personCount * hourlyWage + hourlyProfit) * totalMinutes / 60
+            return result + (subtotal.isNaN ? Decimal.zero : subtotal)
+        }
+        let handler = NSDecimalNumberHandler(roundingMode: .bankers, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+        let totalInt: Int = NSDecimalNumber(decimal: totalDecimal).rounding(accordingToBehavior: handler).intValue
+        return totalInt
+    }
+    
+    private func toTotalMinutes() -> Int {
+        return timePickerViewModel.hourSelection * 60 + timePickerViewModel.minSelection
     }
 }

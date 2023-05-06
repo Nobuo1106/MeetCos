@@ -27,7 +27,7 @@ class NumberFormatterUtility {
     let decimalFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.minimumIntegerDigits = 1 // Add this line
+        formatter.minimumIntegerDigits = 1
         return formatter
     }()
 }
