@@ -7,6 +7,12 @@
 
 import Foundation
 
+class Utility {
+    func toTotalMinutes(hours: Int, minutes: Int) -> Int {
+        return hours * 60 + minutes
+    }
+}
+
 extension String {
     var isLessThanSix: Bool {
         return self.count <= 6
