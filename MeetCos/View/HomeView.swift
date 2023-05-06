@@ -54,7 +54,7 @@ struct HomeView: View {
                 Button("Start") {
                     homeViewModel.start()
                 }
-                .disabled(homeViewModel.isRunning || $showingResult.wrappedValue)
+                .disabled(homeViewModel.isRunning || $showingResult.wrappedValue || homeViewModel.estimatedTotalCost == 0)
                 Button("Done") {
                     homeViewModel.stop()
                     homeViewModel.finishSession {
