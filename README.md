@@ -46,9 +46,11 @@ Copy code
 ## ライセンス
 
 [MITライセンス](https://choosealicense.com/licenses/mit/)
-your_usernameをgit cloneコマンド内の実際のGitHubユーザー名に置き換えてください。また、特定の要件に合わせてセクションを変更または追加してください。
+
 
 ---
+  
+
 
 # MeetCos
 
