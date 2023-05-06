@@ -68,7 +68,9 @@ struct HomeView: View {
             }
             .opacity(showingResult ? 0.3 : 1)
             Spacer()
-            Text("\(homeViewModel.totalCost)円")
+            Text("想定コスト ¥\(homeViewModel.estimatedTotalCost)")
+                .kerning(2.0)
+                .font(.footnote)
                 .opacity(showingResult ? 0 : 1)
             Spacer()
             Button (action:{

@@ -13,7 +13,7 @@ class HomeViewModel: ObservableObject {
     @Published var timePickerViewModel: TimePickerViewModel
     @Published var countdownTimerViewModel: CountdownTimerViewModel
     @Published var isRunning = false
-    @Published var totalCost = 0
+    @Published var estimatedTotalCost = 0
     private var appInBackground = false
     private var backgroundTime: Date?
     private let sharedData = SharedData()
@@ -30,6 +30,7 @@ class HomeViewModel: ObservableObject {
         getLatestSession { [weak self] session in
             guard let self = self else { return }
             SessionModel.shared.latestSession = session
+            self.updateEstimatedTotalCost()
             self.updateDisplayTime()
             self.updateCountdownTimerViewModel()
         }
@@ -129,7 +130,7 @@ class HomeViewModel: ObservableObject {
         SessionModel.shared.fetchLatestSession { [weak self] latestSession in
             guard let self = self else { return }
             SessionModel.shared.latestSession = latestSession
-            let totalCost = self.calculateTotalCost(session: SessionModel.shared.latestSession)
+            let totalCost = self.calculateEstimatedTotalCost(session: SessionModel.shared.latestSession)
             SessionModel.shared.upsertSession(session: SessionModel.shared.latestSession, hour: newHour, minute: newMinute, estimatedCost: totalCost) { updatedSession in
                 SessionModel.shared.latestSession = updatedSession
                 self.updateCountdownTimerViewModel()
@@ -156,6 +157,7 @@ class HomeViewModel: ObservableObject {
                 self.updateCountdownTimerViewModel()
                 self.timePickerViewModel.hourSelection = 0
                 self.timePickerViewModel.minSelection = 0
+                self.updateEstimatedTotalCost()
                 completion()
             }
         } else {
@@ -163,7 +165,7 @@ class HomeViewModel: ObservableObject {
         }
     }
     
-    func calculateTotalCost(session: Session? ) -> Int {
+    func calculateEstimatedTotalCost(session: Session? ) -> Int {
         let totalMinutes: Decimal = Decimal(toTotalMinutes())
         guard let groups = session?.groups else { return 0 } // グループが存在しないときはコストは0円
         let totalDecimal: Decimal = groups.reduce(Decimal.zero) { (result, group) in
@@ -180,5 +182,9 @@ class HomeViewModel: ObservableObject {
     
     private func toTotalMinutes() -> Int {
         return timePickerViewModel.hourSelection * 60 + timePickerViewModel.minSelection
+    }
+    
+    func updateEstimatedTotalCost() {
+        estimatedTotalCost = Int(SessionModel.shared.latestSession?.estimatedCost ?? 0)
     }
 }
