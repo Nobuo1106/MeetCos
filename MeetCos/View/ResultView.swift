@@ -30,17 +30,16 @@ struct ResultView: View {
                     .bold()
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(
-                        Color("Color-1")
-                    )
-                    .foregroundColor(Color("Color-2"))
+                    .background(LinearGradient(gradient: Gradient(colors: [Color("Color-1"), Color("Color-2")]), startPoint: .leading, endPoint: .trailing))
+
+                    .foregroundColor(.white)
                     .cornerRadius(12.0)
                     .padding()
             }
         }
         .padding()
         .frame(maxWidth: 300, maxHeight: 350)
-        .background(Color("backGroundColor"))
+        .background(Color("Color-3"))
         .cornerRadius(CGFloat(21.0))
         .shadow(radius: 10, x: 5, y: 5)
         .transition(.scale)
