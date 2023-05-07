@@ -1,15 +1,26 @@
 //
-//  HistoryView.swift
+//  HistoryDetailView.swift
 //  MeetCos
 //
-//  Created by apple on 2023/05/06.
+//  Created by apple on 2023/05/07.
 //
+
+import SwiftUI
 
 import SwiftUI
 
 struct HistoryView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Started At: 9:00 AM")
+            Text("Finished At: 12:00 PM")
+            Text("Estimated Cost: ¥1000")
+            Text("Total Cost: ¥1200")
+            Text("Total Time: 3 hours")
+            Text("Gap Cost: ¥200")
+        }
+        .padding()
+        .navigationTitle("History Detail")
     }
 }
 
