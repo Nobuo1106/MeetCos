@@ -19,7 +19,7 @@ struct TabBar: View {
                         Text("ホーム")
                     }
                 }
-            HistoryView()
+            HistoryListView()
                 .tabItem {
                     VStack {
                         Image(systemName: "clock.arrow.2.circlepath")
