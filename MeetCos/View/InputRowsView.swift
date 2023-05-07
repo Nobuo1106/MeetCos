@@ -39,7 +39,10 @@ struct InputRowsView: View {
                     .bold()
                 Text("¥")
                     .font(.callout)
+                Spacer(minLength: 55)
                 TextField("1XXX", value: $expense.hourlyWage, formatter: NumberFormatterUtility.shared.decimalFormatter)
+                    .frame(minHeight: 5, maxHeight: 40)
+                    .multilineTextAlignment(.trailing)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.numberPad)
                     .onTapGesture {
@@ -60,6 +63,8 @@ struct InputRowsView: View {
                 Text("¥")
                     .font(.callout)
                 TextField("1XXX", value: $expense.hourlyProfit, formatter: NumberFormatterUtility.shared.decimalFormatter)
+                    .multilineTextAlignment(.trailing)
+
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.numberPad)
                     .onTapGesture {
