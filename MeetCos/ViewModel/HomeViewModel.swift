@@ -173,7 +173,7 @@ class HomeViewModel: ObservableObject {
             let personCount = Decimal(group.personCount)
             let hourlyWage = Decimal(group.hourlyWage)
             let hourlyProfit = Decimal(group.hourlyProfit)
-            let subtotal = (personCount * hourlyWage + hourlyProfit) * totalMinutes / 60
+            let subtotal = (personCount * (hourlyWage + hourlyProfit)) * totalMinutes / 60
             return result + (subtotal.isNaN ? Decimal.zero : subtotal)
         }
         let handler = NSDecimalNumberHandler(roundingMode: .bankers, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)

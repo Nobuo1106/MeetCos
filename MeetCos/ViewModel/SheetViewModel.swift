@@ -39,7 +39,7 @@ class SheetViewModel: ObservableObject {
             let personCount = Decimal(expense.personCount)
             let hourlyWage = Decimal(expense.hourlyWage)
             let hourlyProfit = Decimal(expense.hourlyProfit)
-            let subtotal = (personCount * hourlyWage + hourlyProfit) * totalMinutes / 60
+            let subtotal = (personCount * (hourlyWage + hourlyProfit)) * totalMinutes / 60
             return result + (subtotal.isNaN ? Decimal.zero : subtotal)
         }
         let handler = NSDecimalNumberHandler(roundingMode: .bankers, scale: 0, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
