@@ -18,6 +18,9 @@
 		182AA1A02976CFBA00128DE5 /* SheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182AA19F2976CFBA00128DE5 /* SheetViewModel.swift */; };
 		182F3B9A2A078FD0005EDFB5 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182F3B992A078FD0005EDFB5 /* HistoryViewModel.swift */; };
 		182F3B9C2A079475005EDFB5 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182F3B9B2A079475005EDFB5 /* HistoryView.swift */; };
+		182F3B9E2A07BB37005EDFB5 /* HistoryListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182F3B9D2A07BB37005EDFB5 /* HistoryListViewModelProtocol.swift */; };
+		182F3BA02A07BB8C005EDFB5 /* HistoryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182F3B9F2A07BB8C005EDFB5 /* HistoryListViewModel.swift */; };
+		182F3BA22A07BBDD005EDFB5 /* HistoryViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182F3BA12A07BBDD005EDFB5 /* HistoryViewModelProtocol.swift */; };
 		1837DAE629CEED85007B8E5B /* TimePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1837DAE529CEED85007B8E5B /* TimePickerViewModel.swift */; };
 		1837DAEA29D80DF5007B8E5B /* SessionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1837DAE929D80DF5007B8E5B /* SessionModel.swift */; };
 		18382DF029FFF3830022596A /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18382DEF29FFF3830022596A /* ResultView.swift */; };
@@ -54,6 +57,9 @@
 		182AA1A12981223800128DE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		182F3B992A078FD0005EDFB5 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 		182F3B9B2A079475005EDFB5 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		182F3B9D2A07BB37005EDFB5 /* HistoryListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListViewModelProtocol.swift; sourceTree = "<group>"; };
+		182F3B9F2A07BB8C005EDFB5 /* HistoryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListViewModel.swift; sourceTree = "<group>"; };
+		182F3BA12A07BBDD005EDFB5 /* HistoryViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModelProtocol.swift; sourceTree = "<group>"; };
 		1837DAE529CEED85007B8E5B /* TimePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerViewModel.swift; sourceTree = "<group>"; };
 		1837DAE929D80DF5007B8E5B /* SessionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionModel.swift; sourceTree = "<group>"; };
 		18382DEF29FFF3830022596A /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
@@ -152,6 +158,9 @@
 				1837DAE529CEED85007B8E5B /* TimePickerViewModel.swift */,
 				1897743529E2882E0039A58A /* CountDownTimerViewModel.swift */,
 				18382DF12A0253FD0022596A /* ResultViewModel.swift */,
+				182F3B9D2A07BB37005EDFB5 /* HistoryListViewModelProtocol.swift */,
+				182F3B9F2A07BB8C005EDFB5 /* HistoryListViewModel.swift */,
+				182F3BA12A07BBDD005EDFB5 /* HistoryViewModelProtocol.swift */,
 				182F3B992A078FD0005EDFB5 /* HistoryViewModel.swift */,
 			);
 			path = ViewModel;
@@ -252,6 +261,7 @@
 				18D0679329B15C1200B594C7 /* CoreData.xcdatamodeld in Sources */,
 				18C17C2C29BD7A3C0084B9CC /* Session+CoreDataProperties.swift in Sources */,
 				18C17C2829BD762C0084B9CC /* Group+CoreDataProperties.swift in Sources */,
+				182F3BA02A07BB8C005EDFB5 /* HistoryListViewModel.swift in Sources */,
 				1806351129569A540013369D /* HomeView.swift in Sources */,
 				18A18E902A062A5200584DCC /* HistoryListView.swift in Sources */,
 				182AA198296A857B00128DE5 /* HomeViewModel.swift in Sources */,
@@ -264,6 +274,7 @@
 				18D0679629B15C9300B594C7 /* Group+CoreDataClass.swift in Sources */,
 				182AA19C29718B5400128DE5 /* FormView.swift in Sources */,
 				182AA19A297178AA00128DE5 /* SheetView.swift in Sources */,
+				182F3BA22A07BBDD005EDFB5 /* HistoryViewModelProtocol.swift in Sources */,
 				18382DF029FFF3830022596A /* ResultView.swift in Sources */,
 				182AA19E2972942300128DE5 /* InputRowsView.swift in Sources */,
 				1837DAE629CEED85007B8E5B /* TimePickerViewModel.swift in Sources */,
@@ -271,6 +282,7 @@
 				1806350F29569A540013369D /* MeetCosApp.swift in Sources */,
 				1897743429E281900039A58A /* SharedData.swift in Sources */,
 				18C17C2B29BD7A3C0084B9CC /* Session+CoreDataClass.swift in Sources */,
+				182F3B9E2A07BB37005EDFB5 /* HistoryListViewModelProtocol.swift in Sources */,
 				1897743629E2882E0039A58A /* CountDownTimerViewModel.swift in Sources */,
 				182AA1A02976CFBA00128DE5 /* SheetViewModel.swift in Sources */,
 			);

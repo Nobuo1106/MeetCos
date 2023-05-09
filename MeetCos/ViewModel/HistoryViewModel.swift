@@ -7,7 +7,10 @@
 
 import Foundation
 
-class HistoryViewModel: ObservableObject {
-    
-    
+class HistoryViewModel: ObservableObject, HistoryViewModelProtocol {
+    var session: Session
+
+    init(session: Session) {
+        self.session = session
+    }
 }

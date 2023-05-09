@@ -10,23 +10,28 @@ import SwiftUI
 import SwiftUI
 
 struct HistoryListView: View {
+    @StateObject private var viewModel = HistoryListViewModel()
     @State private var showDetail = false
+
     var body: some View {
         NavigationView {
             List {
-                ForEach(0..<5) { index in
-                    NavigationLink(destination: HistoryView()) {
+                ForEach(viewModel.sessions) { session in
+                    NavigationLink(destination: HistoryView(session: session)) {
                         HStack {
-                            Text(" \(index + 1)")
+                            if let startedAt = session.startedAt {
+                                Text("日時: \(startedAt, formatter: DateFormatter.shortDateAndTime)")
+                            }
                             Spacer()
-                            Text("日時: 203/4/4 4:56")
-                            Spacer()
-                            Text("コスト: ¥1200")
+                            Text("コスト: ¥\(session.totalCost)")
                         }
                     }
                 }
             }
             .navigationTitle("会議履歴")
+            .onAppear {
+                viewModel.fetchCompletedSessions()
+            }
         }
     }
 }
@@ -34,5 +39,14 @@ struct HistoryListView: View {
 struct HistoryListView_Previews: PreviewProvider {
     static var previews: some View {
         HistoryListView()
+    }
+}
+
+extension DateFormatter {
+    static var shortDateAndTime: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter
     }
 }
