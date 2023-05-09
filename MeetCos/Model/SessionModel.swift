@@ -243,4 +243,43 @@ class SessionModel {
             return 1
         }
     }
+    
+    func fetchCompletedSessions(completion: @escaping ([Session]) -> Void) {
+        let context = PersistenceController.shared.container.viewContext
+        let request: NSFetchRequest<Session> = Session.fetchRequest()
+        request.predicate = NSPredicate(format: "finishedAt != nil")
+        
+        do {
+            let completedSessions = try context.fetch(request)
+            completion(completedSessions)
+        } catch {
+            print("Error fetching completed sessions: \(error.localizedDescription)")
+            completion([])
+        }
+    }
+}
+
+extension Session {
+    static var sampleSession: Session {
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        let sampleSession = Session(context: context)
+        sampleSession.finishedAt = Date()
+        sampleSession.willFinishAt = Date().addingTimeInterval(60 * 60)
+        sampleSession.sessionId = 1
+        sampleSession.startedAt = Date().addingTimeInterval(-60 * 60)
+        sampleSession.createdAt = "2023-05-07"
+        sampleSession.updatedAt = "2023-05-07"
+        sampleSession.duration = 3600
+        sampleSession.estimatedCost = 1000
+        sampleSession.totalCost = 1200
+
+        let sampleGroup = Group(context: context)
+        sampleGroup.hourlyProfit = 100
+        sampleGroup.hourlyWage = 1000
+        sampleGroup.personCount = 1
+
+        sampleSession.addToGroups(sampleGroup)
+        
+        return sampleSession
+    }
 }
