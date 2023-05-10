@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HistoryView: View {
-    let session: Session
+    let session: SessionProtocol
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -60,7 +60,35 @@ struct HistoryView: View {
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            HistoryView(session: Session.sampleSession)
+            HistoryView(session: MockSession.sampleSession)
         }
+    }
+}
+
+struct MockSession: SessionProtocol {
+    var sessionId: Int64 = 1
+    var startedAt: Date? = Date().addingTimeInterval(-60 * 60)
+    var finishedAt: Date? = Date()
+    var willFinishAt: Date? = Date().addingTimeInterval(60 * 60)
+    var createdAt: String = "2023-05-07"
+    var updatedAt: String = "2023-05-07"
+    var duration: Double = 3600
+    var estimatedCost: Int64 = 1000
+    var totalCost: Int64 = 1200
+    var groups: Set<Group> = [] // You need to define some mock groups here if you need them
+}
+
+
+extension MockSession {
+    static var sampleSession: MockSession {
+        MockSession(sessionId: 1,
+                    startedAt: Date().addingTimeInterval(-60 * 60),
+                    finishedAt: Date(),
+                    willFinishAt: Date().addingTimeInterval(60 * 60),
+                    createdAt: "2023020294",
+                    updatedAt: "2023023033",
+                    duration: 3600,
+                    estimatedCost: 1000,
+                    totalCost: 1200)
     }
 }
