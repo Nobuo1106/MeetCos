@@ -20,9 +20,10 @@ class HomeViewModel: ObservableObject {
     private var timePickerSelectionsObserver: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = []
     
-    init(timePickerViewModel: TimePickerViewModel) {
+    init(timePickerViewModel: TimePickerViewModel, countdownTimerViewModel: CountdownTimerViewModel) {
         let groups: [Group] = []
         self.timePickerViewModel = timePickerViewModel
+        self.countdownTimerViewModel = countdownTimerViewModel
         let initialDuration = Double(timePickerViewModel.hourSelection * 3600 + timePickerViewModel.minSelection * 60)
         let tempCountdownTimerViewModel = CountdownTimerViewModel(initialDuration: initialDuration, groups: groups)
         self.countdownTimerViewModel = tempCountdownTimerViewModel
@@ -47,11 +48,9 @@ class HomeViewModel: ObservableObject {
     func appStateChanged(_ scenePhase: ScenePhase) {
         switch scenePhase {
         case .background:
-            //            appDidEnterBackground()
-            break
+            countdownTimerViewModel.appMovedToBackground()
         case .active:
-            //            appWillEnterForeground()
-            break
+            countdownTimerViewModel.appMovedToForeground()
         default:
             break
         }

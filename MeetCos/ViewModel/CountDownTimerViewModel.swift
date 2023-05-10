@@ -25,6 +25,7 @@ class CountdownTimerViewModel: ObservableObject {
     private var costPerSecond: Double = 0.0
     private var timer: Timer?
     private var totalDuration: Double = 0.0
+    var backgroundTime: Date?
     
     init(initialDuration: Double, groups: [Group]) {
         self.remainingTime = initialDuration
@@ -87,7 +88,6 @@ class CountdownTimerViewModel: ObservableObject {
         formatter.numberStyle = .currency
         formatter.currencySymbol = "¥"
         formatter.maximumFractionDigits = 0
-        print(totalCost)
         return formatter.string(from: NSNumber(value: totalCost)) ?? ""
     }
     
@@ -100,6 +100,25 @@ class CountdownTimerViewModel: ObservableObject {
             return "+ \(String(format: "%02d:%02d:%02d", hours, minutes, seconds))"
         } else {
             return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+        }
+    }
+    
+    
+    func appMovedToBackground() {
+        backgroundTime = Date()
+        print(backgroundTime!)
+    }
+
+    func appMovedToForeground() {
+        if let backgroundTime = backgroundTime {
+            let elapsedTime = Date().timeIntervalSince(backgroundTime)
+            print(elapsedTime)
+            print(remainingTime)
+            remainingTime -= elapsedTime
+            print(remainingTime)
+            totalCost += costPerSecond * elapsedTime
+            updateProgress()
+            self.backgroundTime = nil
         }
     }
 }
