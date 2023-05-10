@@ -15,12 +15,20 @@ struct ResultView: View {
         VStack(spacing: 10) {
             Text("MTG結果")
             Spacer()
-            Text("時間：\(viewModel.timeString(from: viewModel.totalSeconds ?? 0))")
-            Text("予定時間：\(viewModel.timeString(from: viewModel.estimatedSeconds ?? 0))")
-            Text("経費 ¥： \(viewModel.totalCost ?? 0)")
-            Text("予定経費 ¥：\(viewModel.estimatedCost ?? 0)")
-            Spacer()
+            VStack (alignment: .leading) {
+                Text("時間：\(viewModel.timeString(from: viewModel.totalSeconds ?? 0))")
+                    .padding(.bottom, 3)
+                Text("予定時間：\(viewModel.timeString(from: viewModel.estimatedSeconds ?? 0))")
+                    .padding(.bottom, 3)
+                Text("経費 ¥： \(viewModel.totalCost ?? 0)")
+                    .padding(.bottom, 3)
+                Text("予定経費 ¥：\(viewModel.estimatedCost ?? 0)")
+                    .padding(.bottom, 3)
 
+                
+            }
+            Spacer()
+            
             Button(action: {
                 withAnimation {
                     showingResult = false
