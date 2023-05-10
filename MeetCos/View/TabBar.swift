@@ -31,8 +31,14 @@ struct TabBar: View {
 }
 
 struct TabBar_Previews: PreviewProvider {
-    
     static var previews: some View {
-        TabBar()
+        let mockTimePickerViewModel = TimePickerViewModel()
+        let mockInitialDuration: Double = 0.0
+        let mockGroups: [Group] = []
+        
+        let mockCountdownTimerViewModel = CountdownTimerViewModel(initialDuration: mockInitialDuration, groups: mockGroups)
+
+        return TabBar()
+            .environmentObject(HomeViewModel(timePickerViewModel: mockTimePickerViewModel, countdownTimerViewModel: mockCountdownTimerViewModel))
     }
 }
