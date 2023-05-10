@@ -89,9 +89,12 @@ struct HomeView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var timePickerViewModel = TimePickerViewModel()
+    static var countdownTimerViewModel = CountdownTimerViewModel(initialDuration: 0, groups: [])
+    static var homeViewModel = HomeViewModel(timePickerViewModel: timePickerViewModel, countdownTimerViewModel: countdownTimerViewModel)
     
     static var previews: some View {
         HomeView()
-            .environmentObject(timePickerViewModel)
+            .environmentObject(homeViewModel)
+            .environmentObject(countdownTimerViewModel)
     }
 }
