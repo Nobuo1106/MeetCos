@@ -57,14 +57,6 @@ struct HistoryView: View {
     }
 }
 
-struct HistoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            HistoryView(session: MockSession.sampleSession)
-        }
-    }
-}
-
 struct MockSession: SessionProtocol {
     var sessionId: Int64 = 1
     var startedAt: Date? = Date().addingTimeInterval(-60 * 60)
@@ -78,7 +70,6 @@ struct MockSession: SessionProtocol {
     var groups: Set<Group> = [] // You need to define some mock groups here if you need them
 }
 
-
 extension MockSession {
     static var sampleSession: MockSession {
         MockSession(sessionId: 1,
@@ -90,5 +81,13 @@ extension MockSession {
                     duration: 3600,
                     estimatedCost: 1000,
                     totalCost: 1200)
+    }
+}
+
+struct HistoryView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            HistoryView(session: MockSession.sampleSession)
+        }
     }
 }
