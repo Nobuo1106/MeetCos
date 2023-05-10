@@ -9,17 +9,10 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject private var timePickerViewModel = TimePickerViewModel()
-    @StateObject private var homeViewModel: HomeViewModel
+    @EnvironmentObject var homeViewModel: HomeViewModel
+    @EnvironmentObject var timerViewModel: CountdownTimerViewModel
     @State private var showingSheet = false
     @State private var showingResult = false
-    
-    init() {
-        let timePickerVM = TimePickerViewModel()
-        let homeVM = HomeViewModel(timePickerViewModel: timePickerVM)
-        
-        _timePickerViewModel = StateObject(wrappedValue: timePickerVM)
-        _homeViewModel = StateObject(wrappedValue: homeVM)
-    }
     
     var body: some View {
         VStack {

@@ -73,12 +73,10 @@ class SessionModel {
             let targetSession: Session
             if let existingSession = session {
                 targetSession = existingSession
-                print("update")
             } else {
                 targetSession = Session(context: context)
                 targetSession.sessionId = self.getNextSessionId()
                 targetSession.createdAt = formatter.string(from: now)
-                print("insert")
             }
             
             targetSession.updatedAt = formatter.string(from: now)
@@ -101,7 +99,6 @@ class SessionModel {
             
             do {
                 try context.save()
-                //                print("Session and groups saved")
                 completion(targetSession)
             } catch {
                 print("Error saving session and groups: \(error.localizedDescription)")
