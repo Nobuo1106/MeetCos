@@ -14,41 +14,30 @@ struct ResultView: View {
     var body: some View {
         VStack {
             Text("MTG結果")
-                Spacer()
-            
+            Spacer()
             HStack {
-                
-                Spacer()
-                
-                VStack (alignment: .leading) {
-                    Text("時間")
+                VStack (alignment: .trailing) {
+                    Text("時間 :")
                         .padding(.bottom, 3)
-                    Text("予定時間")
+                    Text("予定時間 :")
                         .padding(.bottom, 3)
-                    Text("経費 ¥")
+                    Text("経費 ¥ :")
                         .padding(.bottom, 3)
-                    Text("予定経費 ¥：")
+                    Text("予定経費 ¥ :")
                         .padding(.bottom, 3)
-                    
-                    
                 }
-               
-                Spacer()
-                
                 VStack (alignment: .leading) {
-                    Text("：\(viewModel.timeString(from: viewModel.totalSeconds ?? 0))")
+                    Text("\(viewModel.timeString(from: viewModel.totalSeconds ?? 0))")
                         .padding(.bottom, 3)
-                    Text("：\(viewModel.timeString(from: viewModel.estimatedSeconds ?? 0))")
+                    Text("\(viewModel.timeString(from: viewModel.estimatedSeconds ?? 0))")
                         .padding(.bottom, 3)
-                    Text("： \(viewModel.totalCost ?? 0)")
+                    Text(" \(viewModel.totalCost ?? 0)")
                         .padding(.bottom, 3)
-                    Text("：\(viewModel.estimatedCost ?? 0)")
+                    Text("\(viewModel.estimatedCost ?? 0)")
                         .padding(.bottom, 3)
-                    
                 }
             }
             Spacer()
-            
             
             Button(action: {
                 withAnimation {
@@ -60,7 +49,7 @@ struct ResultView: View {
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(LinearGradient(gradient: Gradient(colors: [Color("Color-1"), Color("Color-2")]), startPoint: .leading, endPoint: .trailing))
-
+                
                     .foregroundColor(.white)
                     .cornerRadius(12.0)
                     .padding()
