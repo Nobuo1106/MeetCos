@@ -36,17 +36,17 @@ struct HistoryListView: View {
     }
 }
 
-struct HistoryListView_Previews: PreviewProvider {
-    static var previews: some View {
-        HistoryListView()
-    }
-}
-
 extension DateFormatter {
     static var shortDateAndTime: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         formatter.timeStyle = .short
         return formatter
+    }
+}
+
+struct HistoryListView_Previews: PreviewProvider {
+    static var previews: some View {
+        HistoryListView()
     }
 }

@@ -23,6 +23,21 @@ struct CurrencyTextField: UIViewRepresentable {
         
         textField.leftView = symbolLabel
         textField.leftViewMode = .always
+        
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(title: "完了", style: .done, target: context.coordinator, action: #selector(Coordinator.doneButtonTapped))
+        doneButton.tintColor = UIColor(named: "accent-green")
+        doneButton.setTitleTextAttributes([.font: UIFont.systemFont(ofSize: 17, weight: .regular)], for: .normal)
+        toolbar.setItems([flexSpace, doneButton], animated: false)
+        
+        textField.inputAccessoryView = toolbar
+        
+        // Update text color based on value
+        textField.textColor = value == 0 ? .gray : .black
+        symbolLabel.textColor = value == 0 ? .gray : .black
+        
         return textField
     }
     
@@ -44,6 +59,16 @@ struct CurrencyTextField: UIViewRepresentable {
         @objc func textFieldDidChange(textField: UITextField) {
             let newText = String(textField.text?.filter { "0123456789".contains($0) } ?? "")
             self.parent.value = Int(newText) ?? 0
+            
+            textField.textColor = self.parent.value == 0 ? .gray : .black
+            
+            if let symbolLabel = textField.leftView as? UILabel {
+                symbolLabel.textColor = self.parent.value == 0 ? .gray : .black
+            }
+        }
+        
+        @objc func doneButtonTapped() {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
     }
 }
