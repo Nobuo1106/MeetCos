@@ -7,11 +7,14 @@
 
 import SwiftUI
 
+import SwiftUI
+import UIKit
+
 struct InputRowsView: View {
     @Binding var expense: Expense
     @State var activeTextField: String?
     @EnvironmentObject var viewModel: SheetViewModel
-    
+
     var body: some View {
         Section (header: Text("グループ")){
             HStack(alignment: .center) {
@@ -28,44 +31,37 @@ struct InputRowsView: View {
                     }
                     .onChange(of: expense.personCount) { _ in
                         viewModel.changeTotal()
-
                     }
                 }
             }
-            
+
             HStack (alignment: .center) {
                 Text("時給：")
                     .font(.callout)
                     .bold()
-                Text("¥")
-                    .font(.callout)
-                Spacer(minLength: 55)
-                TextField("1XXX", value: $expense.hourlyWage, formatter: NumberFormatterUtility.shared.decimalFormatter)
-                    .frame(minHeight: 5, maxHeight: 40)
-                    .multilineTextAlignment(.trailing)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                CurrencyTextField(value: $expense.hourlyWage)
+                    .padding(.horizontal, 10)
+                    .frame(height: 40)
+                    .background(RoundedRectangle(cornerRadius: 5).strokeBorder(Color.gray, lineWidth: 1))
                     .keyboardType(.numberPad)
                     .onTapGesture {
                         self.activeTextField = "hourlyWage"
                     }
-
                     .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
                         if self.activeTextField == "hourlyWage" {
                             viewModel.changeTotal()
                         }
                     }
             }
-            
+
             HStack (alignment: .center) {
                 Text("見込み利益：")
                     .font(.callout)
                     .bold()
-                Text("¥")
-                    .font(.callout)
-                TextField("1XXX", value: $expense.hourlyProfit, formatter: NumberFormatterUtility.shared.decimalFormatter)
-                    .multilineTextAlignment(.trailing)
-
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                CurrencyTextField(value: $expense.hourlyProfit)
+                    .padding(.horizontal, 10)
+                    .frame(height: 40)
+                    .background(RoundedRectangle(cornerRadius: 5).strokeBorder(Color.gray, lineWidth: 1))
                     .keyboardType(.numberPad)
                     .onTapGesture {
                         self.activeTextField = "hourlyProfit"
@@ -101,6 +97,6 @@ struct InputRowsView_Previews: PreviewProvider {
             InputRowsView(expense: $expense3)
                 .previewDisplayName("Preview 3")
         }.environmentObject(sheetVM)
-         .environmentObject(timePickerVM) // Add the environmentObject here
+         .environmentObject(timePickerVM)
     }
 }

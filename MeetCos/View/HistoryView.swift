@@ -67,7 +67,7 @@ struct MockSession: SessionProtocol {
     var duration: Double = 3600
     var estimatedCost: Int64 = 1000
     var totalCost: Int64 = 1200
-    var groups: Set<Group> = [] // You need to define some mock groups here if you need them
+    var groups: Set<Group> = [] 
 }
 
 extension MockSession {
