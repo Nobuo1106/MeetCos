@@ -10,25 +10,29 @@ import SwiftUI
 struct HistoryListView: View {
     @StateObject private var viewModel = HistoryListViewModel()
     @State private var showDetail = false
-
+    
     var body: some View {
         NavigationView {
-            List {
-                ForEach(viewModel.sessions) { session in
-                    NavigationLink(destination: HistoryView(session: session)) {
-                        HStack {
-                            if let startedAt = session.startedAt {
-                                Text("日時: \(startedAt, formatter: DateFormatter.shortDateAndTime)")
+            VStack {
+                Text("会議一覧")
+                    .padding()
+                    .foregroundColor(.green)
+                List {
+                    ForEach(viewModel.sessions) { session in
+                        NavigationLink(destination: HistoryView(session: session)) {
+                            HStack {
+                                if let startedAt = session.startedAt {
+                                    Text("日時: \(startedAt, formatter: DateFormatter.shortDateAndTime)")
+                                }
+                                Spacer()
+                                Text("コスト: ¥\(session.totalCost)")
                             }
-                            Spacer()
-                            Text("コスト: ¥\(session.totalCost)")
                         }
                     }
                 }
-            }
-            .navigationTitle("会議履歴")
-            .onAppear {
-                viewModel.fetchCompletedSessions()
+                .onAppear {
+                    viewModel.fetchCompletedSessions()
+                }
             }
         }
     }
