@@ -8,9 +8,13 @@
 import Foundation
 
 class HistoryViewModel: ObservableObject, HistoryViewModelProtocol {
-    var session: Session
+    @Published var session: SessionProtocol
+    @Published var formattedStartedAt: String
+    @Published var formattedFinishedAt: String
 
-    init(session: Session) {
+    init(session: SessionProtocol) {
         self.session = session
+        self.formattedStartedAt = Utility.formatDate(date: session.startedAt)
+        self.formattedFinishedAt = Utility.formatDate(date: session.finishedAt)
     }
 }

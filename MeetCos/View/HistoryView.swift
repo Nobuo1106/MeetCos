@@ -9,51 +9,66 @@ import SwiftUI
 
 struct HistoryView: View {
     let session: SessionProtocol
+    @ObservedObject private var viewModel: HistoryViewModel
+    
+    init(session: SessionProtocol) {
+        self.session = session
+        self.viewModel = HistoryViewModel(session: session)
+    }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            HStack {
-                Text("開始時刻:")
-                    .font(.headline)
-                if let startedAt = session.startedAt {
-                    Text("\(startedAt, formatter: DateFormatter.shortDateAndTime)")
+        VStack {
+            Text("会議詳細")
+                .padding()
+                .foregroundColor(.green)
+            VStack(alignment: .leading, spacing: 20) {
+                HStack {
+                    Text("開始時刻:")
+                        .font(.headline)
+                    if (session.startedAt) != nil {
+                        Text(viewModel.formattedStartedAt)
+                    }
+                }
+                
+                HStack {
+                    Text("終了時刻:")
+                        .font(.headline)
+                    if (session.startedAt) != nil {
+                        Text(viewModel.formattedFinishedAt)
+                    }
+                }
+                
+                HStack {
+                    Text("予想コスト:")
+                        .font(.headline)
+                    Text("¥\(session.estimatedCost)")
+                }
+                
+                HStack {
+                    Text("合計コスト:")
+                        .font(.headline)
+                    Text("¥\(session.totalCost)")
+                }
+                
+                HStack {
+                    Text("合計時間:")
+                        .font(.headline)
+                    Text(Utility.timeString(from: Int(session.duration)))
+                }
+                
+                HStack {
+                    Text("コスト差:")
+                        .font(.headline)
+                    Text("¥\(session.totalCost - session.estimatedCost)")
                 }
             }
-            
-            HStack {
-                Text("終了時刻:")
-                    .font(.headline)
-                if let finishedAt = session.finishedAt {
-                    Text("\(finishedAt, formatter: DateFormatter.shortDateAndTime)")
-                }
-            }
-            
-            HStack {
-                Text("予想コスト:")
-                    .font(.headline)
-                Text("¥\(session.estimatedCost)")
-            }
-            
-            HStack {
-                Text("合計コスト:")
-                    .font(.headline)
-                Text("¥\(session.totalCost)")
-            }
-            
-            HStack {
-                Text("合計時間:")
-                    .font(.headline)
-                Text("\(Int(session.duration)) 分")
-            }
-            
-            HStack {
-                Text("コスト差:")
-                    .font(.headline)
-                Text("¥\(session.totalCost - session.estimatedCost)")
-            }
+            .padding()
+            .frame(maxWidth: 300, maxHeight: 350)
+            .background(Color("Color-3"))
+            .cornerRadius(CGFloat(21.0))
+            .shadow(radius: 10, x: 5, y: 5)
+        .transition(.scale)
         }
-        .padding()
-        .navigationTitle("会議詳細")
     }
 }
 
@@ -86,8 +101,10 @@ extension MockSession {
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            HistoryView(session: MockSession.sampleSession)
+        let mockSession = MockSession.sampleSession
+        
+        return NavigationView {
+            HistoryView(session: mockSession)
         }
     }
 }
