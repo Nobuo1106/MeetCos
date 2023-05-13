@@ -29,26 +29,32 @@ struct InputRowsView: View {
                     viewModel.changeTotal()
                 }
             }
-            
-            HStack (alignment: .center) {
-                Text("時給：")
-                    .font(.callout)
-                    .bold()
-                CurrencyTextField(value: $expense.hourlyWage)
-                    .padding(.horizontal, 10)
-                    .frame(height: 40)
-                    .background(RoundedRectangle(cornerRadius: 5).strokeBorder(Color.gray, lineWidth: 1))
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("時給：")
+                        .font(.callout)
+                        .bold()
+                        .padding(.bottom)
+                    Text("見込み利益：")
+                        .font(.callout)
+                        .bold()
+                }//.frame(width: 120)
+
+                Spacer()
+                VStack {
+                    
+                    CurrencyTextField(value: $expense.hourlyWage)
+                        .padding(.horizontal, 10)
+                        .frame(height: 40)
+                        .background(RoundedRectangle(cornerRadius: 5).strokeBorder(Color("Color-4"), lineWidth: 1))
+        
+                    CurrencyTextField(value: $expense.hourlyProfit)
+                        .padding(.horizontal, 10)
+                        .frame(height: 40)
+                        .background(RoundedRectangle(cornerRadius: 5).strokeBorder(Color("Color-4"), lineWidth: 1))
+                }
             }
-            
-            HStack (alignment: .center) {
-                Text("見込み利益：")
-                    .font(.callout)
-                    .bold()
-                CurrencyTextField(value: $expense.hourlyProfit)
-                    .padding(.horizontal, 10)
-                    .frame(height: 40)
-                    .background(RoundedRectangle(cornerRadius: 5).strokeBorder(Color.gray, lineWidth: 1))
-            }
+
         }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("CurrencyTextFieldDidChange"))) { _ in
             viewModel.changeTotal()
