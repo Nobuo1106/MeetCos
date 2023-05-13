@@ -38,7 +38,7 @@ struct SheetView: View {
                         }
                         .disabled(viewModel.focus)
                         .keyboardShortcut(.defaultAction)
-
+                        
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
                 }
@@ -50,7 +50,7 @@ struct SheetView: View {
                 self.presentationMode.wrappedValue.dismiss()
                 viewModel.saveSessionAndGroups()
             })
-        }
+        }.accentColor(.green)
     }
 }
 

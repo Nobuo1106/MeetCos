@@ -6,30 +6,27 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct InputRowsView: View {
     @Binding var expense: Expense
-    @State var activeTextField: String?
     @EnvironmentObject var viewModel: SheetViewModel
     
     var body: some View {
         Section (header: Text("グループ")){
             HStack(alignment: .center) {
-                HStack(alignment: .center) {
-                    Picker(selection: $expense.personCount) {
-                        ForEach(0 ..< 100) { value in
-                            Text("\(value)人")
-                                .tag(value)
-                        }
-                    } label: {
-                        Text("人数")
-                            .font(.callout)
-                            .bold()
+                Picker(selection: $expense.personCount) {
+                    ForEach(0 ..< 100) { value in
+                        Text("\(value)人")
+                            .tag(value)
                     }
-                    .onChange(of: expense.personCount) { _ in
-                        viewModel.changeTotal()
-
-                    }
+                } label: {
+                    Text("人数")
+                        .font(.callout)
+                        .bold()
+                }
+                .onChange(of: expense.personCount) { _ in
+                    viewModel.changeTotal()
                 }
             }
             
@@ -37,46 +34,23 @@ struct InputRowsView: View {
                 Text("時給：")
                     .font(.callout)
                     .bold()
-                Text("¥")
-                    .font(.callout)
-                Spacer(minLength: 55)
-                TextField("1XXX", value: $expense.hourlyWage, formatter: NumberFormatterUtility.shared.decimalFormatter)
-                    .frame(minHeight: 5, maxHeight: 40)
-                    .multilineTextAlignment(.trailing)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .keyboardType(.numberPad)
-                    .onTapGesture {
-                        self.activeTextField = "hourlyWage"
-                    }
-
-                    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
-                        if self.activeTextField == "hourlyWage" {
-                            viewModel.changeTotal()
-                        }
-                    }
+                CurrencyTextField(value: $expense.hourlyWage)
+                    .padding(.horizontal, 10)
+                    .frame(height: 40)
+                    .background(RoundedRectangle(cornerRadius: 5).strokeBorder(Color.gray, lineWidth: 1))
             }
             
             HStack (alignment: .center) {
                 Text("見込み利益：")
                     .font(.callout)
                     .bold()
-                Text("¥")
-                    .font(.callout)
-                TextField("1XXX", value: $expense.hourlyProfit, formatter: NumberFormatterUtility.shared.decimalFormatter)
-                    .multilineTextAlignment(.trailing)
-
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .keyboardType(.numberPad)
-                    .onTapGesture {
-                        self.activeTextField = "hourlyProfit"
-                    }
-                    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
-                        if self.activeTextField == "hourlyProfit" {
-                            viewModel.changeTotal()
-                        }
-                    }
+                CurrencyTextField(value: $expense.hourlyProfit)
+                    .padding(.horizontal, 10)
+                    .frame(height: 40)
+                    .background(RoundedRectangle(cornerRadius: 5).strokeBorder(Color.gray, lineWidth: 1))
             }
-        }.onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("CurrencyTextFieldDidChange"))) { _ in
             viewModel.changeTotal()
         }
     }
@@ -86,11 +60,11 @@ struct InputRowsView_Previews: PreviewProvider {
     @State static var expense1 = Expense(id: UUID(), personCount: 3, hourlyWage: 2, hourlyProfit: 2000)
     @State static var expense2 = Expense(id: UUID(), personCount: 5, hourlyWage: 3, hourlyProfit: 3000)
     @State static var expense3 = Expense(id: UUID(), personCount: 7, hourlyWage: 4, hourlyProfit: 4000)
-
+    
     static var previews: some View {
         let timePickerVM = TimePickerViewModel()
         let sheetVM = SheetViewModel(timePickerViewModel: timePickerVM)
-
+        
         VStack {
             InputRowsView(expense: $expense1)
                 .previewDisplayName("Preview 1")
@@ -101,6 +75,6 @@ struct InputRowsView_Previews: PreviewProvider {
             InputRowsView(expense: $expense3)
                 .previewDisplayName("Preview 3")
         }.environmentObject(sheetVM)
-         .environmentObject(timePickerVM) // Add the environmentObject here
+            .environmentObject(timePickerVM)
     }
 }
