@@ -15,6 +15,34 @@ class Utility {
     static func formatToYen(_ value: Int) -> String {
         return "¥\(value)"
     }
+    // ResultViewに表示する時間を経過時間に応じて整形
+    static func timeString(from seconds: Int?) -> String {
+        guard let seconds = seconds else { return "N/A" }
+        
+        if seconds < 60 {
+            return "\(seconds) 秒"
+        }
+        
+        let minutes = seconds / 60
+        
+        if minutes < 60 {
+            return "\(minutes) 分"
+        }
+        
+        let hours = minutes / 60
+        let remainingMinutes = minutes % 60
+        
+        return "\(hours) 時間 \(remainingMinutes) 分"
+    }
+    
+    static func formatDate(date: Date?, format: String = "yyyy.M.d HH:mm") -> String {
+        guard let date = date else {
+            return ""
+        }
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.string(from: date)
+    }
 }
 
 extension String {

@@ -8,5 +8,5 @@
 import Foundation
 
 protocol HistoryViewModelProtocol {
-    var session: Session { get }
+    var session: SessionProtocol { get }
 }

@@ -27,9 +27,9 @@ struct ResultView: View {
                         .padding(.bottom, 3)
                 }
                 VStack (alignment: .leading) {
-                    Text("\(viewModel.timeString(from: viewModel.totalSeconds ?? 0))")
+                    Text("\(Utility.timeString(from: viewModel.totalSeconds ?? 0))")
                         .padding(.bottom, 3)
-                    Text("\(viewModel.timeString(from: viewModel.estimatedSeconds ?? 0))")
+                    Text("\(Utility.timeString(from: viewModel.estimatedSeconds ?? 0))")
                         .padding(.bottom, 3)
                     Text(" \(viewModel.totalCost ?? 0)")
                         .padding(.bottom, 3)

@@ -9,22 +9,28 @@ import SwiftUI
 
 struct HistoryView: View {
     let session: SessionProtocol
+    @ObservedObject private var viewModel: HistoryViewModel
+    
+    init(session: SessionProtocol) {
+        self.session = session
+        self.viewModel = HistoryViewModel(session: session)
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack {
                 Text("開始時刻:")
                     .font(.headline)
-                if let startedAt = session.startedAt {
-                    Text("\(startedAt, formatter: DateFormatter.shortDateAndTime)")
+                if (session.startedAt) != nil {
+                    Text(viewModel.formattedStartedAt)
                 }
             }
             
             HStack {
                 Text("終了時刻:")
                     .font(.headline)
-                if let finishedAt = session.finishedAt {
-                    Text("\(finishedAt, formatter: DateFormatter.shortDateAndTime)")
+                if (session.startedAt) != nil {
+                    Text(viewModel.formattedFinishedAt)
                 }
             }
             
@@ -43,7 +49,7 @@ struct HistoryView: View {
             HStack {
                 Text("合計時間:")
                     .font(.headline)
-                Text("\(Int(session.duration)) 分")
+                Text(Utility.timeString(from: Int(session.duration)))
             }
             
             HStack {
@@ -86,8 +92,10 @@ extension MockSession {
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            HistoryView(session: MockSession.sampleSession)
+        let mockSession = MockSession.sampleSession
+        
+        return NavigationView {
+            HistoryView(session: mockSession)
         }
     }
 }
