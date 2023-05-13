@@ -81,7 +81,13 @@ struct CurrencyTextField: UIViewRepresentable {
         
         @objc func textFieldDidChange(textField: UITextField) {
             let newText = String(textField.text?.filter { "0123456789".contains($0) } ?? "")
-            self.parent.value = Int(newText) ?? 0
+            let number = Int(newText) ?? 0
+            self.parent.value = Int(number)
+            NotificationCenter.default.post(name: Notification.Name("CurrencyTextFieldDidChange"), object: nil)
+            
+            let formatter = NumberFormatter()
+                    formatter.numberStyle = .decimal
+                    textField.text = formatter.string(from: NSNumber(value: number))
             
             textField.textColor = self.parent.value == 0 ? .gray : .black
             
