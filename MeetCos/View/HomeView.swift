@@ -44,11 +44,19 @@ struct HomeView: View {
             .frame(height: 400)
             
             HStack {
-                Button("Start") {
+                Button("スタート") {
                     homeViewModel.start()
                 }
+                .bold()
+                .padding()
+                .frame(maxWidth: 175)
+                .background(!homeViewModel.isRunning ? AnyShapeStyle(LinearGradient(gradient: Gradient(colors: [Color("Color-1"), Color("Color-2")]), startPoint: .leading, endPoint: .trailing)): AnyShapeStyle(Color(.gray)))
+            
+                .foregroundColor(.white)
+                .cornerRadius(12.0)
+                .padding()
                 .disabled(homeViewModel.isRunning || $showingResult.wrappedValue || homeViewModel.estimatedTotalCost == 0)
-                Button("Done") {
+                Button("ストップ") {
                     homeViewModel.stop()
                     homeViewModel.finishSession {
                         withAnimation {
@@ -57,6 +65,14 @@ struct HomeView: View {
                     }
                     homeViewModel.countdownTimerViewModel.reset()
                 }
+                .bold()
+                .padding()
+                .frame(maxWidth: 175)
+                .background(homeViewModel.isRunning ? AnyShapeStyle(LinearGradient(gradient: Gradient(colors: [Color(.yellow), Color(.red)]), startPoint: .leading, endPoint: .trailing)) : AnyShapeStyle(Color(.gray)))
+            
+                .foregroundColor(.white)
+                .cornerRadius(12.0)
+                .padding()
                 .disabled(!homeViewModel.isRunning || $showingResult.wrappedValue)
             }
             .opacity(showingResult ? 0.3 : 1)
@@ -69,8 +85,16 @@ struct HomeView: View {
             Button (action:{
                 showingSheet.toggle()
             }) {
-                Text("Edit")
+                Text("編集")
             }
+            .bold()
+            .padding()
+            .frame(maxWidth: 175)
+            .background(!homeViewModel.isRunning ? AnyShapeStyle(LinearGradient(gradient: Gradient(colors: [Color(.yellow), Color(.red)]), startPoint: .leading, endPoint: .trailing)) : AnyShapeStyle(Color(.gray)))
+        
+            .foregroundColor(.white)
+            .cornerRadius(12.0)
+            .padding()
             .opacity(showingResult ? 0.3 : 1)
             .disabled(homeViewModel.isRunning || $showingResult.wrappedValue)
             .sheet(isPresented: $showingSheet, onDismiss: {
