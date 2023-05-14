@@ -26,38 +26,6 @@ extension Session {
     @NSManaged public var duration: Double
     @NSManaged public var estimatedCost: Int64
     @NSManaged public var totalCost: Int64
-    
-    static var latestSessionId: Int64 {
-        let request: NSFetchRequest<Session> = Session.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Session.sessionId, ascending: false)]
-        request.fetchLimit = 1
-        do {
-            let result = try PersistenceController.shared.container.viewContext.fetch(request)
-            if let session = result.first {
-                return session.sessionId + 1
-            } else {
-                return 1
-            }
-        } catch {
-            print("Error fetching latest session id: \(error)")
-            return 1
-        }
-    }
-    
-    static func getLatestSession() -> Session? {
-        let context = PersistenceController.shared.container.viewContext
-        let fetchRequest: NSFetchRequest<Session> = Session.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "sessionId", ascending: false)]
-        fetchRequest.predicate = NSPredicate(format: "finishedAt == nil")
-        fetchRequest.fetchLimit = 1
-        do {
-            let results = try context.fetch(fetchRequest)
-            return results.first
-        } catch {
-            print("Error fetching last session: \(error.localizedDescription)")
-            return nil
-        }
-    }
 }
 
 // MARK: Generated accessors for groups

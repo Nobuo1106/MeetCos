@@ -41,18 +41,12 @@ struct CurrencyTextField: UIViewRepresentable {
         textField.textColor = value == 0 ? .gray : .black
         symbolLabel.textColor = value == 0 ? .gray : .black
         
-        container.addSubview(symbolLabel)
         container.addSubview(textField)
 
-        // Set up constraints to keep the symbol label on the left
-        symbolLabel.translatesAutoresizingMaskIntoConstraints = false
         textField.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            symbolLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            symbolLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor),
-            
-            textField.leadingAnchor.constraint(equalTo: symbolLabel.trailingAnchor, constant: 5),
+            textField.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             textField.trailingAnchor.constraint(equalTo: container.trailingAnchor),
             textField.centerYAnchor.constraint(equalTo: container.centerYAnchor)
         ])
