@@ -27,6 +27,9 @@ struct TabBar: View {
                     }
                 }
         }.accentColor(.green)
+            .onAppear {
+                UserDefaults.standard.set(Date(), forKey: "LastLaunchDate")
+            }
     }
 }
 
