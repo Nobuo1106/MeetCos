@@ -10,18 +10,38 @@ import Lottie
 
 struct AnimatedLaunchScreen: View {
     @Binding var animationFinished: Bool
+    @State var title: String = ""
+    
     var body: some View {
-        LottieView(name: "insights", loopMode: .playOnce)
-            .aspectRatio(contentMode: .fit)
-            .frame(width: UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.75)
-            .position(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
-            .onAppear{
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    withAnimation(.easeOut(duration: 1.1)) {
-                        animationFinished = true
+        VStack {
+            LottieView(name: "insights", loopMode: .playOnce)
+                .aspectRatio(contentMode: .fit)
+                .frame(width: UIScreen.main.bounds.width * 0.75, height: UIScreen.main.bounds.height * 0.75)
+                .position(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2.5)
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        withAnimation(.easeOut(duration: 1.1)) {
+                            animationFinished = true
+                        }
+                    }
+                }
+            Text(title).animation(.easeInOut(duration: 0.2))
+                .font(.title)
+                .fontWeight(.black)
+                .foregroundColor(Color("Color-2"))
+                .padding(75)
+            Spacer()
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                title = ""
+                "MeetCos".enumerated().forEach { index, character in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.2) {
+                        title += String(character)
                     }
                 }
             }
+        }
     }
 }
 
@@ -47,4 +67,12 @@ struct LottieView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<LottieView>) {}
+}
+
+struct AnimatedLaunchScreen_Previews: PreviewProvider {
+    @State static var animationFinished: Bool = false
+    
+    static var previews: some View {
+        AnimatedLaunchScreen(animationFinished: $animationFinished)
+    }
 }
