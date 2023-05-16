@@ -38,8 +38,7 @@ struct InputRowsView: View {
                     Text("見込み利益：")
                         .font(.callout)
                         .bold()
-                }//.frame(width: 120)
-
+                }
                 Spacer()
                 VStack {
                     

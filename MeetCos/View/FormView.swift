@@ -26,7 +26,8 @@ struct FormView: View {
         VStack {
             Form {
                 Section (header: Text("会議時間")){
-                    TimePickerView(viewModel: timePickerViewModel)
+                    TimePickerView()
+                        .environmentObject(timePickerViewModel)
                         .onChange(of: timePickerViewModel.hourSelection) { newValue in
                             timePickerViewModel.hourSelection = newValue
                             viewModel.changeTotal()
@@ -36,10 +37,9 @@ struct FormView: View {
                             viewModel.changeTotal()
                         }
                 }
-
                 ForEach($viewModel.expenses) { $expense in
                     InputRowsView(expense: $expense)
-                    .focused(self.$focus)
+                        .focused(self.$focus)
                 }
                 HStack {
                     Button {
@@ -61,7 +61,7 @@ struct FormView: View {
                     .foregroundColor(viewModel.expenses.count <= 1 ? .gray : .red)
                     .disabled(viewModel.expenses.count <= 1)
                 }
-
+                
                 Section {
                     Text("総経費 ¥: \(viewModel.totalCost) ").bold()
                 }

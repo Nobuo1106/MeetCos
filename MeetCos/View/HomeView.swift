@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var timePickerViewModel = TimePickerViewModel()
     @EnvironmentObject var homeViewModel: HomeViewModel
     @EnvironmentObject var timerViewModel: CountdownTimerViewModel
     @State private var showingSheet = false
@@ -19,11 +18,12 @@ struct HomeView: View {
             HStack {
                 Text("会議時間")
                     .padding()
-                TimePickerView(viewModel: timePickerViewModel, isRunning: $homeViewModel.isRunning)
-                    .onChange(of: timePickerViewModel.hourSelection) { _ in
+                TimePickerView()
+                    .environmentObject(homeViewModel.timePickerViewModel)
+                    .onChange(of: homeViewModel.timePickerViewModel.hourSelection) { _ in
                         homeViewModel.updateSessionDuration()
                     }
-                    .onChange(of: timePickerViewModel.minSelection) { _ in
+                    .onChange(of: homeViewModel.timePickerViewModel.minSelection) { _ in
                         homeViewModel.updateSessionDuration()
                     }
                     .disabled(homeViewModel.isRunning || $showingResult.wrappedValue)
