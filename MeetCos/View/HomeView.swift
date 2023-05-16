@@ -48,12 +48,21 @@ struct HomeView: View {
                     homeViewModel.start()
                 }
                 .bold()
+                .font(.callout)
                 .padding()
                 .frame(maxWidth: 175)
-                .background(!homeViewModel.isRunning ? AnyShapeStyle(LinearGradient(gradient: Gradient(colors: [Color("Color-1"), Color("Color-2")]), startPoint: .leading, endPoint: .trailing)): AnyShapeStyle(Color(.gray)))
+                .background(
+                   !homeViewModel.isRunning ?
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(Color.white, lineWidth: 5)
+                        .background(Color("Color-1"))
+                   : RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color.white, lineWidth: 5)
+                    .background(Color("Color-6"))
+                )
             
                 .foregroundColor(.white)
-                .cornerRadius(12.0)
+                .cornerRadius(15)
                 .padding()
                 .disabled(homeViewModel.isRunning || $showingResult.wrappedValue || homeViewModel.estimatedTotalCost == 0)
                 Button("ストップ") {
@@ -66,12 +75,21 @@ struct HomeView: View {
                     homeViewModel.countdownTimerViewModel.reset()
                 }
                 .bold()
+                .font(.callout)
                 .padding()
                 .frame(maxWidth: 175)
-                .background(homeViewModel.isRunning ? AnyShapeStyle(LinearGradient(gradient: Gradient(colors: [Color(.yellow), Color(.red)]), startPoint: .leading, endPoint: .trailing)) : AnyShapeStyle(Color(.gray)))
+                .background(
+                   !homeViewModel.isRunning ?
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(Color.white, lineWidth: 3)
+                        .background(Color("Color-6"))
+                   : RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color.white, lineWidth: 5)
+                    .background(Color("Color-1"))
+                )
             
                 .foregroundColor(.white)
-                .cornerRadius(12.0)
+                .cornerRadius(15)
                 .padding()
                 .disabled(!homeViewModel.isRunning || $showingResult.wrappedValue)
             }
@@ -82,18 +100,26 @@ struct HomeView: View {
                 .font(.footnote)
                 .opacity(showingResult ? 0 : 1)
             Spacer()
-            Button (action:{
+            //
+            Button(action: {
                 showingSheet.toggle()
             }) {
                 Text("編集")
+                    .bold()
+                    .foregroundColor(.green)
+                    .padding()
+                    .frame(maxWidth: 175)
             }
-            .bold()
-            .padding()
-            .frame(maxWidth: 175)
-            .background(!homeViewModel.isRunning ? AnyShapeStyle(LinearGradient(gradient: Gradient(colors: [Color(.yellow), Color(.red)]), startPoint: .leading, endPoint: .trailing)) : AnyShapeStyle(Color(.gray)))
-        
-            .foregroundColor(.white)
-            .cornerRadius(12.0)
+            .background(
+               !homeViewModel.isRunning ?
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color.green, lineWidth: 5)
+                    .background(Color.white)
+               : RoundedRectangle(cornerRadius: 20)
+                .stroke(Color.gray, lineWidth: 3)
+                .background(Color("Color-5"))
+            )
+            .cornerRadius(20)
             .padding()
             .opacity(showingResult ? 0.3 : 1)
             .disabled(homeViewModel.isRunning || $showingResult.wrappedValue)
