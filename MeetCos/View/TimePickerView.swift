@@ -9,18 +9,12 @@ import SwiftUI
 
 
 struct TimePickerView: View {
-    @ObservedObject var viewModel: TimePickerViewModel
-    @Binding var isRunning: Bool
+    @EnvironmentObject var viewModel: TimePickerViewModel
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     var hours = [Int](0..<24)
     var minutes = [Int](0..<60)
     var seconds = [Int](0..<60)
-
-    init(viewModel: TimePickerViewModel, isRunning: Binding<Bool> = .constant(false)) {
-        self.viewModel = viewModel
-        _isRunning = isRunning
-    }
     
     var body: some View {
         //ZStackでPickerとレイヤーで重なるようにボタンを配置
@@ -62,7 +56,8 @@ struct TimePickerView_Previews: PreviewProvider {
     @State static private var isRunning = false
     static var previews: some View {
         let timePickerVM = TimePickerViewModel()
-        TimePickerView(viewModel: timePickerVM, isRunning: $isRunning)
+        TimePickerView()
+            .environmentObject(timePickerVM)
             .previewLayout(.sizeThatFits)
     }
 }
