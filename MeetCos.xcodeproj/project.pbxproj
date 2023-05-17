@@ -36,6 +36,9 @@
 		189DDFE12A1084D000CB6FB4 /* AnimatedLaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189DDFE02A1084CF00CB6FB4 /* AnimatedLaunchScreen.swift */; };
 		189DDFE42A10D85300CB6FB4 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 189DDFE32A10D85300CB6FB4 /* Lottie */; };
 		189DDFEA2A1108D700CB6FB4 /* insights.json in Resources */ = {isa = PBXBuildFile; fileRef = 189DDFE92A1108D700CB6FB4 /* insights.json */; };
+		189DDFEC2A156E0C00CB6FB4 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189DDFEB2A156E0C00CB6FB4 /* WebView.swift */; };
+		189DDFF02A15731900CB6FB4 /* FullScreenModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189DDFEF2A15731900CB6FB4 /* FullScreenModalView.swift */; };
+		189DDFF22A1574E800CB6FB4 /* WebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189DDFF12A1574E800CB6FB4 /* WebViewModel.swift */; };
 		18A18E8E2A061C6C00584DCC /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A18E8D2A061C6C00584DCC /* TabBar.swift */; };
 		18A18E902A062A5200584DCC /* HistoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A18E8F2A062A5200584DCC /* HistoryListView.swift */; };
 		18C17C2829BD762C0084B9CC /* Group+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C17C2629BD762C0084B9CC /* Group+CoreDataProperties.swift */; };
@@ -78,6 +81,9 @@
 		1897743729E28B8E0039A58A /* CountDownTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownTimerView.swift; sourceTree = "<group>"; };
 		189DDFE02A1084CF00CB6FB4 /* AnimatedLaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedLaunchScreen.swift; sourceTree = "<group>"; };
 		189DDFE92A1108D700CB6FB4 /* insights.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = insights.json; sourceTree = "<group>"; };
+		189DDFEB2A156E0C00CB6FB4 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		189DDFEF2A15731900CB6FB4 /* FullScreenModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenModalView.swift; sourceTree = "<group>"; };
+		189DDFF12A1574E800CB6FB4 /* WebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewModel.swift; sourceTree = "<group>"; };
 		18A18E8D2A061C6C00584DCC /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		18A18E8F2A062A5200584DCC /* HistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryListView.swift; sourceTree = "<group>"; };
 		18C17C2629BD762C0084B9CC /* Group+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Group+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -171,6 +177,7 @@
 				182F3B9F2A07BB8C005EDFB5 /* HistoryListViewModel.swift */,
 				182F3BA12A07BBDD005EDFB5 /* HistoryViewModelProtocol.swift */,
 				182F3B992A078FD0005EDFB5 /* HistoryViewModel.swift */,
+				189DDFF12A1574E800CB6FB4 /* WebViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -180,6 +187,8 @@
 			children = (
 				189DDFE02A1084CF00CB6FB4 /* AnimatedLaunchScreen.swift */,
 				18A18E8D2A061C6C00584DCC /* TabBar.swift */,
+				189DDFEB2A156E0C00CB6FB4 /* WebView.swift */,
+				189DDFEF2A15731900CB6FB4 /* FullScreenModalView.swift */,
 				1806351029569A540013369D /* HomeView.swift */,
 				182AA199297178AA00128DE5 /* SheetView.swift */,
 				1863141929B15AE8003123AB /* TimePickerView.swift */,
@@ -274,15 +283,18 @@
 				1863141829B15AD4003123AB /* Expense.swift in Sources */,
 				18E03DBC29B2DB0B006CD4A7 /* Persistance.swift in Sources */,
 				1863141A29B15AE8003123AB /* TimePickerView.swift in Sources */,
+				189DDFF02A15731900CB6FB4 /* FullScreenModalView.swift in Sources */,
 				18D0679329B15C1200B594C7 /* CoreData.xcdatamodeld in Sources */,
 				18C17C2C29BD7A3C0084B9CC /* Session+CoreDataProperties.swift in Sources */,
 				18C17C2829BD762C0084B9CC /* Group+CoreDataProperties.swift in Sources */,
+				189DDFEC2A156E0C00CB6FB4 /* WebView.swift in Sources */,
 				182F3BA62A0BD3CD005EDFB5 /* SessionProtocol.swift in Sources */,
 				182F3BA02A07BB8C005EDFB5 /* HistoryListViewModel.swift in Sources */,
 				1806351129569A540013369D /* HomeView.swift in Sources */,
 				18A18E902A062A5200584DCC /* HistoryListView.swift in Sources */,
 				182AA198296A857B00128DE5 /* HomeViewModel.swift in Sources */,
 				18382DF22A0253FD0022596A /* ResultViewModel.swift in Sources */,
+				189DDFF22A1574E800CB6FB4 /* WebViewModel.swift in Sources */,
 				1897743829E28B8E0039A58A /* CountDownTimerView.swift in Sources */,
 				182F3B9A2A078FD0005EDFB5 /* HistoryViewModel.swift in Sources */,
 				18A18E8E2A061C6C00584DCC /* TabBar.swift in Sources */,
