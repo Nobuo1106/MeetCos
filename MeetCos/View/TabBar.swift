@@ -26,6 +26,13 @@ struct TabBar: View {
                         Text("履歴")
                     }
                 }
+            FullScreenModalView()
+                .tabItem {
+                    VStack {
+                        Image(systemName: "link")
+                        Text("プライバシーポリシー")
+                    }
+                }
         }.accentColor(.green)
             .onAppear {
                 UserDefaults.standard.set(Date(), forKey: "LastLaunchDate")
