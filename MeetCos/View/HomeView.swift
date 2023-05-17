@@ -44,28 +44,29 @@ struct HomeView: View {
             .frame(height: 400)
             
             HStack {
-                Button("スタート") {
+                Button(action: {
                     homeViewModel.start()
+                }) {
+                    Text("スタート")
+                        .bold()
+                        .font(.callout)
+                        .padding()
+                        .frame(maxWidth: 175)
+                        .background(
+                            !homeViewModel.isRunning  && homeViewModel.estimatedTotalCost != 0 ?
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(Color.white, lineWidth: 5)
+                                .background(Color("Color-1"))
+                           : RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.white, lineWidth: 5)
+                            .background(Color("Color-6"))
+                        )
+                        .foregroundColor(.white)
+                        .cornerRadius(15)
+                        .padding()
                 }
-                .bold()
-                .font(.callout)
-                .padding()
-                .frame(maxWidth: 175)
-                .background(
-                   !homeViewModel.isRunning ?
-                    RoundedRectangle(cornerRadius: 15)
-                        .stroke(Color.white, lineWidth: 5)
-                        .background(Color("Color-1"))
-                   : RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.white, lineWidth: 5)
-                    .background(Color("Color-6"))
-                )
-            
-                .foregroundColor(.white)
-                .cornerRadius(15)
-                .padding()
                 .disabled(homeViewModel.isRunning || $showingResult.wrappedValue || homeViewModel.estimatedTotalCost == 0)
-                Button("ストップ") {
+                Button(action: {
                     homeViewModel.stop()
                     homeViewModel.finishSession {
                         withAnimation {
@@ -73,24 +74,25 @@ struct HomeView: View {
                         }
                     }
                     homeViewModel.countdownTimerViewModel.reset()
+                }) {
+                    Text("ストップ")
+                        .bold()
+                        .font(.callout)
+                        .padding()
+                        .frame(maxWidth: 175)
+                        .background(
+                           !homeViewModel.isRunning ?
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(Color.white, lineWidth: 3)
+                                .background(Color("Color-6"))
+                           : RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color.white, lineWidth: 5)
+                            .background(Color("Color-1"))
+                        )
+                        .foregroundColor(.white)
+                        .cornerRadius(15)
+                        .padding()
                 }
-                .bold()
-                .font(.callout)
-                .padding()
-                .frame(maxWidth: 175)
-                .background(
-                   !homeViewModel.isRunning ?
-                    RoundedRectangle(cornerRadius: 15)
-                        .stroke(Color.white, lineWidth: 3)
-                        .background(Color("Color-6"))
-                   : RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.white, lineWidth: 5)
-                    .background(Color("Color-1"))
-                )
-            
-                .foregroundColor(.white)
-                .cornerRadius(15)
-                .padding()
                 .disabled(!homeViewModel.isRunning || $showingResult.wrappedValue)
             }
             .opacity(showingResult ? 0.3 : 1)

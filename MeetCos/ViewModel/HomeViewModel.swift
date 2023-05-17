@@ -56,19 +56,6 @@ class HomeViewModel: ObservableObject {
         }
     }
     
-    //    func appDidEnterBackground() {
-    //        appInBackground = true
-    //        backgroundTime = Date()
-    //    }
-    
-    //    func appWillEnterForeground() {
-    //        if appInBackground, let backgroundTime = backgroundTime {
-    //            let timeInBackground = Date().timeIntervalSince(backgroundTime)
-    //            remainingTime -= timeInBackground
-    //        }
-    //        appInBackground = false
-    //    }
-    
     func getLatestSession(completion: @escaping (Session?) -> Void) {
         SessionModel.shared.fetchLatestSession { [weak self] latestSession in
             guard let self = self else { return }
