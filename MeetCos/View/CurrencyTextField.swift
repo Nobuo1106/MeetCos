@@ -13,19 +13,10 @@ struct CurrencyTextField: UIViewRepresentable {
     
     func makeUIView(context: Context) -> UIView {
         let textField = UITextField()
-        let container = UIView()
         textField.delegate = context.coordinator
         textField.keyboardType = .numberPad
-        textField.placeholder = "0"
         textField.textAlignment = .right
         textField.addTarget(context.coordinator, action: #selector(Coordinator.textFieldDidChange), for: .editingChanged)
-        
-        let symbolLabel = UILabel()
-        symbolLabel.text = "¥"
-        symbolLabel.sizeToFit()
-        
-        textField.leftView = symbolLabel
-        textField.leftViewMode = .always
         
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -39,26 +30,14 @@ struct CurrencyTextField: UIViewRepresentable {
         
         // Update text color based on value
         textField.textColor = value == 0 ? .gray : .black
-        symbolLabel.textColor = value == 0 ? .gray : .black
         
-        container.addSubview(textField)
-
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            textField.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            textField.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            textField.centerYAnchor.constraint(equalTo: container.centerYAnchor)
-        ])
-        
-        return container
+        return textField
     }
     
     func updateUIView(_ uiView: UIView, context: Context) {
-        if let textField = uiView.subviews.compactMap({ $0 as? UITextField }).first,
-           let symbolLabel = uiView.subviews.compactMap({ $0 as? UILabel }).first {
-            textField.text = "\(value)"
-            symbolLabel.textColor = self.value > 0 ? UIColor.black : UIColor.gray
+        if let textField = uiView as? UITextField {
+            textField.text = self.value > 0 ? "¥\(self.value)" : "¥0"
+            textField.textColor = self.value > 0 ? UIColor.black : UIColor.gray
         }
     }
     
@@ -74,20 +53,18 @@ struct CurrencyTextField: UIViewRepresentable {
         }
         
         @objc func textFieldDidChange(textField: UITextField) {
-            let newText = String(textField.text?.filter { "0123456789".contains($0) } ?? "")
+            var newText = String(textField.text?.filter { "0123456789".contains($0) } ?? "")
+            if newText.isEmpty {
+                newText = "0"
+            }
             let number = Int(newText) ?? 0
-            self.parent.value = Int(number)
-            NotificationCenter.default.post(name: Notification.Name("CurrencyTextFieldDidChange"), object: nil)
+            self.parent.value = number
             
             let formatter = NumberFormatter()
-                    formatter.numberStyle = .decimal
-                    textField.text = formatter.string(from: NSNumber(value: number))
+            formatter.numberStyle = .decimal
+            textField.text = "¥" + (formatter.string(from: NSNumber(value: number)) ?? "")
             
             textField.textColor = self.parent.value == 0 ? .gray : .black
-            
-            if let symbolLabel = textField.leftView as? UILabel {
-                symbolLabel.textColor = self.parent.value == 0 ? .gray : .black
-            }
         }
         
         @objc func doneButtonTapped() {
