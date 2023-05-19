@@ -42,21 +42,30 @@ struct InputRowsView: View {
                 Spacer()
                 VStack {
                     
-                    CurrencyTextField(value: $expense.hourlyWage)
+                    CurrencyTextField(value: Binding(
+                        get: { self.expense.hourlyWage },
+                        set: {
+                            self.expense.hourlyWage = $0
+                            self.viewModel.changeTotal()
+                        }
+                    ))
                         .padding(.horizontal, 10)
                         .frame(height: 40)
                         .background(RoundedRectangle(cornerRadius: 5).strokeBorder(Color("Color-4"), lineWidth: 1))
         
-                    CurrencyTextField(value: $expense.hourlyProfit)
+                    CurrencyTextField(value: Binding(
+                        get: { self.expense.hourlyProfit },
+                        set: {
+                            self.expense.hourlyProfit = $0
+                            self.viewModel.changeTotal()
+                        }
+                    ))
                         .padding(.horizontal, 10)
                         .frame(height: 40)
                         .background(RoundedRectangle(cornerRadius: 5).strokeBorder(Color("Color-4"), lineWidth: 1))
                 }
             }
 
-        }
-        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("CurrencyTextFieldDidChange"))) { _ in
-            viewModel.changeTotal()
         }
     }
 }
