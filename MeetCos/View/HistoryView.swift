@@ -25,7 +25,7 @@ struct HistoryView: View {
                 HStack {
                     Text("開始時刻:")
                         .font(.headline)
-                    Spacer()
+                    Spacer().frame(width: 40)
                     if (session.startedAt) != nil {
                         Text(viewModel.formattedStartedAt)
                     }
@@ -34,7 +34,7 @@ struct HistoryView: View {
                 HStack {
                     Text("終了時刻:")
                         .font(.headline)
-                    Spacer()
+                    Spacer().frame(width: 40)
                     if (session.startedAt) != nil {
                         Text(viewModel.formattedFinishedAt)
                     }
@@ -43,7 +43,7 @@ struct HistoryView: View {
                 HStack {
                     Text("合計時間:")
                         .font(.headline)
-                    Spacer().frame(width: 76)
+                    Spacer().frame(width: 43)
 
                     Text(Utility.timeString(from: Int(session.duration)))
                 }
@@ -51,14 +51,14 @@ struct HistoryView: View {
                 HStack {
                     Text("予想コスト:")
                         .font(.headline)
-                    Spacer().frame(width: 58)
+                    Spacer().frame(width: 27)
                     Text("¥\(session.estimatedCost)")
                 }
                 
                 HStack {
                     Text("合計コスト:")
                         .font(.headline)
-                    Spacer().frame(width: 58)
+                    Spacer().frame(width: 28)
 
                     Text("¥\(session.totalCost)")
                 }
@@ -68,7 +68,7 @@ struct HistoryView: View {
                 HStack {
                     Text("コスト差:")
                         .font(.headline)
-                    Spacer().frame(width: 76)
+                    Spacer().frame(width: 47)
 
                     Text("¥\(session.totalCost - session.estimatedCost)")
                 }
