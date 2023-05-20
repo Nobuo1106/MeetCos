@@ -12,7 +12,7 @@ struct HomeView: View {
     @EnvironmentObject var timerViewModel: CountdownTimerViewModel
     @State private var showingSheet = false
     @State private var showingResult = false
-    
+
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -58,9 +58,10 @@ struct HomeView: View {
                                 RoundedRectangle(cornerRadius: 15)
                                     .stroke(Color.white, lineWidth: 5)
                                     .background(Color("Color-1"))
-                                : RoundedRectangle(cornerRadius: 20)
+                                : RoundedRectangle(cornerRadius: 15)
                                     .stroke(Color.white, lineWidth: 5)
-                                    .background(Color("Color-6"))
+                                    .background(Color("Color-6")
+                                                    )
                             )
                             .foregroundColor(.white)
                             .cornerRadius(15)
@@ -84,9 +85,9 @@ struct HomeView: View {
                             .background(
                                 !homeViewModel.isRunning ?
                                 RoundedRectangle(cornerRadius: 15)
-                                    .stroke(Color.white, lineWidth: 3)
+                                    .stroke(Color.white, lineWidth: 5)
                                     .background(Color("Color-6"))
-                                : RoundedRectangle(cornerRadius: 20)
+                                : RoundedRectangle(cornerRadius: 15)
                                     .stroke(Color.white, lineWidth: 5)
                                     .background(Color("Color-1"))
                             )

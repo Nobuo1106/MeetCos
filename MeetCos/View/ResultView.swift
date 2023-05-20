@@ -26,6 +26,7 @@ struct ResultView: View {
                     Text("予定経費 ¥ :")
                         .padding(.bottom, 3)
                 }
+                
                 VStack (alignment: .leading) {
                     Text("\(Utility.timeString(from: viewModel.totalSeconds ?? 0))")
                         .padding(.bottom, 3)
@@ -37,6 +38,7 @@ struct ResultView: View {
                         .padding(.bottom, 3)
                 }
             }
+            .foregroundColor(.black)
             Spacer()
             
             Button(action: {
