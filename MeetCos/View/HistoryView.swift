@@ -73,6 +73,7 @@ struct HistoryView: View {
                     Text("¥\(session.totalCost - session.estimatedCost)")
                 }
             }
+            .foregroundColor(.black)
             .padding()
             .frame(maxWidth: 300, maxHeight: 350)
             .background(Color("Color-3"))
