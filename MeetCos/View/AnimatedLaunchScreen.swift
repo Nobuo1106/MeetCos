@@ -27,7 +27,7 @@ struct AnimatedLaunchScreen: View {
                 }
             Text(title).animation(.easeInOut(duration: 0.2))
                 .font(.title)
-                .fontWeight(.black)
+                .bold()
                 .foregroundColor(Color("Color-2"))
                 .padding(75)
             Spacer()
