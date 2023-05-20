@@ -16,32 +16,37 @@ struct TabBar: View {
     }
     
     var body: some View {
-        TabView {
-            HomeView()
-                .tabItem {
-                    VStack {
-                        Image(systemName: "house")
-                        Text("ホーム")
+        VStack {
+            TabView {
+                
+                HomeView()
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "house")
+                            Text("ホーム")
+                        }
                     }
-                }
-            HistoryListView()
-                .tabItem {
-                    VStack {
-                        Image(systemName: "clock.arrow.2.circlepath")
-                        Text("履歴")
+                HistoryListView()
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "clock.arrow.2.circlepath")
+                            Text("履歴")
+                        }
                     }
-                }
-            FullScreenModalView()
-                .tabItem {
-                    VStack {
-                        Image(systemName: "link")
-                        Text("プライバシーポリシー")
+                FullScreenModalView()
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "link")
+                            Text("プライバシーポリシー")
+                        }
                     }
-                }
-        }.accentColor(.green)
-            .onAppear {
-                UserDefaults.standard.set(Date(), forKey: "LastLaunchDate")
+            }.accentColor(.green)
+                .onAppear {
+                    UserDefaults.standard.set(Date(), forKey: "LastLaunchDate")
             }
+            
+        }
+        Spacer()
     }
 }
 

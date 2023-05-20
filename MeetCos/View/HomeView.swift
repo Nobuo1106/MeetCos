@@ -42,7 +42,7 @@ struct HomeView: View {
                             .transition(.scale)
                     }
                 }
-                .frame(height: geometry.size.height / 2.25)
+                .frame(height: geometry.size.height / 2.50)
                 
                 HStack {
                     Button(action: {
