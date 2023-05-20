@@ -54,6 +54,7 @@ class CountdownTimerViewModel: ObservableObject {
         remainingTime = 0
         totalCost = 0
         progress = 0
+        isOvertime = false
     }
     
     func updateDuration(newDuration: Double) {
