@@ -104,7 +104,7 @@ struct HomeView: View {
                     .font(.footnote)
                     .opacity(showingResult ? 0 : 1)
                 Spacer()
-                //
+                
                 Button(action: {
                     showingSheet.toggle()
                 }) {
