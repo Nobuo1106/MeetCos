@@ -12,7 +12,7 @@ struct UrlWebView: UIViewRepresentable {
     @ObservedObject var viewModel: WebViewModel
     @Binding var isLoading: Bool
     let webView = WKWebView()
-
+    
     func makeCoordinator() -> Coordinator {
         Coordinator(self.viewModel)
     }
@@ -27,7 +27,7 @@ struct UrlWebView: UIViewRepresentable {
         func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
             self.viewModel.isLoading = true
         }
-
+        
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
             self.viewModel.isLoading = false
         }
@@ -41,11 +41,11 @@ struct UrlWebView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> UIView {
         self.webView.navigationDelegate = context.coordinator
-
+        
         if let url = URL(string: self.viewModel.url) {
             self.webView.load(URLRequest(url: url))
         }
-
+        
         return self.webView
     }
 }
@@ -84,7 +84,7 @@ struct LoadingView<Content>: View where Content: View {
                     }
                     .scaleEffect(x: 1, y: 0.75, anchor: .center)
                     .accentColor(Color(red: 0.915, green: 0.447, blue: 0.445))
-                    .offset(y:-320)
+                    .position(x: geometry.size.width / 2, y: geometry.size.height * 0.05)
                     .opacity(self.isLoading ? 1 : 0)
                 
                 VStack {
