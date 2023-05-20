@@ -41,6 +41,8 @@ struct UrlWebView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> UIView {
         self.webView.navigationDelegate = context.coordinator
+        self.webView.backgroundColor = .clear
+        self.webView.isOpaque = false
         
         if let url = URL(string: self.viewModel.url) {
             self.webView.load(URLRequest(url: url))
