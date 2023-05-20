@@ -18,7 +18,7 @@ struct CountDownTimerView: View {
                 .padding(50)
             ClockwiseProgress(progress: CGFloat(viewModel.progress), isOverTime: viewModel.isOvertime)
                 .stroke(Color.yellow, style: StrokeStyle(lineWidth: 10))
-                .scaledToFit()
+                .scaledToFill()
                 .padding(50)
             VStack {
                 Text("残り時間: \(viewModel.formattedRemainingTime)")
