@@ -41,6 +41,7 @@ struct TabBar: View {
                         }
                     }
             }.accentColor(.green)
+                .edgesIgnoringSafeArea(.bottom)
                 .onAppear {
                     UserDefaults.standard.set(Date(), forKey: "LastLaunchDate")
             }
