@@ -27,9 +27,7 @@ struct CurrencyTextField: UIViewRepresentable {
         toolbar.setItems([flexSpace, doneButton], animated: false)
         
         textField.inputAccessoryView = toolbar
-        
-        // Update text color based on value
-        textField.textColor = value == 0 ? .gray : .black
+        textField.textColor = value == 0 ? .gray : UIColor(Color("inputTextColor"))
         
         return textField
     }
@@ -37,7 +35,7 @@ struct CurrencyTextField: UIViewRepresentable {
     func updateUIView(_ uiView: UIView, context: Context) {
         if let textField = uiView as? UITextField {
             textField.text = self.value > 0 ? "¥\(self.value)" : "¥0"
-            textField.textColor = self.value > 0 ? UIColor.black : UIColor.gray
+            textField.textColor = self.value > 0 ? UIColor(Color("inputTextColor")): UIColor.gray
         }
     }
     
@@ -64,7 +62,7 @@ struct CurrencyTextField: UIViewRepresentable {
             formatter.numberStyle = .decimal
             textField.text = "¥" + (formatter.string(from: NSNumber(value: number)) ?? "")
             
-            textField.textColor = self.parent.value == 0 ? .gray : .black
+            textField.textColor = self.parent.value == 0 ? .gray : UIColor(Color("inputTextColor"))
         }
         
         @objc func doneButtonTapped() {
