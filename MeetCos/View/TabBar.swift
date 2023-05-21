@@ -40,13 +40,18 @@ struct TabBar: View {
                             Text("プライバシーポリシー")
                         }
                     }
-            }.accentColor(.green)
-                .edgesIgnoringSafeArea(.bottom)
+            }
+            .frame(
+                width: UIScreen.main.bounds.width ,
+                height: UIScreen.main.bounds.height
+            )
+            .accentColor(.green)
+                .edgesIgnoringSafeArea(.all)
                 .onAppear {
                     UserDefaults.standard.set(Date(), forKey: "LastLaunchDate")
             }
-            
         }
+        .edgesIgnoringSafeArea(.all)
         Spacer()
     }
 }
