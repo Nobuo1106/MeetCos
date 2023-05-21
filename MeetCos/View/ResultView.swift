@@ -17,24 +17,24 @@ struct ResultView: View {
             Spacer()
             HStack {
                 VStack (alignment: .trailing) {
-                    Text("時間 :")
+                    Text("想定時間 :")
                         .padding(.bottom, 3)
-                    Text("予定時間 :")
+                    Text("会議時間 :")
                         .padding(.bottom, 3)
-                    Text("経費 ¥ :")
+                    Text("想定コスト:")
                         .padding(.bottom, 3)
-                    Text("予定経費 ¥ :")
+                    Text("合計コスト:")
                         .padding(.bottom, 3)
                 }
                 
                 VStack (alignment: .leading) {
-                    Text("\(Utility.timeString(from: viewModel.totalSeconds ?? 0))")
-                        .padding(.bottom, 3)
                     Text("\(Utility.timeString(from: viewModel.estimatedSeconds ?? 0))")
                         .padding(.bottom, 3)
-                    Text(" \(viewModel.totalCost ?? 0)")
+                    Text("\(Utility.timeString(from: viewModel.totalSeconds ?? 0))")
                         .padding(.bottom, 3)
-                    Text("\(viewModel.estimatedCost ?? 0)")
+                    Text("¥ \(viewModel.estimatedCost ?? 0)")
+                        .padding(.bottom, 3)
+                    Text("¥ \(viewModel.totalCost ?? 0)")
                         .padding(.bottom, 3)
                 }
             }

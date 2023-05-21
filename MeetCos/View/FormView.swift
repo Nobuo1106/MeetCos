@@ -63,7 +63,7 @@ struct FormView: View {
                 }
                 
                 Section {
-                    Text("総経費 ¥: \(viewModel.totalCost) ").bold()
+                    Text("合計コスト ¥: \(viewModel.totalCost) ").bold()
                 }
             }
             Spacer()

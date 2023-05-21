@@ -41,7 +41,7 @@ struct HistoryView: View {
                 }
                 
                 HStack {
-                    Text("合計時間:")
+                    Text("会議時間:")
                         .font(.headline)
                     Spacer().frame(width: 43)
 
