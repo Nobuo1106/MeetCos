@@ -22,10 +22,10 @@ struct HistoryListView: View {
                         NavigationLink(destination: HistoryView(session: session)) {
                             HStack {
                                 if let startedAt = session.startedAt {
-                                    Text("日時: \(startedAt, formatter: DateFormatter.shortDateAndTime)")
+                                    Text(" \(startedAt, formatter: DateFormatter.shortDateAndTime)")
                                 }
                                 Spacer()
-                                Text("コスト: ¥\(session.totalCost)")
+                                Text(" ¥\(session.totalCost)")
                             }
                         }
                     }
@@ -41,8 +41,7 @@ struct HistoryListView: View {
 extension DateFormatter {
     static var shortDateAndTime: DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
+        formatter.dateFormat = "yy.M.dd H:mm"
         return formatter
     }
 }
