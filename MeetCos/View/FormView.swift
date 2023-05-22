@@ -41,15 +41,20 @@ struct FormView: View {
                     InputRowsView(expense: $expense)
                         .focused(self.$focus)
                 }
+                
                 HStack {
                     Button {
-                        viewModel.expenses.append(Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0))
+                        if viewModel.expenses.count < 10 {
+                            viewModel.expenses.append(Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0))
+                        }
                     } label: {
                         Text("+")
                             .bold()
                     }
                     .buttonStyle(.plain)
                     .foregroundColor(.blue)
+                    .disabled(viewModel.expenses.count >= 10)
+                    
                     Spacer()
                     Button {
                         viewModel.expenses.removeLast()
