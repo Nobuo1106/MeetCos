@@ -39,6 +39,11 @@ Copy code
 5. 「完了」ボタンをタップして会議を終了し、コストの詳細を表示します。
 6. 履歴タブで会議履歴にアクセスします。
 
+## 技術スタック
+- SwiftUI
+- Lottie
+- CoreData
+
 ## 貢献
 
 プルリクエストは歓迎です。大きな変更については、まず問題を開いて変更したい内容について話し合ってください。
@@ -70,7 +75,7 @@ MeetCos is a meeting cost calculator app designed to help users track and manage
 ### Prerequisites
 
 - Xcode 13 or later
-- iOS 15 or later
+- iOS 15.0 or later
 
 ### Installation
 
@@ -92,6 +97,11 @@ Copy code
 4. stop the meeting timer as needed.
 5. Tap the "Done" button to finish the meeting and view the cost details.
 6. Access the meeting history on the History tab.
+
+## SkillStack
+- SwiftUI
+- Lottie
+- CoreData
 
 ## Contributing
 
