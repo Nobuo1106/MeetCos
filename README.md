@@ -1,4 +1,5 @@
 # MeetCos（ミートコス）
+[MeetCos](https://apple.co/4222VeK)
 
 MeetCos（ミートコス）は、ユーザーが会議中の経費を追跡および管理することを支援する会議費用計算アプリです。アプリでは、出席者数、時給、会議の所要時間を入力して、合計コストを見積もることができます。
 
@@ -44,6 +45,9 @@ Copy code
 - Lottie
 - CoreData
 
+## アーキテクチャ
+MVVM
+
 ## 貢献
 
 プルリクエストは歓迎です。大きな変更については、まず問題を開いて変更したい内容について話し合ってください。
@@ -58,7 +62,7 @@ Copy code
 
 
 # MeetCos
-
+[MeetCos](https://apple.co/4222VeK)
 MeetCos is a meeting cost calculator app designed to help users track and manage expenses during meetings. The app allows users to input the number of attendees, hourly wages, and meeting duration to estimate the total cost.
 
 ## Features
@@ -102,6 +106,9 @@ Copy code
 - SwiftUI
 - Lottie
 - CoreData
+
+## Architecture
+MVVM
 
 ## Contributing
 
