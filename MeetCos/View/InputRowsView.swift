@@ -21,7 +21,7 @@ struct InputRowsView: View {
                             .tag(value)
                     }
                 } label: {
-                    Text("人数")
+                    Text("人数：")
                         .font(.callout)
                         .bold()
                 }

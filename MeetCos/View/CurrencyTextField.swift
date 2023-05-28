@@ -34,7 +34,10 @@ struct CurrencyTextField: UIViewRepresentable {
     
     func updateUIView(_ uiView: UIView, context: Context) {
         if let textField = uiView as? UITextField {
-            textField.text = self.value > 0 ? "¥\(self.value)" : "¥0"
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            let formattedNumberString = formatter.string(from: NSNumber(value: self.value))
+            textField.text = self.value > 0 ? "¥" + formattedNumberString! : "¥0"
             textField.textColor = self.value > 0 ? UIColor(Color("inputTextColor")): UIColor.gray
         }
     }
