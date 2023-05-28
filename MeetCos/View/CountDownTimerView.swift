@@ -23,7 +23,7 @@ struct CountDownTimerView: View {
             VStack {
                 Text("残り時間: \(viewModel.formattedRemainingTime)")
                     .foregroundColor(viewModel.isOvertime ? .red : .primary)
-                Text("経費：\(viewModel.formattedTotalCost)")
+                Text("コスト：\(viewModel.formattedTotalCost)")
                     .foregroundColor(viewModel.isOvertime ? .red : .primary)
             }
         }
