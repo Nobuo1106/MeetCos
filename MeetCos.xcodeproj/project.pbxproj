@@ -48,7 +48,7 @@
 		18D0679629B15C9300B594C7 /* Group+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D0679429B15C9200B594C7 /* Group+CoreDataClass.swift */; };
 		18E03DBC29B2DB0B006CD4A7 /* Persistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E03DBB29B2DB0B006CD4A7 /* Persistance.swift */; };
 		18E03DE229B69698006CD4A7 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E03DE129B69698006CD4A7 /* Utility.swift */; };
-		18EF38A22A219AAA00E272F7 /* MeetCosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF38A12A219AAA00E272F7 /* MeetCosTests.swift */; };
+		18EF38A22A219AAA00E272F7 /* SheetViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF38A12A219AAA00E272F7 /* SheetViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,7 +105,7 @@
 		18E03DBB29B2DB0B006CD4A7 /* Persistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistance.swift; sourceTree = "<group>"; };
 		18E03DE129B69698006CD4A7 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		18EF389F2A219AAA00E272F7 /* MeetCosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeetCosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		18EF38A12A219AAA00E272F7 /* MeetCosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetCosTests.swift; sourceTree = "<group>"; };
+		18EF38A12A219AAA00E272F7 /* SheetViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,7 +228,7 @@
 		18EF38A02A219AAA00E272F7 /* MeetCosTests */ = {
 			isa = PBXGroup;
 			children = (
-				18EF38A12A219AAA00E272F7 /* MeetCosTests.swift */,
+				18EF38A12A219AAA00E272F7 /* SheetViewModelTests.swift */,
 			);
 			path = MeetCosTests;
 			sourceTree = "<group>";
@@ -383,7 +383,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18EF38A22A219AAA00E272F7 /* MeetCosTests.swift in Sources */,
+				18EF38A22A219AAA00E272F7 /* SheetViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,13 +596,16 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8BG588F6G9;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = igarashi.MeetCosTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MeetCos.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MeetCos";
 			};
 			name = Debug;
@@ -615,13 +618,16 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8BG588F6G9;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = igarashi.MeetCosTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MeetCos.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MeetCos";
 			};
 			name = Release;
