@@ -87,6 +87,7 @@
 		185D088E2A0EF67C00A947C4 /* CurrencyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyTextField.swift; sourceTree = "<group>"; };
 		1863141729B15AD4003123AB /* Expense.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		1863141929B15AE8003123AB /* TimePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
+		187C8E692A231BE700AAD904 /* CoreData 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "CoreData 2.xcdatamodel"; sourceTree = "<group>"; };
 		1897743329E281900039A58A /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		1897743529E2882E0039A58A /* CountDownTimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownTimerViewModel.swift; sourceTree = "<group>"; };
 		1897743729E28B8E0039A58A /* CountDownTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownTimerView.swift; sourceTree = "<group>"; };
@@ -687,9 +688,10 @@
 		18D0679129B15C1200B594C7 /* CoreData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				187C8E692A231BE700AAD904 /* CoreData 2.xcdatamodel */,
 				18D0679229B15C1200B594C7 /* CoreData.xcdatamodel */,
 			);
-			currentVersion = 18D0679229B15C1200B594C7 /* CoreData.xcdatamodel */;
+			currentVersion = 187C8E692A231BE700AAD904 /* CoreData 2.xcdatamodel */;
 			path = CoreData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

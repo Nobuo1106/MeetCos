@@ -116,7 +116,8 @@ class SheetViewModel: ObservableObject {
                 if groups.isEmpty {
                     expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
                 } else {
-                    expenses = groups.map { group in
+                    let sortedGroups = groups.sorted { $0.orderIndex < $1.orderIndex }
+                    expenses = sortedGroups.map { group in
                         Expense(personCount: Int(group.personCount),
                                 hourlyWage: Int(group.hourlyWage),
                                 hourlyProfit: Int(group.hourlyProfit)
