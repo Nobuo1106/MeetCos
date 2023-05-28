@@ -44,13 +44,14 @@ Copy code
 - SwiftUI
 - Lottie
 - CoreData
+- XCTest
+- Swift Package Manager
 
 ## アーキテクチャ
 MVVM
 
-## 貢献
-
-プルリクエストは歓迎です。大きな変更については、まず問題を開いて変更したい内容について話し合ってください。
+## テストカバレッジ率
+1%
 
 ## ライセンス
 
@@ -106,13 +107,14 @@ Copy code
 - SwiftUI
 - Lottie
 - CoreData
+- XCTest
+- Swift Package Manager
 
 ## Architecture
 MVVM
 
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+## TestCoverage
+1%
 
 ## License
 
