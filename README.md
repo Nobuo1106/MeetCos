@@ -50,9 +50,6 @@ Copy code
 ## アーキテクチャ
 MVVM
 
-## テストカバレッジ率
-1%
-
 ## ライセンス
 
 [MITライセンス](https://choosealicense.com/licenses/mit/)
@@ -112,9 +109,6 @@ Copy code
 
 ## Architecture
 MVVM
-
-## TestCoverage
-1%
 
 ## License
 
