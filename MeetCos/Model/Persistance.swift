@@ -39,12 +39,16 @@ struct PersistenceController {
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
-        let description = NSPersistentStoreDescription()
-        let url = container.persistentStoreDescriptions.first?.url ?? FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last?.appendingPathComponent("CoreData.sqlite")
-        description.url = url
-        description.shouldMigrateStoreAutomatically = true
-        description.shouldInferMappingModelAutomatically = true
-        container.persistentStoreDescriptions = [description]
+        let appGroupID = "group.igarashi.MeetCos"
+        if let appGroupURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupID) {
+            let url = appGroupURL.appendingPathComponent("CoreData.sqlite")
+            let description = NSPersistentStoreDescription(url: url)
+            description.shouldMigrateStoreAutomatically = true
+            description.shouldInferMappingModelAutomatically = true
+            container.persistentStoreDescriptions = [description]
+        } else {
+            print("Failed to create URL for app group \(appGroupID)")
+        }
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
