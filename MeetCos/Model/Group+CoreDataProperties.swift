@@ -16,6 +16,7 @@ extension Group {
         return NSFetchRequest<Group>(entityName: "Group")
     }
 
+    @NSManaged public var orderIndex: Int16
     @NSManaged public var hourlyProfit: Int64
     @NSManaged public var hourlyWage: Int64
     @NSManaged public var personCount: Int64

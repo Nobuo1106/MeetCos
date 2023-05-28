@@ -37,7 +37,7 @@ class SessionModel {
         }
     }
     
-    // ResultViewで終了したセッションを取得する為のメソッド
+    // ResultViewで終了したセッションを取得する
     func fetchLatestFinishedSession(completion: @escaping (Session?) -> Void) {
         let context = PersistenceController.shared.container.viewContext
         
@@ -89,9 +89,10 @@ class SessionModel {
             if !expenses.isEmpty {
                 targetSession.groups.forEach { context.delete($0) }
                 var groups = [Group]()
-                for expense in expenses {
+                for (index, expense) in expenses.enumerated() {
                     let group = expense.toGroup(sessionId: targetSession.sessionId)
                     group.session = targetSession
+                    group.orderIndex = Int16(index)
                     groups.append(group)
                 }
                 targetSession.groups = Set(groups)
@@ -105,47 +106,6 @@ class SessionModel {
                 context.rollback()
                 completion(nil)
             }
-        }
-    }
-    
-    func saveSession(hourSelection: Int, minSelection: Int, totalCost: Int? = nil, estimatedCost: Int = 0) {
-        let context = PersistenceController.shared.container.viewContext
-        let session = self.latestSession ?? Session(context: context)
-        
-        let newDuration = Double(hourSelection * 60 + minSelection)
-        if session.duration != newDuration {
-            session.duration = newDuration
-        }
-        
-        if let totalCost = totalCost {
-            session.totalCost = Int64(totalCost)
-        }
-        session.estimatedCost = Int64(estimatedCost)
-        
-        if session.createdAt.isEmpty {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let currentTime = dateFormatter.string(from: Date())
-            session.createdAt = currentTime
-            
-            let emptyGroup = Group(context: context)
-            emptyGroup.personCount = 0
-            emptyGroup.hourlyWage = 0
-            emptyGroup.hourlyProfit = 0
-            emptyGroup.createdAt = currentTime
-            emptyGroup.updatedAt = currentTime
-            emptyGroup.session = session
-            print("insert")
-        }
-        
-        do {
-            try context.save()
-            print("Session saved")
-            
-            self.latestSession = session
-        } catch {
-            print("Error saving session: \(error.localizedDescription)")
-            context.rollback()
         }
     }
     
@@ -269,12 +229,12 @@ extension Session {
         sampleSession.duration = 3600
         sampleSession.estimatedCost = 1000
         sampleSession.totalCost = 1200
-
+        
         let sampleGroup = Group(context: context)
         sampleGroup.hourlyProfit = 100
         sampleGroup.hourlyWage = 1000
         sampleGroup.personCount = 1
-
+        
         sampleSession.addToGroups(sampleGroup)
         
         return sampleSession
