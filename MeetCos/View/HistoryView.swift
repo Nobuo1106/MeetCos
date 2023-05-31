@@ -30,7 +30,6 @@ struct HistoryView: View {
                         Text(viewModel.formattedStartedAt)
                     }
                 }
-                
                 HStack {
                     Text("終了時刻:")
                         .font(.headline)
@@ -39,37 +38,30 @@ struct HistoryView: View {
                         Text(viewModel.formattedFinishedAt)
                     }
                 }
-                
                 HStack {
                     Text("会議時間:")
                         .font(.headline)
                     Spacer().frame(width: 43)
-
-                    Text(Utility.timeString(from: Int(session.duration)))
+                    Text("\(Utility.timeString(from: viewModel.totalSeconds))")
                 }
-                
                 HStack {
                     Text("予想コスト:")
                         .font(.headline)
                     Spacer().frame(width: 27)
                     Text("¥\(session.estimatedCost)")
                 }
-                
                 HStack {
                     Text("合計コスト:")
                         .font(.headline)
                     Spacer().frame(width: 28)
-
+                    
                     Text("¥\(session.totalCost)")
                 }
-                
-              
-                
                 HStack {
                     Text("コスト差:")
                         .font(.headline)
                     Spacer().frame(width: 47)
-
+                    
                     Text("¥\(session.totalCost - session.estimatedCost)")
                 }
             }
@@ -79,7 +71,7 @@ struct HistoryView: View {
             .background(Color("Color-3"))
             .cornerRadius(CGFloat(21.0))
             .shadow(radius: 10, x: 5, y: 5)
-        .transition(.scale)
+            .transition(.scale)
         }
     }
 }
@@ -94,7 +86,7 @@ struct MockSession: SessionProtocol {
     var duration: Double = 3600
     var estimatedCost: Int64 = 1000
     var totalCost: Int64 = 1200
-    var groups: Set<Group> = [] 
+    var groups: Set<Group> = []
 }
 
 extension MockSession {
