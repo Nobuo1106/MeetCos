@@ -8,6 +8,6 @@
 import Foundation
 
 class WebViewModel: ObservableObject {
-    @Published var url: String = "https://doc-hosting.flycricket.io/meetcos-privacy-policy/d7495ed9-7564-4d05-82ab-57c53234470b/privacy"
+    @Published var url: String = "https://meet-cos-privacy-policy.vercel.app/privacy.html"
     @Published var isLoading: Bool = true
 }
