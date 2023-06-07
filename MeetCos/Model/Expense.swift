@@ -25,7 +25,7 @@ extension Expense {
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         formatter.timeZone = TimeZone.current
         formatter.locale = Locale.current
-        
+
         let now = Date()
         group.createdAt = formatter.string(from: now)
         group.updatedAt = formatter.string(from: now)

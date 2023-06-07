@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension Session {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Session> {
@@ -45,6 +44,6 @@ extension Session {
 
 }
 
-extension Session : Identifiable {
+extension Session: Identifiable {
 
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct HistoryListView: View {
     @StateObject private var viewModel = HistoryListViewModel()
     @State private var showDetail = false
-    
+
     var body: some View {
         NavigationView {
             VStack {

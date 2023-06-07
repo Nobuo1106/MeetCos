@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CountDownTimerView: View {
     @ObservedObject var viewModel: CountdownTimerViewModel
-    
+
     var body: some View {
         ZStack {
             Circle()
@@ -33,7 +33,7 @@ struct CountDownTimerView: View {
 struct ClockwiseProgress: Shape {
     var progress: CGFloat = 0.0
     var isOverTime: Bool = false
-    
+
     func path(in rect: CGRect) -> Path {
         var path = Path()
         path.addArc(center: CGPoint(x: rect.midX, y: rect.midY),

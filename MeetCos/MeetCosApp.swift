@@ -13,16 +13,16 @@ struct MeetCosApp: App {
     @StateObject var homeViewModel: HomeViewModel
     @Environment(\.scenePhase) private var scenePhase
     @State var animationFinished = false
-    
+
     init() {
         let timePickerViewModel = TimePickerViewModel()
         let timerViewModel = CountdownTimerViewModel(initialDuration: 0, groups: [])
         let homeViewModel = HomeViewModel(timePickerViewModel: timePickerViewModel, countdownTimerViewModel: timerViewModel)
-        
+
         _timerViewModel = StateObject(wrappedValue: timerViewModel)
         _homeViewModel = StateObject(wrappedValue: homeViewModel)
     }
-    
+
     var body: some Scene {
         WindowGroup {
             if shouldShowLaunchScreen() && !animationFinished {
@@ -46,20 +46,20 @@ struct MeetCosApp: App {
             }
         }
     }
-    
+
     func shouldShowLaunchScreen() -> Bool {
         let lastLaunchDate = UserDefaults.standard.object(forKey: "LastLaunchDate") as? Date
         let isMeetingOngoing = UserDefaults.standard.bool(forKey: "IsMeetingOngoing")
-        
+
         guard let lastLaunch = lastLaunchDate, !isMeetingOngoing else {
             return true
         }
-        
+
         let calendar = Calendar.current
         if let date = calendar.date(byAdding: .day, value: 3, to: lastLaunch), date > Date() {
             return false
         }
-        
+
         return true
     }
 }

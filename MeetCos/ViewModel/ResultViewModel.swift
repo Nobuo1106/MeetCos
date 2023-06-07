@@ -14,7 +14,7 @@ class ResultViewModel: ObservableObject {
     @Published var estimatedSeconds: Int?
     @Published var estimatedCost: Int?
     @Published var totalCost: Int?
-    
+
     init() {
         fetchLatestFinishedSession()
     }
@@ -28,14 +28,14 @@ class ResultViewModel: ObservableObject {
             self.updatePublishedProperties(using: latestFinishedSession)
         }
     }
-    
+
     // 最新の終了後セッションから合計時間、予定時間、コスト、予定コストを計算
     private func updatePublishedProperties(using latestFinishedSession: Session) {
         self.latestFinishedSession = latestFinishedSession
-        
+
         if let startedAt = latestFinishedSession.startedAt,
            let finishedAt = latestFinishedSession.finishedAt {
-            
+
             let interval = finishedAt.timeIntervalSince(startedAt)
             print(interval)
             self.totalSeconds = Int(interval)
@@ -46,6 +46,5 @@ class ResultViewModel: ObservableObject {
         self.estimatedSeconds = Int(latestFinishedSession.duration) * 60
         self.estimatedCost = Int(latestFinishedSession.estimatedCost)
     }
-    
 
 }

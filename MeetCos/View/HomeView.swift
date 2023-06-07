@@ -30,7 +30,7 @@ struct HomeView: View {
                         .disabled(homeViewModel.isRunning || $showingResult.wrappedValue)
                 }
                 .opacity(showingResult ? 0.3 : 1)
-                
+
                 ZStack(alignment: .center) {
                     if showingResult {
                         ResultView(showingResult: $showingResult)
@@ -43,7 +43,7 @@ struct HomeView: View {
                     }
                 }
                 .frame(height: geometry.size.height / 2.50)
-                
+
                 HStack {
                     Button(action: {
                         homeViewModel.start()
@@ -55,13 +55,13 @@ struct HomeView: View {
                             .frame(maxWidth: 175)
                             .background(
                                 !homeViewModel.isRunning  && homeViewModel.estimatedTotalCost != 0 ?
-                                RoundedRectangle(cornerRadius: 15)
+                                    RoundedRectangle(cornerRadius: 15)
                                     .stroke(Color.white, lineWidth: 5)
                                     .background(Color("Color-1"))
-                                : RoundedRectangle(cornerRadius: 15)
+                                    : RoundedRectangle(cornerRadius: 15)
                                     .stroke(Color.white, lineWidth: 5)
                                     .background(Color("Color-6")
-                                                    )
+                                    )
                             )
                             .foregroundColor(.white)
                             .cornerRadius(15)
@@ -84,10 +84,10 @@ struct HomeView: View {
                             .frame(maxWidth: 175)
                             .background(
                                 !homeViewModel.isRunning ?
-                                RoundedRectangle(cornerRadius: 15)
+                                    RoundedRectangle(cornerRadius: 15)
                                     .stroke(Color.white, lineWidth: 5)
                                     .background(Color("Color-6"))
-                                : RoundedRectangle(cornerRadius: 15)
+                                    : RoundedRectangle(cornerRadius: 15)
                                     .stroke(Color.white, lineWidth: 5)
                                     .background(Color("Color-1"))
                             )
@@ -104,7 +104,7 @@ struct HomeView: View {
                     .font(.footnote)
                     .opacity(showingResult ? 0 : 1)
                 Spacer()
-                
+
                 Button(action: {
                     showingSheet.toggle()
                 }) {
@@ -116,10 +116,10 @@ struct HomeView: View {
                 }
                 .background(
                     !homeViewModel.isRunning ?
-                    RoundedRectangle(cornerRadius: 20)
+                        RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.green, lineWidth: 5)
                         .background(Color.white)
-                    : RoundedRectangle(cornerRadius: 20)
+                        : RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.gray, lineWidth: 3)
                         .background(Color("Color-5"))
                 )
@@ -146,7 +146,7 @@ struct ContentView_Previews: PreviewProvider {
     static var timePickerViewModel = TimePickerViewModel()
     static var countdownTimerViewModel = CountdownTimerViewModel(initialDuration: 0, groups: [])
     static var homeViewModel = HomeViewModel(timePickerViewModel: timePickerViewModel, countdownTimerViewModel: countdownTimerViewModel)
-    
+
     static var previews: some View {
         HomeView()
             .environmentObject(homeViewModel)

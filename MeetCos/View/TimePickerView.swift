@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct TimePickerView: View {
     @EnvironmentObject var viewModel: TimePickerViewModel
     let screenWidth = UIScreen.main.bounds.width
@@ -15,20 +14,20 @@ struct TimePickerView: View {
     var hours = [Int](0..<24)
     var minutes = [Int](0..<60)
     var seconds = [Int](0..<60)
-    
+
     var body: some View {
-        //ZStackでPickerとレイヤーで重なるようにボタンを配置
-        ZStack{
-            //時間、分、秒のPickerとそれぞれの単位を示すテキストをHStackで横並びに
+        // ZStackでPickerとレイヤーで重なるようにボタンを配置
+        ZStack {
+            // 時間、分、秒のPickerとそれぞれの単位を示すテキストをHStackで横並びに
             HStack {
-                //時間単位のPicker
+                // 時間単位のPicker
                 Picker(selection: self.$viewModel.hourSelection, label: Text("hour")) {
                     ForEach(0..<11) { index in
                         Text("\(index)").font(.system(size: 14))
                             .tag(index)
                     }
                 }
-                //上下に回転するホイールスタイルを指定
+                // 上下に回転するホイールスタイルを指定
                 .pickerStyle(WheelPickerStyle())
                 .frame(width: self.screenWidth * 0.15, height: self.screenWidth * 0.3)
                 .clipped()
