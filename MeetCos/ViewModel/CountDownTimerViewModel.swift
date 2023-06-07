@@ -5,19 +5,20 @@
 //  Created by apple on 2023/04/09.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 class CountdownTimerViewModel: ObservableObject {
     @Published var initialDuration: Double
     @Published var remainingTime: Double {
         didSet {
-            if remainingTime < 0 && initialDuration > 0 {
+            if remainingTime < 0, initialDuration > 0 {
                 // 予定時刻をオーバーした場合
                 isOvertime = true
             }
         }
     }
+
     @Published var displayTime: String = "0:00:00"
     @Published var totalCost: Double = 0.0
     @Published var progress: Double = 0
@@ -28,7 +29,7 @@ class CountdownTimerViewModel: ObservableObject {
     var backgroundTime: Date?
 
     init(initialDuration: Double, groups: [Group]) {
-        self.remainingTime = initialDuration
+        remainingTime = initialDuration
         self.initialDuration = initialDuration
         updateCostPerSecond(groups: groups)
     }
@@ -60,8 +61,8 @@ class CountdownTimerViewModel: ObservableObject {
     }
 
     func updateDuration(newDuration: Double) {
-        self.initialDuration = newDuration * 60
-        self.remainingTime = newDuration * 60
+        initialDuration = newDuration * 60
+        remainingTime = newDuration * 60
     }
 
     func initializeTotalCost(groups: [Group]) {
@@ -96,7 +97,7 @@ class CountdownTimerViewModel: ObservableObject {
 
     var formattedRemainingTime: String {
         let hours = abs(Int(remainingTime)) / 3600
-        let minutes = abs((Int(remainingTime) % 3600)) / 60
+        let minutes = abs(Int(remainingTime) % 3600) / 60
         let seconds = abs(Int(remainingTime)) % 60
 
         if isOvertime {

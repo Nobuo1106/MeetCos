@@ -5,11 +5,10 @@
 //  Created by apple on 2023/05/27.
 //
 
-import XCTest
 @testable import MeetCos
+import XCTest
 
 class SheetViewModelTests: XCTestCase {
-
     var timePickerViewModel: TimePickerViewModel!
     var sheetViewModel: SheetViewModel!
 
@@ -24,7 +23,7 @@ class SheetViewModelTests: XCTestCase {
         timePickerViewModel.minSelection = 30
         sheetViewModel.expenses = [
             Expense(personCount: 1, hourlyWage: 2000, hourlyProfit: 1000),
-            Expense(personCount: 2, hourlyWage: 3000, hourlyProfit: 5000)
+            Expense(personCount: 2, hourlyWage: 3000, hourlyProfit: 5000),
         ]
 
         let totalCost = sheetViewModel.calculateSession()

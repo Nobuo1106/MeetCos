@@ -17,9 +17,9 @@ struct Expense: Identifiable {
 extension Expense {
     func toGroup(sessionId: Int64) -> Group {
         let group = Group(context: PersistenceController.shared.container.viewContext)
-        group.personCount = Int64(self.personCount)
-        group.hourlyWage = Int64(self.hourlyWage)
-        group.hourlyProfit = Int64(self.hourlyProfit)
+        group.personCount = Int64(personCount)
+        group.hourlyWage = Int64(hourlyWage)
+        group.hourlyProfit = Int64(hourlyProfit)
         group.sessionId = sessionId
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

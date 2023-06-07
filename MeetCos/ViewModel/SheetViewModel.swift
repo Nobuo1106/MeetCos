@@ -5,10 +5,10 @@
 //  Created by apple on 2023/01/17.
 //
 
+import Combine
+import CoreData
 import Foundation
 import SwiftUI
-import CoreData
-import Combine
 
 enum TimeFormat {
     case hr
@@ -34,8 +34,8 @@ class SheetViewModel: ObservableObject {
     }
 
     func calculateSession() -> Int {
-        let totalMinutes: Decimal = Decimal(toTotalMinutes())
-        let totalDecimal: Decimal = expenses.reduce(Decimal.zero) { (result, expense) in
+        let totalMinutes = Decimal(toTotalMinutes())
+        let totalDecimal: Decimal = expenses.reduce(Decimal.zero) { result, expense in
             let personCount = Decimal(expense.personCount)
             let hourlyWage = Decimal(expense.hourlyWage)
             let hourlyProfit = Decimal(expense.hourlyProfit)
@@ -59,7 +59,7 @@ class SheetViewModel: ObservableObject {
                 SessionModel.shared.latestSession = updatedSession
             }
         }
-        self.changeTotal()
+        changeTotal()
     }
 
     private func toTotalMinutes() -> Int {
@@ -73,7 +73,7 @@ class SheetViewModel: ObservableObject {
                 expense.hourlyWage
             },
             set: { [self] newValue in
-                if let index = self.expenses.firstIndex(where: { $0.id == expense.id }) {
+                if let index = expenses.firstIndex(where: { $0.id == expense.id }) {
                     expenses[index].hourlyWage = newValue
                 }
             }
@@ -86,7 +86,7 @@ class SheetViewModel: ObservableObject {
                 expense.personCount
             },
             set: { [self] newValue in
-                if let index = self.expenses.firstIndex(where: { $0.id == expense.id }) {
+                if let index = expenses.firstIndex(where: { $0.id == expense.id }) {
                     expenses[index].personCount = newValue
                 }
             }
@@ -99,18 +99,18 @@ class SheetViewModel: ObservableObject {
                 expense.hourlyProfit
             },
             set: { [self] newValue in
-                if let index = self.expenses.firstIndex(where: { $0.id == expense.id }) {
+                if let index = expenses.firstIndex(where: { $0.id == expense.id }) {
                     expenses[index].hourlyProfit = newValue
                 }
             }
         )
     }
 
-    func getLatestGroups(from session: Session? = nil) {
+    func getLatestGroups(from _: Session? = nil) {
         getLatestSession { [self] _ in
             if let latestSession = SessionModel.shared.latestSession {
                 let hourMin: (hours: Int, minutes: Int) = timePickerViewModel.toHourAndMinutes(minutes: latestSession.duration)
-                self.timePickerViewModel.hourSelection = hourMin.hours
+                timePickerViewModel.hourSelection = hourMin.hours
                 timePickerViewModel.minSelection = hourMin.minutes
                 let groups = Array(latestSession.groups)
                 if groups.isEmpty {
@@ -120,14 +120,13 @@ class SheetViewModel: ObservableObject {
                     expenses = sortedGroups.map { group in
                         Expense(personCount: Int(group.personCount),
                                 hourlyWage: Int(group.hourlyWage),
-                                hourlyProfit: Int(group.hourlyProfit)
-                        )
+                                hourlyProfit: Int(group.hourlyProfit))
                     }
                 }
             } else {
                 expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
             }
-            self.changeTotal()
+            changeTotal()
         }
     }
 

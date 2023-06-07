@@ -14,8 +14,8 @@ struct FullScreenModalView: View {
 
     var body: some View {
         ZStack {
-            LoadingView(isLoading: self.$model.isLoading) {
-                UrlWebView(viewModel: self.model, isLoading: self.$model.isLoading)
+            LoadingView(isLoading: $model.isLoading) {
+                UrlWebView(viewModel: model, isLoading: $model.isLoading)
             }
         }
     }

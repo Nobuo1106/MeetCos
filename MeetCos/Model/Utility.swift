@@ -9,12 +9,13 @@ import Foundation
 
 class Utility {
     func toTotalMinutes(hours: Int, minutes: Int) -> Int {
-        return hours * 60 + minutes
+        hours * 60 + minutes
     }
 
     static func formatToYen(_ value: Int) -> String {
-        return "¥\(value)"
+        "¥\(value)"
     }
+
     // ResultViewに表示する時間を経過時間に応じて整形
     static func timeString(from seconds: Int?) -> String {
         guard let seconds = seconds else {
@@ -49,15 +50,15 @@ class Utility {
 
 extension String {
     var isLessThanSix: Bool {
-        return self.count <= 6
+        count <= 6
     }
 
     var isLessThanEight: Bool {
-        return self.count <= 8
+        count <= 8
     }
 
     var isNumeric: Bool {
-        return self.range(of: "[^.0-9]", options: .regularExpression) == nil && self != ""
+        range(of: "[^.0-9]", options: .regularExpression) == nil && self != ""
     }
 }
 

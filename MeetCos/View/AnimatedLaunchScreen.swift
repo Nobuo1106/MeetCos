@@ -5,8 +5,8 @@
 //  Created by apple on 2023/05/14.
 //
 
-import SwiftUI
 import Lottie
+import SwiftUI
 
 struct AnimatedLaunchScreen: View {
     @Binding var animationFinished: Bool
@@ -49,7 +49,7 @@ struct LottieView: UIViewRepresentable {
     var name: String
     var loopMode: LottieLoopMode
 
-    func makeUIView(context: UIViewRepresentableContext<LottieView>) -> UIView {
+    func makeUIView(context _: UIViewRepresentableContext<LottieView>) -> UIView {
         let view = UIView(frame: .zero)
         let animationView = LottieAnimationView()
         let animatiion = LottieAnimation.named("insights")
@@ -61,12 +61,12 @@ struct LottieView: UIViewRepresentable {
         view.addSubview(animationView)
         NSLayoutConstraint.activate([
             animationView.heightAnchor.constraint(equalTo: view.heightAnchor),
-            animationView.widthAnchor.constraint(equalTo: view.widthAnchor)
+            animationView.widthAnchor.constraint(equalTo: view.widthAnchor),
         ])
         return view
     }
 
-    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<LottieView>) {}
+    func updateUIView(_: UIView, context _: UIViewRepresentableContext<LottieView>) {}
 }
 
 struct AnimatedLaunchScreen_Previews: PreviewProvider {

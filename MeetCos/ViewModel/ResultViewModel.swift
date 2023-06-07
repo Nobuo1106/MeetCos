@@ -34,17 +34,16 @@ class ResultViewModel: ObservableObject {
         self.latestFinishedSession = latestFinishedSession
 
         if let startedAt = latestFinishedSession.startedAt,
-           let finishedAt = latestFinishedSession.finishedAt {
-
+           let finishedAt = latestFinishedSession.finishedAt
+        {
             let interval = finishedAt.timeIntervalSince(startedAt)
             print(interval)
-            self.totalSeconds = Int(interval)
+            totalSeconds = Int(interval)
         } else {
-            self.totalSeconds = 0
+            totalSeconds = 0
         }
-        self.totalCost = Int(latestFinishedSession.totalCost)
-        self.estimatedSeconds = Int(latestFinishedSession.duration) * 60
-        self.estimatedCost = Int(latestFinishedSession.estimatedCost)
+        totalCost = Int(latestFinishedSession.totalCost)
+        estimatedSeconds = Int(latestFinishedSession.duration) * 60
+        estimatedCost = Int(latestFinishedSession.estimatedCost)
     }
-
 }

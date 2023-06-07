@@ -5,16 +5,16 @@
 //  Created by apple on 2023/01/13.
 //
 
-import SwiftUI
 import CoreData
+import SwiftUI
 
 struct SheetView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var viewModel: SheetViewModel
     @StateObject var timePickerViewModel = TimePickerViewModel()
-    init(latestSession: Session? = nil) {
+    init(latestSession _: Session? = nil) {
         let timePickerVM = TimePickerViewModel()
-        let viewModel = SheetViewModel( timePickerViewModel: timePickerVM)
+        let viewModel = SheetViewModel(timePickerViewModel: timePickerVM)
         _timePickerViewModel = StateObject(wrappedValue: timePickerVM)
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -38,16 +38,15 @@ struct SheetView: View {
                         }
                         .disabled(viewModel.focus)
                         .keyboardShortcut(.defaultAction)
-
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
                 }
             }
             .navigationBarItems(leading: Button("キャンセル") {
-                self.presentationMode.wrappedValue.dismiss()
+                presentationMode.wrappedValue.dismiss()
             })
             .navigationBarItems(trailing: Button("完了") {
-                self.presentationMode.wrappedValue.dismiss()
+                presentationMode.wrappedValue.dismiss()
                 viewModel.saveSessionAndGroups()
             })
         }.accentColor(.green)

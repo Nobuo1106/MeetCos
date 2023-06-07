@@ -7,4 +7,4 @@
 
 import Foundation
 
-extension Session: SessionProtocol { }
+extension Session: SessionProtocol {}

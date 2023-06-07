@@ -67,7 +67,7 @@ struct ResultView: View {
 }
 
 struct ResultView_Previews: PreviewProvider {
-    static private var showingResult = Binding.constant(false)
+    private static var showingResult = Binding.constant(false)
     static var previews: some View {
         ResultView(showingResult: showingResult)
     }

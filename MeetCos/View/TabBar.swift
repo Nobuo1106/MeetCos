@@ -17,7 +17,6 @@ struct TabBar: View {
     var body: some View {
         VStack {
             TabView {
-
                 HomeView()
                     .tabItem {
                         VStack {
@@ -58,7 +57,7 @@ struct TabBar: View {
 struct TabBar_Previews: PreviewProvider {
     static var previews: some View {
         let mockTimePickerViewModel = TimePickerViewModel()
-        let mockInitialDuration: Double = 0.0
+        let mockInitialDuration = 0.0
         let mockGroups: [Group] = []
 
         let mockCountdownTimerViewModel = CountdownTimerViewModel(initialDuration: mockInitialDuration, groups: mockGroups)

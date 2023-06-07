@@ -13,7 +13,7 @@ struct HistoryView: View {
 
     init(session: SessionProtocol) {
         self.session = session
-        self.viewModel = HistoryViewModel(session: session)
+        viewModel = HistoryViewModel(session: session)
     }
 
     var body: some View {

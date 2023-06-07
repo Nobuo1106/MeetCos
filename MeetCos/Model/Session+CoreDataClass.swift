@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(Session)
-public class Session: NSManagedObject {
-
-}
+public class Session: NSManagedObject {}

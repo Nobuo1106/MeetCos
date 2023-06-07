@@ -14,7 +14,7 @@ struct UrlWebView: UIViewRepresentable {
     let webView = WKWebView()
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(self.viewModel)
+        Coordinator(viewModel)
     }
 
     class Coordinator: NSObject, WKNavigationDelegate {
@@ -24,31 +24,31 @@ struct UrlWebView: UIViewRepresentable {
             self.viewModel = viewModel
         }
 
-        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-            self.viewModel.isLoading = true
+        func webView(_: WKWebView, didStartProvisionalNavigation _: WKNavigation!) {
+            viewModel.isLoading = true
         }
 
-        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-            self.viewModel.isLoading = false
+        func webView(_: WKWebView, didFinish _: WKNavigation!) {
+            viewModel.isLoading = false
         }
 
-        func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        func webView(_: WKWebView, didFail _: WKNavigation!, withError error: Error) {
             print(error)
         }
     }
 
-    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<UrlWebView>) { }
+    func updateUIView(_: UIView, context _: UIViewRepresentableContext<UrlWebView>) {}
 
     func makeUIView(context: Context) -> UIView {
-        self.webView.navigationDelegate = context.coordinator
-        self.webView.backgroundColor = .clear
-        self.webView.isOpaque = false
+        webView.navigationDelegate = context.coordinator
+        webView.backgroundColor = .clear
+        webView.isOpaque = false
 
-        if let url = URL(string: self.viewModel.url) {
-            self.webView.load(URLRequest(url: url))
+        if let url = URL(string: viewModel.url) {
+            webView.load(URLRequest(url: url))
         }
 
-        return self.webView
+        return webView
     }
 }
 
@@ -57,11 +57,11 @@ struct ActivityIndicatorView: UIViewRepresentable {
     @Binding var isAnimating: Bool
     let style: UIActivityIndicatorView.Style
 
-    func makeUIView(context: UIViewRepresentableContext<ActivityIndicatorView>) -> UIActivityIndicatorView {
-        return UIActivityIndicatorView(style: style)
+    func makeUIView(context _: UIViewRepresentableContext<ActivityIndicatorView>) -> UIActivityIndicatorView {
+        UIActivityIndicatorView(style: style)
     }
 
-    func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicatorView>) {
+    func updateUIView(_ uiView: UIActivityIndicatorView, context _: UIViewRepresentableContext<ActivityIndicatorView>) {
         if isAnimating {
             uiView.startAnimating()
         } else {
@@ -79,8 +79,8 @@ struct LoadingView<Content>: View where Content: View {
         let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
         GeometryReader { geometry in
             ZStack {
-                self.content()
-                    .disabled(self.isLoading)
+                content()
+                    .disabled(isLoading)
                 ProgressView("", value: downloadAmount, total: 100)
                     .onReceive(timer) { _ in
                         if downloadAmount < 100 {
@@ -90,14 +90,14 @@ struct LoadingView<Content>: View where Content: View {
                     .scaleEffect(x: 1, y: 0.75, anchor: .center)
                     .accentColor(Color(red: 0.915, green: 0.447, blue: 0.445))
                     .position(x: geometry.size.width / 2, y: geometry.size.height * 0.05)
-                    .opacity(self.isLoading ? 1 : 0)
+                    .opacity(isLoading ? 1 : 0)
 
                 VStack {
                     ActivityIndicatorView(isAnimating: .constant(true), style: .medium)
                         .foregroundColor(.pink)
                         .frame(alignment: .center)
                 }
-                .opacity(self.isLoading ? 1 : 0)
+                .opacity(isLoading ? 1 : 0)
             }
         }
     }
