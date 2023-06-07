@@ -73,7 +73,7 @@ class SheetViewModel: ObservableObject {
                 expense.hourlyWage
             },
             set: { [self] newValue in
-                if let index = self.expenses.firstIndex(where: { $0.id == expense.id }) {
+                if let index = expenses.firstIndex(where: { $0.id == expense.id }) {
                     expenses[index].hourlyWage = newValue
                 }
             }
@@ -86,7 +86,7 @@ class SheetViewModel: ObservableObject {
                 expense.personCount
             },
             set: { [self] newValue in
-                if let index = self.expenses.firstIndex(where: { $0.id == expense.id }) {
+                if let index = expenses.firstIndex(where: { $0.id == expense.id }) {
                     expenses[index].personCount = newValue
                 }
             }
@@ -99,7 +99,7 @@ class SheetViewModel: ObservableObject {
                 expense.hourlyProfit
             },
             set: { [self] newValue in
-                if let index = self.expenses.firstIndex(where: { $0.id == expense.id }) {
+                if let index = expenses.firstIndex(where: { $0.id == expense.id }) {
                     expenses[index].hourlyProfit = newValue
                 }
             }
@@ -110,7 +110,7 @@ class SheetViewModel: ObservableObject {
         getLatestSession { [self] _ in
             if let latestSession = SessionModel.shared.latestSession {
                 let hourMin: (hours: Int, minutes: Int) = timePickerViewModel.toHourAndMinutes(minutes: latestSession.duration)
-                self.timePickerViewModel.hourSelection = hourMin.hours
+                timePickerViewModel.hourSelection = hourMin.hours
                 timePickerViewModel.minSelection = hourMin.minutes
                 let groups = Array(latestSession.groups)
                 if groups.isEmpty {
@@ -126,7 +126,7 @@ class SheetViewModel: ObservableObject {
             } else {
                 expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
             }
-            self.changeTotal()
+            changeTotal()
         }
     }
 

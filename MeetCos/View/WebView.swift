@@ -58,7 +58,7 @@ struct ActivityIndicatorView: UIViewRepresentable {
     let style: UIActivityIndicatorView.Style
 
     func makeUIView(context _: UIViewRepresentableContext<ActivityIndicatorView>) -> UIActivityIndicatorView {
-        return UIActivityIndicatorView(style: style)
+        UIActivityIndicatorView(style: style)
     }
 
     func updateUIView(_ uiView: UIActivityIndicatorView, context _: UIViewRepresentableContext<ActivityIndicatorView>) {
@@ -79,8 +79,8 @@ struct LoadingView<Content>: View where Content: View {
         let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
         GeometryReader { geometry in
             ZStack {
-                self.content()
-                    .disabled(self.isLoading)
+                content()
+                    .disabled(isLoading)
                 ProgressView("", value: downloadAmount, total: 100)
                     .onReceive(timer) { _ in
                         if downloadAmount < 100 {
@@ -90,14 +90,14 @@ struct LoadingView<Content>: View where Content: View {
                     .scaleEffect(x: 1, y: 0.75, anchor: .center)
                     .accentColor(Color(red: 0.915, green: 0.447, blue: 0.445))
                     .position(x: geometry.size.width / 2, y: geometry.size.height * 0.05)
-                    .opacity(self.isLoading ? 1 : 0)
+                    .opacity(isLoading ? 1 : 0)
 
                 VStack {
                     ActivityIndicatorView(isAnimating: .constant(true), style: .medium)
                         .foregroundColor(.pink)
                         .frame(alignment: .center)
                 }
-                .opacity(self.isLoading ? 1 : 0)
+                .opacity(isLoading ? 1 : 0)
             }
         }
     }

@@ -34,8 +34,8 @@ class ResultViewModel: ObservableObject {
         self.latestFinishedSession = latestFinishedSession
 
         if let startedAt = latestFinishedSession.startedAt,
-           let finishedAt = latestFinishedSession.finishedAt {
-
+           let finishedAt = latestFinishedSession.finishedAt
+        {
             let interval = finishedAt.timeIntervalSince(startedAt)
             print(interval)
             totalSeconds = Int(interval)

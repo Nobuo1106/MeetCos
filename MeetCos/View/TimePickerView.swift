@@ -21,7 +21,7 @@ struct TimePickerView: View {
             // 時間、分、秒のPickerとそれぞれの単位を示すテキストをHStackで横並びに
             HStack {
                 // 時間単位のPicker
-                Picker(selection: self.$viewModel.hourSelection, label: Text("hour")) {
+                Picker(selection: $viewModel.hourSelection, label: Text("hour")) {
                     ForEach(0 ..< 11) { index in
                         Text("\(index)").font(.system(size: 14))
                             .tag(index)
@@ -29,20 +29,20 @@ struct TimePickerView: View {
                 }
                 // 上下に回転するホイールスタイルを指定
                 .pickerStyle(WheelPickerStyle())
-                .frame(width: self.screenWidth * 0.15, height: self.screenWidth * 0.3)
+                .frame(width: screenWidth * 0.15, height: screenWidth * 0.3)
                 .clipped()
                 Text("時間")
                     .font(.headline)
                     .font(.system(size: 14))
 
-                Picker(selection: self.$viewModel.minSelection, label: Text("分")) {
+                Picker(selection: $viewModel.minSelection, label: Text("分")) {
                     ForEach(0 ..< 60) { index in
-                        Text("\(self.minutes[index])").font(.system(size: 14))
+                        Text("\(minutes[index])").font(.system(size: 14))
                             .tag(index)
                     }
                 }
                 .pickerStyle(WheelPickerStyle())
-                .frame(width: self.screenWidth * 0.15, height: self.screenWidth * 0.3)
+                .frame(width: screenWidth * 0.15, height: screenWidth * 0.3)
                 Text("分")
                     .font(.headline)
                     .font(.system(size: 14))

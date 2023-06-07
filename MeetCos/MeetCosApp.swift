@@ -25,7 +25,7 @@ struct MeetCosApp: App {
 
     var body: some Scene {
         WindowGroup {
-            if shouldShowLaunchScreen() && !animationFinished {
+            if shouldShowLaunchScreen(), !animationFinished {
                 AnimatedLaunchScreen(animationFinished: $animationFinished)
             } else {
                 TabBar()

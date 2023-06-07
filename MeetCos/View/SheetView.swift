@@ -43,10 +43,10 @@ struct SheetView: View {
                 }
             }
             .navigationBarItems(leading: Button("キャンセル") {
-                self.presentationMode.wrappedValue.dismiss()
+                presentationMode.wrappedValue.dismiss()
             })
             .navigationBarItems(trailing: Button("完了") {
-                self.presentationMode.wrappedValue.dismiss()
+                presentationMode.wrappedValue.dismiss()
                 viewModel.saveSessionAndGroups()
             })
         }.accentColor(.green)

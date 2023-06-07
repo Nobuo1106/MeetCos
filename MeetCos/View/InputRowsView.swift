@@ -42,10 +42,10 @@ struct InputRowsView: View {
                 Spacer()
                 VStack {
                     CurrencyTextField(value: Binding(
-                        get: { self.expense.hourlyWage },
+                        get: { expense.hourlyWage },
                         set: {
-                            self.expense.hourlyWage = $0
-                            self.viewModel.changeTotal()
+                            expense.hourlyWage = $0
+                            viewModel.changeTotal()
                         }
                     ))
                     .padding(.horizontal, 10)
@@ -53,10 +53,10 @@ struct InputRowsView: View {
                     .background(RoundedRectangle(cornerRadius: 5).strokeBorder(Color("Color-4"), lineWidth: 1))
 
                     CurrencyTextField(value: Binding(
-                        get: { self.expense.hourlyProfit },
+                        get: { expense.hourlyProfit },
                         set: {
-                            self.expense.hourlyProfit = $0
-                            self.viewModel.changeTotal()
+                            expense.hourlyProfit = $0
+                            viewModel.changeTotal()
                         }
                     ))
                     .padding(.horizontal, 10)

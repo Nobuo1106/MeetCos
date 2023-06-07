@@ -11,7 +11,7 @@ import Foundation
 
 public extension Group {
     @nonobjc class func fetchRequest() -> NSFetchRequest<Group> {
-        return NSFetchRequest<Group>(entityName: "Group")
+        NSFetchRequest<Group>(entityName: "Group")
     }
 
     @NSManaged var orderIndex: Int16

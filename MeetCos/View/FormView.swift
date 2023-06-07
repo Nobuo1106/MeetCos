@@ -39,7 +39,7 @@ struct FormView: View {
                 }
                 ForEach($viewModel.expenses) { $expense in
                     InputRowsView(expense: $expense)
-                        .focused(self.$focus)
+                        .focused($focus)
                 }
 
                 HStack {
@@ -72,7 +72,7 @@ struct FormView: View {
                 }
             }
             Spacer()
-        }.gesture(self.gesture)
+        }.gesture(gesture)
     }
 }
 

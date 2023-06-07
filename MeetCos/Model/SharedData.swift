@@ -12,7 +12,7 @@ class SharedData {
 
     var remainingTime: Double {
         get {
-            return userDefaults.double(forKey: "remainingTime")
+            userDefaults.double(forKey: "remainingTime")
         }
         set {
             userDefaults.set(newValue, forKey: "remainingTime")

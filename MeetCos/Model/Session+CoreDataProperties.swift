@@ -11,7 +11,7 @@ import Foundation
 
 public extension Session {
     @nonobjc class func fetchRequest() -> NSFetchRequest<Session> {
-        return NSFetchRequest<Session>(entityName: "Session")
+        NSFetchRequest<Session>(entityName: "Session")
     }
 
     @NSManaged var finishedAt: Date?

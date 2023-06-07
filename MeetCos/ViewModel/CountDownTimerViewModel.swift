@@ -12,7 +12,7 @@ class CountdownTimerViewModel: ObservableObject {
     @Published var initialDuration: Double
     @Published var remainingTime: Double {
         didSet {
-            if remainingTime < 0 && initialDuration > 0 {
+            if remainingTime < 0, initialDuration > 0 {
                 // 予定時刻をオーバーした場合
                 isOvertime = true
             }
