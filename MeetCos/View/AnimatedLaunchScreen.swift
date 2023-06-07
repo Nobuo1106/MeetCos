@@ -11,7 +11,7 @@ import Lottie
 struct AnimatedLaunchScreen: View {
     @Binding var animationFinished: Bool
     @State var title: String = ""
-    
+
     var body: some View {
         VStack {
             LottieView(name: "insights", loopMode: .playOnce)
@@ -48,7 +48,7 @@ struct AnimatedLaunchScreen: View {
 struct LottieView: UIViewRepresentable {
     var name: String
     var loopMode: LottieLoopMode
-    
+
     func makeUIView(context: UIViewRepresentableContext<LottieView>) -> UIView {
         let view = UIView(frame: .zero)
         let animationView = LottieAnimationView()
@@ -56,22 +56,22 @@ struct LottieView: UIViewRepresentable {
         animationView.animation = animatiion
         animationView.contentMode = .scaleAspectFit
         animationView.play()
-        
+
         animationView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(animationView)
         NSLayoutConstraint.activate([
             animationView.heightAnchor.constraint(equalTo: view.heightAnchor),
-            animationView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            animationView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
         return view
     }
-    
+
     func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<LottieView>) {}
 }
 
 struct AnimatedLaunchScreen_Previews: PreviewProvider {
     @State static var animationFinished: Bool = false
-    
+
     static var previews: some View {
         AnimatedLaunchScreen(animationFinished: $animationFinished)
     }

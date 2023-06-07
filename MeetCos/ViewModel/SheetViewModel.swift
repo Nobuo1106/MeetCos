@@ -19,20 +19,20 @@ enum TimeFormat {
 class SheetViewModel: ObservableObject {
     @Published var timePickerViewModel: TimePickerViewModel
     private var cancellables: Set<AnyCancellable> = []
-    //カウントダウン残り時間
+    // カウントダウン残り時間
     @Published var duration: Double = 0
-    //カウントダウン開始前の最大時間
+    // カウントダウン開始前の最大時間
     @Published var maxValue: Double = 0
-    //設定した時間が1時間以上、1時間未満1分以上、1分未満1秒以上によって変わる時間表示形式
+    // 設定した時間が1時間以上、1時間未満1分以上、1分未満1秒以上によって変わる時間表示形式
     @Published var displayedTimeFormat: TimeFormat = .min
     @Published var focus: Bool = false
     @Published var expenses = [Expense(personCount: 0, hourlyWage: 0, hourlyProfit: 0)]
     @Published var totalCost: Int = 0
-    
+
     init(timePickerViewModel: TimePickerViewModel) {
         self.timePickerViewModel = timePickerViewModel
     }
-    
+
     func calculateSession() -> Int {
         let totalMinutes: Decimal = Decimal(toTotalMinutes())
         let totalDecimal: Decimal = expenses.reduce(Decimal.zero) { (result, expense) in
@@ -46,11 +46,11 @@ class SheetViewModel: ObservableObject {
         let totalInt: Int = NSDecimalNumber(decimal: totalDecimal).rounding(accordingToBehavior: handler).intValue
         return totalInt
     }
-    
+
     func changeTotal() {
         totalCost = calculateSession()
     }
-    
+
     func saveSessionAndGroups() {
         let hour = timePickerViewModel.hourSelection
         let minute = timePickerViewModel.minSelection
@@ -61,12 +61,12 @@ class SheetViewModel: ObservableObject {
         }
         self.changeTotal()
     }
-    
+
     private func toTotalMinutes() -> Int {
         let utility = Utility()
         return utility.toTotalMinutes(hours: timePickerViewModel.hourSelection, minutes: timePickerViewModel.minSelection)
     }
-    
+
     func hourlyWage(for expense: Expense) -> Binding<Int> {
         Binding(
             get: {
@@ -79,7 +79,7 @@ class SheetViewModel: ObservableObject {
             }
         )
     }
-    
+
     func personCount(for expense: Expense) -> Binding<Int> {
         Binding(
             get: {
@@ -92,7 +92,7 @@ class SheetViewModel: ObservableObject {
             }
         )
     }
-    
+
     func hourlyProfit(for expense: Expense) -> Binding<Int> {
         Binding(
             get: {
@@ -105,7 +105,7 @@ class SheetViewModel: ObservableObject {
             }
         )
     }
-    
+
     func getLatestGroups(from session: Session? = nil) {
         getLatestSession { [self] _ in
             if let latestSession = SessionModel.shared.latestSession {
@@ -130,10 +130,12 @@ class SheetViewModel: ObservableObject {
             self.changeTotal()
         }
     }
-    
+
     func getLatestSession(completion: @escaping (Session?) -> Void) {
         SessionModel.shared.fetchLatestSession { [weak self] latestSession in
-            guard self != nil else { return }
+            guard self != nil else {
+                return
+            }
             completion(latestSession)
         }
     }

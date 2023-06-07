@@ -10,13 +10,13 @@ import SwiftUI
 struct ResultView: View {
     @Binding var showingResult: Bool
     @StateObject private var viewModel = ResultViewModel()
-    
+
     var body: some View {
         VStack {
             Text("MTG結果")
             Spacer()
             HStack {
-                VStack (alignment: .trailing) {
+                VStack(alignment: .trailing) {
                     Text("想定時間 :")
                         .padding(.bottom, 3)
                     Text("会議時間 :")
@@ -26,8 +26,8 @@ struct ResultView: View {
                     Text("合計コスト:")
                         .padding(.bottom, 3)
                 }
-                
-                VStack (alignment: .leading) {
+
+                VStack(alignment: .leading) {
                     Text("\(Utility.timeString(from: viewModel.estimatedSeconds ?? 0))")
                         .padding(.bottom, 3)
                     Text("\(Utility.timeString(from: viewModel.totalSeconds ?? 0))")
@@ -40,7 +40,7 @@ struct ResultView: View {
             }
             .foregroundColor(.black)
             Spacer()
-            
+
             Button(action: {
                 withAnimation {
                     showingResult = false
@@ -51,7 +51,7 @@ struct ResultView: View {
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(LinearGradient(gradient: Gradient(colors: [Color("Color-1"), Color("Color-2")]), startPoint: .leading, endPoint: .trailing))
-                
+
                     .foregroundColor(.white)
                     .cornerRadius(12.0)
                     .padding()

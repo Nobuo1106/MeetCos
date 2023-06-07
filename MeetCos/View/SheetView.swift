@@ -18,7 +18,7 @@ struct SheetView: View {
         _timePickerViewModel = StateObject(wrappedValue: timePickerVM)
         _viewModel = StateObject(wrappedValue: viewModel)
     }
-    
+
     var body: some View {
         NavigationView {
             VStack {
@@ -26,7 +26,7 @@ struct SheetView: View {
                     .environmentObject(viewModel)
                     .environmentObject(timePickerViewModel)
             }
-            .onAppear{
+            .onAppear {
                 viewModel.getLatestGroups()
             }
             .toolbar {
@@ -38,7 +38,7 @@ struct SheetView: View {
                         }
                         .disabled(viewModel.focus)
                         .keyboardShortcut(.defaultAction)
-                        
+
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
                 }

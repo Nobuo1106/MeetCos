@@ -11,19 +11,19 @@ import CoreData
 class SessionModel {
     static let shared = SessionModel()
     var latestSession: Session?
-    
+
     private init() {
         fetchLatestSession { latestSession in
             self.latestSession = latestSession
         }
     }
-    
+
     func fetchLatestSession(completion: @escaping (Session?) -> Void) {
         let request: NSFetchRequest<Session> = Session.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "createdAt", ascending: false)
         request.sortDescriptors = [sortDescriptor]
         request.fetchLimit = 1
-        
+
         do {
             let sessions = try PersistenceController.shared.container.viewContext.fetch(request)
             if let session = sessions.first {
@@ -36,16 +36,16 @@ class SessionModel {
             completion(nil)
         }
     }
-    
+
     // ResultViewで終了したセッションを取得する
     func fetchLatestFinishedSession(completion: @escaping (Session?) -> Void) {
         let context = PersistenceController.shared.container.viewContext
-        
+
         let fetchRequest: NSFetchRequest<Session> = Session.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "finishedAt > %@", NSDate.distantPast as CVarArg)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         fetchRequest.fetchLimit = 1
-        
+
         context.perform {
             do {
                 let sessions = try context.fetch(fetchRequest)
@@ -56,20 +56,20 @@ class SessionModel {
             }
         }
     }
-    
+
     /// SheetViewModel、HomeViewModelで利用する為、expense引数がなくても使える。
     /// latestSessionのデータ一貫性の為Sessionを返す。
     func upsertSession(session: Session?, hour: Int, minute: Int, totalCost: Int? = nil, estimatedCost: Int = 0, expenses: [Expense] = [], completion: @escaping (Session?) -> Void) {
         let context = PersistenceController.shared.container.viewContext
-        
+
         context.perform {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             formatter.timeZone = TimeZone.current
             formatter.locale = Locale.current
-            
+
             let now = Date()
-            
+
             let targetSession: Session
             if let existingSession = session {
                 targetSession = existingSession
@@ -78,14 +78,14 @@ class SessionModel {
                 targetSession.sessionId = self.getNextSessionId()
                 targetSession.createdAt = formatter.string(from: now)
             }
-            
+
             targetSession.updatedAt = formatter.string(from: now)
             targetSession.duration = Double(hour * 60 + minute)
             if let totalCost = totalCost {
                 targetSession.totalCost = Int64(totalCost)
             }
             targetSession.estimatedCost = Int64(estimatedCost)
-            
+
             if !expenses.isEmpty {
                 targetSession.groups.forEach { context.delete($0) }
                 var groups = [Group]()
@@ -97,7 +97,7 @@ class SessionModel {
                 }
                 targetSession.groups = Set(groups)
             }
-            
+
             do {
                 try context.save()
                 completion(targetSession)
@@ -108,13 +108,13 @@ class SessionModel {
             }
         }
     }
-    
+
     func updateStartedAt(for session: Session) {
         let context = PersistenceController.shared.container.viewContext
         context.perform {
             let now = Date()
             session.startedAt = now
-            
+
             do {
                 try context.save()
             } catch {
@@ -123,14 +123,14 @@ class SessionModel {
             }
         }
     }
-    
+
     func updateSessionEndDetails(for session: Session, totalCost: Int) {
         let context = PersistenceController.shared.container.viewContext
         context.perform {
             let now = Date()
             session.finishedAt = now
             session.totalCost = Int64(totalCost)
-            
+
             do {
                 try context.save()
             } catch {
@@ -139,11 +139,11 @@ class SessionModel {
             }
         }
     }
-    
+
     func resetLatestSession() {
         latestSession = nil
     }
-    
+
     func createEmptySession(completion: @escaping () -> Void) {
         let context = PersistenceController.shared.container.viewContext
         context.perform {
@@ -155,7 +155,7 @@ class SessionModel {
             let now = Date()
             session.createdAt = formatter.string(from: now)
             session.updatedAt = formatter.string(from: now)
-            
+
             session.finishedAt = nil
             session.duration = 0
             if let latestSession = self.latestSession {
@@ -163,7 +163,7 @@ class SessionModel {
             } else {
                 session.sessionId = 1
             }
-            
+
             do {
                 try context.save()
                 DispatchQueue.main.async {
@@ -176,17 +176,19 @@ class SessionModel {
             }
         }
     }
-    
+
     func isEmptySession(_ session: Session?) -> Bool {
-        guard let session = session else { return true }
+        guard let session = session else {
+            return true
+        }
         return session.startedAt == nil && session.finishedAt == nil && session.duration == 0
     }
-    
+
     func getNextSessionId() -> Int64 {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Session")
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "sessionId", ascending: false)]
         fetchRequest.fetchLimit = 1
-        
+
         let context = PersistenceController.shared.container.viewContext
         do {
             let results = try context.fetch(fetchRequest) as? [Session]
@@ -200,12 +202,12 @@ class SessionModel {
             return 1
         }
     }
-    
+
     func fetchCompletedSessions(completion: @escaping ([Session]) -> Void) {
         let context = PersistenceController.shared.container.viewContext
         let request: NSFetchRequest<Session> = Session.fetchRequest()
         request.predicate = NSPredicate(format: "finishedAt != nil")
-        
+
         do {
             let completedSessions = try context.fetch(request)
             completion(completedSessions)
@@ -229,14 +231,14 @@ extension Session {
         sampleSession.duration = 3600
         sampleSession.estimatedCost = 1000
         sampleSession.totalCost = 1200
-        
+
         let sampleGroup = Group(context: context)
         sampleGroup.hourlyProfit = 100
         sampleGroup.hourlyWage = 1000
         sampleGroup.personCount = 1
-        
+
         sampleSession.addToGroups(sampleGroup)
-        
+
         return sampleSession
     }
 }

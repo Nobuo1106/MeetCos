@@ -12,7 +12,9 @@ class HistoryListViewModel: ObservableObject, HistoryListViewModelProtocol {
 
     func fetchCompletedSessions() {
         SessionModel.shared.fetchCompletedSessions { [weak self] completedSessions in
-            guard let self = self else { return }
+            guard let self = self else {
+                return
+            }
             DispatchQueue.main.async {
                 self.sessions = completedSessions
             }

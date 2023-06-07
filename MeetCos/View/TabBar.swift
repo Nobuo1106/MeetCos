@@ -7,18 +7,17 @@
 
 import SwiftUI
 
-
 struct TabBar: View {
     init() {
         let color = Color("tabBarBackground")
         let uiColor = UIColor(color)
         UITabBar.appearance().backgroundColor = uiColor
     }
-    
+
     var body: some View {
         VStack {
             TabView {
-                
+
                 HomeView()
                     .tabItem {
                         VStack {
@@ -42,13 +41,13 @@ struct TabBar: View {
                     }
             }
             .frame(
-                width: UIScreen.main.bounds.width ,
+                width: UIScreen.main.bounds.width,
                 height: UIScreen.main.bounds.height
             )
             .accentColor(.green)
-                .edgesIgnoringSafeArea(.all)
-                .onAppear {
-                    UserDefaults.standard.set(Date(), forKey: "LastLaunchDate")
+            .edgesIgnoringSafeArea(.all)
+            .onAppear {
+                UserDefaults.standard.set(Date(), forKey: "LastLaunchDate")
             }
         }
         .edgesIgnoringSafeArea(.all)
@@ -61,7 +60,7 @@ struct TabBar_Previews: PreviewProvider {
         let mockTimePickerViewModel = TimePickerViewModel()
         let mockInitialDuration: Double = 0.0
         let mockGroups: [Group] = []
-        
+
         let mockCountdownTimerViewModel = CountdownTimerViewModel(initialDuration: mockInitialDuration, groups: mockGroups)
 
         return TabBar()

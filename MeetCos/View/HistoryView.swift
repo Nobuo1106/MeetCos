@@ -10,12 +10,12 @@ import SwiftUI
 struct HistoryView: View {
     let session: SessionProtocol
     @ObservedObject private var viewModel: HistoryViewModel
-    
+
     init(session: SessionProtocol) {
         self.session = session
         self.viewModel = HistoryViewModel(session: session)
     }
-    
+
     var body: some View {
         VStack {
             Text("会議詳細")
@@ -54,14 +54,14 @@ struct HistoryView: View {
                     Text("合計コスト:")
                         .font(.headline)
                     Spacer().frame(width: 28)
-                    
+
                     Text("¥\(session.totalCost)")
                 }
                 HStack {
                     Text("コスト差:")
                         .font(.headline)
                     Spacer().frame(width: 47)
-                    
+
                     Text("¥\(session.totalCost - session.estimatedCost)")
                 }
             }
@@ -106,7 +106,7 @@ extension MockSession {
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
         let mockSession = MockSession.sampleSession
-        
+
         return NavigationView {
             HistoryView(session: mockSession)
         }
