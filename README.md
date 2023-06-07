@@ -46,6 +46,7 @@ Copy code
 - CoreData
 - XCTest
 - Swift Package Manager
+- SwiftLint
 
 ## アーキテクチャ
 MVVM
@@ -106,6 +107,7 @@ Copy code
 - CoreData
 - XCTest
 - Swift Package Manager
+- SwiftLint
 
 ## Architecture
 MVVM
