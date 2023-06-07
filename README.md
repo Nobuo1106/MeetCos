@@ -47,6 +47,7 @@ Copy code
 - XCTest
 - Swift Package Manager
 - SwiftLint
+- SwiftFormat
 
 ## アーキテクチャ
 MVVM
@@ -108,6 +109,7 @@ Copy code
 - XCTest
 - Swift Package Manager
 - SwiftLint
+- SwiftFormat
 
 ## Architecture
 MVVM
