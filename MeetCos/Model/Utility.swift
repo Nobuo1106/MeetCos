@@ -15,6 +15,7 @@ class Utility {
     static func formatToYen(_ value: Int) -> String {
         return "¥\(value)"
     }
+
     // ResultViewに表示する時間を経過時間に応じて整形
     static func timeString(from seconds: Int?) -> String {
         guard let seconds = seconds else {
@@ -49,15 +50,15 @@ class Utility {
 
 extension String {
     var isLessThanSix: Bool {
-        return self.count <= 6
+        return count <= 6
     }
 
     var isLessThanEight: Bool {
-        return self.count <= 8
+        return count <= 8
     }
 
     var isNumeric: Bool {
-        return self.range(of: "[^.0-9]", options: .regularExpression) == nil && self != ""
+        return range(of: "[^.0-9]", options: .regularExpression) == nil && self != ""
     }
 }
 

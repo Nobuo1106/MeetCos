@@ -6,44 +6,40 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
-extension Session {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Session> {
+public extension Session {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<Session> {
         return NSFetchRequest<Session>(entityName: "Session")
     }
 
-    @NSManaged public var finishedAt: Date?
-    @NSManaged public var willFinishAt: Date?
-    @NSManaged public var sessionId: Int64
-    @NSManaged public var startedAt: Date?
-    @NSManaged public var createdAt: String
-    @NSManaged public var updatedAt: String
-    @NSManaged public var groups: Set<Group>
-    @NSManaged public var duration: Double
-    @NSManaged public var estimatedCost: Int64
-    @NSManaged public var totalCost: Int64
+    @NSManaged var finishedAt: Date?
+    @NSManaged var willFinishAt: Date?
+    @NSManaged var sessionId: Int64
+    @NSManaged var startedAt: Date?
+    @NSManaged var createdAt: String
+    @NSManaged var updatedAt: String
+    @NSManaged var groups: Set<Group>
+    @NSManaged var duration: Double
+    @NSManaged var estimatedCost: Int64
+    @NSManaged var totalCost: Int64
 }
 
 // MARK: Generated accessors for groups
-extension Session {
 
+public extension Session {
     @objc(addGroupsObject:)
-    @NSManaged public func addToGroups(_ value: Group)
+    @NSManaged func addToGroups(_ value: Group)
 
     @objc(removeGroupsObject:)
-    @NSManaged public func removeFromGroups(_ value: Group)
+    @NSManaged func removeFromGroups(_ value: Group)
 
     @objc(addGroups:)
-    @NSManaged public func addToGroups(_ values: NSSet)
+    @NSManaged func addToGroups(_ values: NSSet)
 
     @objc(removeGroups:)
-    @NSManaged public func removeFromGroups(_ values: NSSet)
-
+    @NSManaged func removeFromGroups(_ values: NSSet)
 }
 
-extension Session: Identifiable {
-
-}
+extension Session: Identifiable {}

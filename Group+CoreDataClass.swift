@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(Group)
-public class Group: NSManagedObject {
-
-}
+public class Group: NSManagedObject {}

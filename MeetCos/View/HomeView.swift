@@ -54,7 +54,7 @@ struct HomeView: View {
                             .padding()
                             .frame(maxWidth: 175)
                             .background(
-                                !homeViewModel.isRunning  && homeViewModel.estimatedTotalCost != 0 ?
+                                !homeViewModel.isRunning && homeViewModel.estimatedTotalCost != 0 ?
                                     RoundedRectangle(cornerRadius: 15)
                                     .stroke(Color.white, lineWidth: 5)
                                     .background(Color("Color-1"))

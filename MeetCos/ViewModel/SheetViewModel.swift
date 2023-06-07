@@ -5,10 +5,10 @@
 //  Created by apple on 2023/01/17.
 //
 
+import Combine
+import CoreData
 import Foundation
 import SwiftUI
-import CoreData
-import Combine
 
 enum TimeFormat {
     case hr
@@ -34,8 +34,8 @@ class SheetViewModel: ObservableObject {
     }
 
     func calculateSession() -> Int {
-        let totalMinutes: Decimal = Decimal(toTotalMinutes())
-        let totalDecimal: Decimal = expenses.reduce(Decimal.zero) { (result, expense) in
+        let totalMinutes = Decimal(toTotalMinutes())
+        let totalDecimal: Decimal = expenses.reduce(Decimal.zero) { result, expense in
             let personCount = Decimal(expense.personCount)
             let hourlyWage = Decimal(expense.hourlyWage)
             let hourlyProfit = Decimal(expense.hourlyProfit)
@@ -59,7 +59,7 @@ class SheetViewModel: ObservableObject {
                 SessionModel.shared.latestSession = updatedSession
             }
         }
-        self.changeTotal()
+        changeTotal()
     }
 
     private func toTotalMinutes() -> Int {
@@ -106,7 +106,7 @@ class SheetViewModel: ObservableObject {
         )
     }
 
-    func getLatestGroups(from session: Session? = nil) {
+    func getLatestGroups(from _: Session? = nil) {
         getLatestSession { [self] _ in
             if let latestSession = SessionModel.shared.latestSession {
                 let hourMin: (hours: Int, minutes: Int) = timePickerViewModel.toHourAndMinutes(minutes: latestSession.duration)
@@ -120,8 +120,7 @@ class SheetViewModel: ObservableObject {
                     expenses = sortedGroups.map { group in
                         Expense(personCount: Int(group.personCount),
                                 hourlyWage: Int(group.hourlyWage),
-                                hourlyProfit: Int(group.hourlyProfit)
-                        )
+                                hourlyProfit: Int(group.hourlyProfit))
                     }
                 }
             } else {

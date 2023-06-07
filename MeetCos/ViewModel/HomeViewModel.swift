@@ -5,8 +5,8 @@
 //  Created by apple on 2023/01/08.
 //
 
-import Foundation
 import Combine
+import Foundation
 import SwiftUI
 
 class HomeViewModel: ObservableObject {
@@ -41,7 +41,7 @@ class HomeViewModel: ObservableObject {
         timePickerViewModel.$hourSelection
             .combineLatest(timePickerViewModel.$minSelection)
             .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main) // 重複Insertを防ぐためにdebounceを利用
-            .sink { [weak self] (_, _) in
+            .sink { [weak self] _, _ in
                 self?.updateSessionDuration()
             }
             .store(in: &cancellables)
@@ -99,12 +99,12 @@ class HomeViewModel: ObservableObject {
 
     func convertFromDurationToHoursAndMinutes() {
         if let session = SessionModel.shared.latestSession {
-            let hourMin: (hours: Int, minutes: Int) = self.timePickerViewModel.toHourAndMinutes(minutes: session.duration)
-            self.timePickerViewModel.hourSelection = hourMin.hours
-            self.timePickerViewModel.minSelection = hourMin.minutes
+            let hourMin: (hours: Int, minutes: Int) = timePickerViewModel.toHourAndMinutes(minutes: session.duration)
+            timePickerViewModel.hourSelection = hourMin.hours
+            timePickerViewModel.minSelection = hourMin.minutes
         } else {
-            self.timePickerViewModel.hourSelection = 0
-            self.timePickerViewModel.minSelection = 0
+            timePickerViewModel.hourSelection = 0
+            timePickerViewModel.minSelection = 0
         }
     }
 
@@ -160,12 +160,12 @@ class HomeViewModel: ObservableObject {
         }
     }
 
-    func calculateEstimatedTotalCost(session: Session? ) -> Int {
-        let totalMinutes: Decimal = Decimal(toTotalMinutes())
+    func calculateEstimatedTotalCost(session: Session?) -> Int {
+        let totalMinutes = Decimal(toTotalMinutes())
         guard let groups = session?.groups else {
             return 0 // グループが存在しないときはコストは0円
         }
-        let totalDecimal: Decimal = groups.reduce(Decimal.zero) { (result, group) in
+        let totalDecimal: Decimal = groups.reduce(Decimal.zero) { result, group in
             let personCount = Decimal(group.personCount)
             let hourlyWage = Decimal(group.hourlyWage)
             let hourlyProfit = Decimal(group.hourlyProfit)

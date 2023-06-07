@@ -41,7 +41,6 @@ struct InputRowsView: View {
                 }
                 Spacer()
                 VStack {
-
                     CurrencyTextField(value: Binding(
                         get: { self.expense.hourlyWage },
                         set: {
@@ -65,7 +64,6 @@ struct InputRowsView: View {
                     .background(RoundedRectangle(cornerRadius: 5).strokeBorder(Color("Color-4"), lineWidth: 1))
                 }
             }
-
         }
     }
 }
@@ -89,6 +87,6 @@ struct InputRowsView_Previews: PreviewProvider {
             InputRowsView(expense: $expense3)
                 .previewDisplayName("Preview 3")
         }.environmentObject(sheetVM)
-        .environmentObject(timePickerVM)
+            .environmentObject(timePickerVM)
     }
 }

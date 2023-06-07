@@ -5,11 +5,10 @@
 //  Created by apple on 2023/05/27.
 //
 
-import XCTest
 @testable import MeetCos
+import XCTest
 
 class SheetViewModelTests: XCTestCase {
-
     var timePickerViewModel: TimePickerViewModel!
     var sheetViewModel: SheetViewModel!
 

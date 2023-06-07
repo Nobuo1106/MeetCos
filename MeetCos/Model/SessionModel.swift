@@ -5,8 +5,8 @@
 //  Created by apple on 2023/04/01.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 class SessionModel {
     static let shared = SessionModel()

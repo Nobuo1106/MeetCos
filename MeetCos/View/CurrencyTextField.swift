@@ -32,13 +32,13 @@ struct CurrencyTextField: UIViewRepresentable {
         return textField
     }
 
-    func updateUIView(_ uiView: UIView, context: Context) {
+    func updateUIView(_ uiView: UIView, context _: Context) {
         if let textField = uiView as? UITextField {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            let formattedNumberString = formatter.string(from: NSNumber(value: self.value))
-            textField.text = self.value > 0 ? "¥" + formattedNumberString! : "¥0"
-            textField.textColor = self.value > 0 ? UIColor(Color("inputTextColor")): UIColor.gray
+            let formattedNumberString = formatter.string(from: NSNumber(value: value))
+            textField.text = value > 0 ? "¥" + formattedNumberString! : "¥0"
+            textField.textColor = value > 0 ? UIColor(Color("inputTextColor")) : UIColor.gray
         }
     }
 
@@ -59,13 +59,13 @@ struct CurrencyTextField: UIViewRepresentable {
                 newText = "0"
             }
             let number = Int(newText) ?? 0
-            self.parent.value = number
+            parent.value = number
 
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             textField.text = "¥" + (formatter.string(from: NSNumber(value: number)) ?? "")
 
-            textField.textColor = self.parent.value == 0 ? .gray : UIColor(Color("inputTextColor"))
+            textField.textColor = parent.value == 0 ? .gray : UIColor(Color("inputTextColor"))
         }
 
         @objc func doneButtonTapped() {

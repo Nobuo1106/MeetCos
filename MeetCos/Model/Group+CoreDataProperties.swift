@@ -6,25 +6,22 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
-extension Group {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Group> {
+public extension Group {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<Group> {
         return NSFetchRequest<Group>(entityName: "Group")
     }
 
-    @NSManaged public var orderIndex: Int16
-    @NSManaged public var hourlyProfit: Int64
-    @NSManaged public var hourlyWage: Int64
-    @NSManaged public var personCount: Int64
-    @NSManaged public var sessionId: Int64
-    @NSManaged public var createdAt: String
-    @NSManaged public var updatedAt: String
-    @NSManaged public var session: Session?
-
+    @NSManaged var orderIndex: Int16
+    @NSManaged var hourlyProfit: Int64
+    @NSManaged var hourlyWage: Int64
+    @NSManaged var personCount: Int64
+    @NSManaged var sessionId: Int64
+    @NSManaged var createdAt: String
+    @NSManaged var updatedAt: String
+    @NSManaged var session: Session?
 }
 
-extension Group: Identifiable {
-}
+extension Group: Identifiable {}

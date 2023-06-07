@@ -27,6 +27,7 @@
 		1837DAEA29D80DF5007B8E5B /* SessionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1837DAE929D80DF5007B8E5B /* SessionModel.swift */; };
 		18382DF029FFF3830022596A /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18382DEF29FFF3830022596A /* ResultView.swift */; };
 		18382DF22A0253FD0022596A /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18382DF12A0253FD0022596A /* ResultViewModel.swift */; };
+		1843F3102A31378F00BC6D59 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 1843F30F2A31378F00BC6D59 /* SwiftFormat */; };
 		185D088F2A0EF67C00A947C4 /* CurrencyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D088E2A0EF67C00A947C4 /* CurrencyTextField.swift */; };
 		1863141829B15AD4003123AB /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1863141729B15AD4003123AB /* Expense.swift */; };
 		1863141A29B15AE8003123AB /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1863141929B15AE8003123AB /* TimePickerView.swift */; };
@@ -115,6 +116,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				189DDFE42A10D85300CB6FB4 /* Lottie in Frameworks */,
+				1843F3102A31378F00BC6D59 /* SwiftFormat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +255,7 @@
 			name = MeetCos;
 			packageProductDependencies = (
 				189DDFE32A10D85300CB6FB4 /* Lottie */,
+				1843F30F2A31378F00BC6D59 /* SwiftFormat */,
 			);
 			productName = MeetCos;
 			productReference = 1806350B29569A540013369D /* MeetCos.app */;
@@ -305,6 +308,7 @@
 			mainGroup = 1806350229569A540013369D;
 			packageReferences = (
 				189DDFE22A10D85300CB6FB4 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				1843F30E2A31378F00BC6D59 /* XCRemoteSwiftPackageReference "SwiftFormat" */,
 			);
 			productRefGroup = 1806350C29569A540013369D /* Products */;
 			projectDirPath = "";
@@ -689,6 +693,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1843F30E2A31378F00BC6D59 /* XCRemoteSwiftPackageReference "SwiftFormat" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:nicklockwood/SwiftFormat.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.51.11;
+			};
+		};
 		189DDFE22A10D85300CB6FB4 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -700,6 +712,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1843F30F2A31378F00BC6D59 /* SwiftFormat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1843F30E2A31378F00BC6D59 /* XCRemoteSwiftPackageReference "SwiftFormat" */;
+			productName = SwiftFormat;
+		};
 		189DDFE32A10D85300CB6FB4 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 189DDFE22A10D85300CB6FB4 /* XCRemoteSwiftPackageReference "lottie-ios" */;

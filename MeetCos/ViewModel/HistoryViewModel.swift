@@ -21,7 +21,7 @@ class HistoryViewModel: ObservableObject, HistoryViewModelProtocol {
 
     init(session: SessionProtocol) {
         self.session = session
-        self.formattedStartedAt = Utility.formatDate(date: session.startedAt)
-        self.formattedFinishedAt = Utility.formatDate(date: session.finishedAt)
+        formattedStartedAt = Utility.formatDate(date: session.startedAt)
+        formattedFinishedAt = Utility.formatDate(date: session.finishedAt)
     }
 }
