@@ -17,22 +17,29 @@ struct HistoryListView: View {
                 Text("会議一覧")
                     .padding()
                     .foregroundColor(.green)
-                List {
-                    ForEach(viewModel.sessions) { session in
-                        NavigationLink(destination: HistoryView(session: session)) {
-                            HStack {
-                                if let startedAt = session.startedAt {
-                                    Text(" \(startedAt, formatter: DateFormatter.shortDateAndTime)")
+                if viewModel.sessions.isEmpty {
+                    List {
+                        Text("まだ会議の履歴はありません")
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding()
+                    }
+                } else {
+                    List {
+                        ForEach(viewModel.sessions) { session in
+                            NavigationLink(destination: HistoryView(session: session)) {
+                                HStack {
+                                    if let startedAt = session.startedAt {
+                                        Text(" \(startedAt, formatter: DateFormatter.shortDateAndTime)")
+                                    }
+                                    Spacer()
+                                    Text(" ¥\(session.totalCost)")
                                 }
-                                Spacer()
-                                Text(" ¥\(session.totalCost)")
                             }
                         }
                     }
                 }
-                .onAppear {
-                    viewModel.fetchCompletedSessions()
-                }
+            }.onAppear {
+                viewModel.fetchCompletedSessions()
             }
         }
     }
