@@ -11,9 +11,10 @@ import UIKit
 struct InputRowsView: View {
     @Binding var expense: Expense
     @EnvironmentObject var viewModel: SheetViewModel
+    let groupNumber: Int
 
     var body: some View {
-        Section(header: Text("グループ")) {
+        Section(header: Text("グループ\(groupNumber)")) {
             HStack(alignment: .center) {
                 Picker(selection: $expense.personCount) {
                     ForEach(0 ..< 100) { value in
@@ -78,13 +79,13 @@ struct InputRowsView_Previews: PreviewProvider {
         let sheetVM = SheetViewModel(timePickerViewModel: timePickerVM)
 
         VStack {
-            InputRowsView(expense: $expense1)
+            InputRowsView(expense: $expense1, groupNumber: 1)
                 .previewDisplayName("Preview 1")
 
-            InputRowsView(expense: $expense2)
+            InputRowsView(expense: $expense2, groupNumber: 2)
                 .previewDisplayName("Preview 2")
 
-            InputRowsView(expense: $expense3)
+            InputRowsView(expense: $expense3, groupNumber: 3)
                 .previewDisplayName("Preview 3")
         }.environmentObject(sheetVM)
             .environmentObject(timePickerVM)

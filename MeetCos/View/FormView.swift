@@ -37,8 +37,8 @@ struct FormView: View {
                             viewModel.changeTotal()
                         }
                 }
-                ForEach($viewModel.expenses) { $expense in
-                    InputRowsView(expense: $expense)
+                ForEach(viewModel.expenses.indices, id: \.self) { index in
+                    InputRowsView(expense: $viewModel.expenses[index], groupNumber: index + 1)
                         .focused($focus)
                 }
 
