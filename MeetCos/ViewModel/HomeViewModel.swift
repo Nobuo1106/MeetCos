@@ -12,7 +12,6 @@ import SwiftUI
 class HomeViewModel: ObservableObject {
     @Published var timePickerViewModel: TimePickerViewModel
     @Published var countdownTimerViewModel: CountdownTimerViewModel
-    @Published var isRunning = false
     @Published var estimatedTotalCost = 0
     private var appInBackground = false
     private var backgroundTime: Date?
@@ -48,13 +47,15 @@ class HomeViewModel: ObservableObject {
     }
 
     func appStateChanged(_ scenePhase: ScenePhase) {
-        switch scenePhase {
-        case .background:
-            countdownTimerViewModel.appMovedToBackground()
-        case .active:
-            countdownTimerViewModel.appMovedToForeground()
-        default:
-            break
+        if countdownTimerViewModel.isTimerActive {
+            switch scenePhase {
+            case .background:
+                countdownTimerViewModel.appMovedToBackground()
+            case .active:
+                countdownTimerViewModel.appMovedToForeground()
+            default:
+                break
+            }
         }
     }
 
@@ -77,7 +78,7 @@ class HomeViewModel: ObservableObject {
     }
 
     func start() {
-        isRunning = true
+        countdownTimerViewModel.isTimerActive = true
         if let session = SessionModel.shared.latestSession {
             if session.startedAt == nil {
                 SessionModel.shared.updateStartedAt(for: session)
@@ -88,12 +89,12 @@ class HomeViewModel: ObservableObject {
 
     // タイマーの停止
     func stop() {
-        isRunning = false
+        countdownTimerViewModel.isTimerActive = false
         countdownTimerViewModel.stop()
     }
 
     func reset() {
-        isRunning = false
+        countdownTimerViewModel.isTimerActive = false
         countdownTimerViewModel.reset()
     }
 

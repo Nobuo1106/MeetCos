@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1800F5312A47EE5100E7ED02 /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1800F5302A47EE5100E7ED02 /* HomeViewModelTests.swift */; };
 		1806350F29569A540013369D /* MeetCosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1806350E29569A540013369D /* MeetCosApp.swift */; };
 		1806351129569A540013369D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1806351029569A540013369D /* HomeView.swift */; };
 		1806351329569A560013369D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1806351229569A560013369D /* Assets.xcassets */; };
@@ -63,6 +64,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1800F5302A47EE5100E7ED02 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 		1806350B29569A540013369D /* MeetCos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeetCos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1806350E29569A540013369D /* MeetCosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetCosApp.swift; sourceTree = "<group>"; };
 		1806351029569A540013369D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				18EF38A12A219AAA00E272F7 /* SheetViewModelTests.swift */,
+				1800F5302A47EE5100E7ED02 /* HomeViewModelTests.swift */,
 			);
 			path = MeetCosTests;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18EF38A22A219AAA00E272F7 /* SheetViewModelTests.swift in Sources */,
+				1800F5312A47EE5100E7ED02 /* HomeViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -566,7 +570,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = igarashi.MeetCos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -604,7 +608,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = igarashi.MeetCos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

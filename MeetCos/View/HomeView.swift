@@ -27,7 +27,7 @@ struct HomeView: View {
                         .onChange(of: homeViewModel.timePickerViewModel.minSelection) { _ in
                             homeViewModel.updateSessionDuration()
                         }
-                        .disabled(homeViewModel.isRunning || $showingResult.wrappedValue)
+                        .disabled(homeViewModel.countdownTimerViewModel.isTimerActive || $showingResult.wrappedValue)
                 }
                 .opacity(showingResult ? 0.3 : 1)
 
@@ -54,7 +54,7 @@ struct HomeView: View {
                             .padding()
                             .frame(maxWidth: 175)
                             .background(
-                                !homeViewModel.isRunning && homeViewModel.estimatedTotalCost != 0 ?
+                                !homeViewModel.countdownTimerViewModel.isTimerActive && homeViewModel.estimatedTotalCost != 0 ?
                                     RoundedRectangle(cornerRadius: 15)
                                     .stroke(Color.white, lineWidth: 5)
                                     .background(Color("Color-1"))
@@ -67,7 +67,7 @@ struct HomeView: View {
                             .cornerRadius(15)
                             .padding()
                     }
-                    .disabled(homeViewModel.isRunning || $showingResult.wrappedValue || homeViewModel.estimatedTotalCost == 0)
+                    .disabled(homeViewModel.countdownTimerViewModel.isTimerActive || $showingResult.wrappedValue || homeViewModel.estimatedTotalCost == 0)
                     Button(action: {
                         homeViewModel.stop()
                         homeViewModel.finishSession {
@@ -83,7 +83,7 @@ struct HomeView: View {
                             .padding()
                             .frame(maxWidth: 175)
                             .background(
-                                !homeViewModel.isRunning ?
+                                !homeViewModel.countdownTimerViewModel.isTimerActive ?
                                     RoundedRectangle(cornerRadius: 15)
                                     .stroke(Color.white, lineWidth: 5)
                                     .background(Color("Color-6"))
@@ -95,7 +95,7 @@ struct HomeView: View {
                             .cornerRadius(15)
                             .padding()
                     }
-                    .disabled(!homeViewModel.isRunning || $showingResult.wrappedValue)
+                    .disabled(!homeViewModel.countdownTimerViewModel.isTimerActive || $showingResult.wrappedValue)
                 }
                 .opacity(showingResult ? 0.3 : 1)
                 Spacer()
@@ -115,7 +115,7 @@ struct HomeView: View {
                         .frame(maxWidth: 175)
                 }
                 .background(
-                    !homeViewModel.isRunning ?
+                    !homeViewModel.countdownTimerViewModel.isTimerActive ?
                         RoundedRectangle(cornerRadius: 20)
                         .stroke(Color.green, lineWidth: 5)
                         .background(Color.white)
@@ -126,7 +126,7 @@ struct HomeView: View {
                 .cornerRadius(20)
                 .padding()
                 .opacity(showingResult ? 0.3 : 1)
-                .disabled(homeViewModel.isRunning || $showingResult.wrappedValue)
+                .disabled(homeViewModel.countdownTimerViewModel.isTimerActive || $showingResult.wrappedValue)
                 .sheet(isPresented: $showingSheet, onDismiss: {
                     homeViewModel.getLatestSession { session in
                         SessionModel.shared.latestSession = session
