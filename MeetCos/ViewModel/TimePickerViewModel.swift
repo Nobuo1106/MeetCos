@@ -10,10 +10,10 @@ import Foundation
 class TimePickerViewModel: ObservableObject {
     @Published var hourSelection: Int = 0
     @Published var minSelection: Int = 0
-    @Published var isRunning: Bool
+    @Published var isTimerActive: Bool
 
-    init(isRunning: Bool = false) {
-        self.isRunning = isRunning
+    init(isTimerActive: Bool = false) {
+        self.isTimerActive = isTimerActive
     }
 
     func toHourAndMinutes(minutes: Double) -> (hours: Int, minutes: Int) {
