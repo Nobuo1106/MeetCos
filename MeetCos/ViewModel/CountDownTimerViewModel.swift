@@ -18,7 +18,7 @@ class CountdownTimerViewModel: ObservableObject {
             }
         }
     }
-    @Published var isTimerActive = false
+
     @Published var displayTime: String = "0:00:00"
     @Published var totalCost: Double = 0.0
     @Published var progress: Double = 0

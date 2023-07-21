@@ -52,7 +52,7 @@ struct TimePickerView: View {
 }
 
 struct TimePickerView_Previews: PreviewProvider {
-    @State private static var isTimerActive = false
+    @State private static var isRunning = false
     static var previews: some View {
         let timePickerVM = TimePickerViewModel()
         TimePickerView()
