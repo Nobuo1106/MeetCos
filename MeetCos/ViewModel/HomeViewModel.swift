@@ -50,9 +50,13 @@ class HomeViewModel: ObservableObject {
     func appStateChanged(_ scenePhase: ScenePhase) {
         switch scenePhase {
         case .background:
-            countdownTimerViewModel.appMovedToBackground()
+            if isRunning{
+                countdownTimerViewModel.appMovedToBackground()
+            }
         case .active:
-            countdownTimerViewModel.appMovedToForeground()
+            if isRunning {
+                countdownTimerViewModel.appMovedToForeground()
+            }
         default:
             break
         }
@@ -186,3 +190,4 @@ class HomeViewModel: ObservableObject {
         estimatedTotalCost = Int(SessionModel.shared.latestSession?.estimatedCost ?? 0)
     }
 }
+
