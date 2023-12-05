@@ -1,5 +1,5 @@
 //
-//  HistoryView.swift
+//  HistoryListView.swift
 //  MeetCos
 //
 //  Created by apple on 2023/05/06.

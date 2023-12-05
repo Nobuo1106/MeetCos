@@ -1,5 +1,5 @@
 //
-//  Session.swift
+//  SessionModel.swift
 //  MeetCos
 //
 //  Created by apple on 2023/04/01.

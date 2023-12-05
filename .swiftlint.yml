@@ -1,6 +1,9 @@
 # SwiftLintの対象外とする
 excluded:
 - Pods
+- BuildTools
+- R.generated.swift
+- .build
 
 # 無効とするルール
 disabled_rules:

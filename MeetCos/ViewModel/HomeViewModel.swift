@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  HomeViewModel.swift
 //  MeetCos
 //
 //  Created by apple on 2023/01/08.
@@ -50,7 +50,7 @@ class HomeViewModel: ObservableObject {
     func appStateChanged(_ scenePhase: ScenePhase) {
         switch scenePhase {
         case .background:
-            if isRunning{
+            if isRunning {
                 countdownTimerViewModel.appMovedToBackground()
             }
         case .active:
@@ -190,4 +190,3 @@ class HomeViewModel: ObservableObject {
         estimatedTotalCost = Int(SessionModel.shared.latestSession?.estimatedCost ?? 0)
     }
 }
-

@@ -1,5 +1,5 @@
 //
-//  MeetCosTests.swift
+//  SheetViewModelTests.swift
 //  MeetCosTests
 //
 //  Created by apple on 2023/05/27.
@@ -39,7 +39,7 @@ class SheetViewModelTests: XCTestCase {
         let expense3 = Expense(personCount: 3, hourlyWage: 0, hourlyProfit: 0)
         sheetViewModel.expenses = [expense2, expense1, expense3] // initial unordered array
         sheetViewModel.expenses.sort { $0.personCount < $1.personCount }
-        let sortedPersonCounts = sheetViewModel.expenses.map { $0.personCount }
+        let sortedPersonCounts = sheetViewModel.expenses.map(\.personCount)
         XCTAssertEqual(sortedPersonCounts, [1, 2, 3], "Expenses are not correctly ordered")
     }
 }
