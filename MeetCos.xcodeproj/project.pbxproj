@@ -247,6 +247,7 @@
 				1806350829569A540013369D /* Frameworks */,
 				1806350929569A540013369D /* Resources */,
 				187AF2012A2B128800260397 /* SwiftLint */,
+				C7642A4B2B1B28CB00920F2B /* SwiftFormat */,
 			);
 			buildRules = (
 			);
@@ -358,7 +359,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "
+";
+		};
+		C7642A4B2B1B28CB00920F2B /* SwiftFormat */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftFormat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd BuildTools\nSDKROOT=macosx\n \n # Uncomment this line temporarily to update the version used to the latest matching your BuildTools/Package.swift file\n # swift package update\n \nswift run -c release swiftformat --config $PROJECT_DIR/.swiftformat \"$SRCROOT\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
